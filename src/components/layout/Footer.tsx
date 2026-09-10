@@ -11,7 +11,7 @@ export function Footer() {
       <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
         <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
           <div className="lg:col-span-2">
-            <Logo size="lg" />
+            <Logo size="footer" />
             <p className="mt-4 max-w-md text-sm leading-relaxed text-muted">
               A digital academic platform built to simplify student life and
               connect the Department of Computer Science through one app.

@@ -18,20 +18,20 @@ interface ButtonProps {
 
 const variants: Record<ButtonVariant, string> = {
   primary:
-    "bg-primary-bright text-white hover:bg-primary shadow-md ring-1 ring-primary/25 hover:shadow-lg active:scale-[0.98]",
+    "bg-[#22C55E] text-white hover:bg-[#166534] shadow-md border border-[#14532D]/20",
   secondary:
-    "bg-surface text-foreground border border-border hover:border-primary/30 hover:bg-primary-light/30",
+    "bg-white text-[#0F172A] border-2 border-[#E2E8F0] hover:border-[#166534]/40 hover:bg-[#F8FAFC]",
   outline:
-    "border border-primary/40 text-primary hover:bg-primary-light/40",
-  ghost: "text-muted hover:text-primary hover:bg-primary-light/30",
+    "border-2 border-[#166534]/50 text-[#166534] bg-white hover:bg-[#DCFCE7]",
+  ghost: "text-[#64748B] hover:text-[#166534] hover:bg-[#DCFCE7]/60",
   coral:
-    "bg-accent-red-light text-accent-red border border-accent-coral/50 hover:bg-accent-coral/30",
+    "bg-[#FEE2E2] text-[#EF4444] border border-[#FCA5A5] hover:bg-[#FCA5A5]/40",
 };
 
 const sizes: Record<ButtonSize, string> = {
-  sm: "px-3.5 py-2 text-sm",
-  md: "px-5 py-2.5 text-sm",
-  lg: "px-6 py-3 text-base",
+  sm: "min-h-[40px] px-3.5 py-2 text-xs sm:text-sm",
+  md: "min-h-[44px] px-5 py-2.5 text-sm",
+  lg: "min-h-[48px] px-6 py-3 text-base",
 };
 
 export function Button({
@@ -46,7 +46,9 @@ export function Button({
   disabled,
 }: ButtonProps) {
   const classes = cn(
-    "inline-flex items-center justify-center gap-2 rounded-xl font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
+    "inline-flex items-center justify-center gap-2 rounded-xl font-semibold transition-all duration-200",
+    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#166534]/40 focus-visible:ring-offset-2",
+    "disabled:cursor-not-allowed disabled:opacity-50 active:scale-[0.98]",
     variants[variant],
     sizes[size],
     className
@@ -55,12 +57,7 @@ export function Button({
   if (href && !disabled) {
     if (external) {
       return (
-        <a
-          href={href}
-          className={classes}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+        <a href={href} className={classes} target="_blank" rel="noopener noreferrer">
           {children}
         </a>
       );
@@ -73,12 +70,7 @@ export function Button({
   }
 
   return (
-    <button
-      type={type}
-      className={classes}
-      onClick={onClick}
-      disabled={disabled}
-    >
+    <button type={type} className={classes} onClick={onClick} disabled={disabled}>
       {children}
     </button>
   );

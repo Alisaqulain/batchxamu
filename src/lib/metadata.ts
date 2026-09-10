@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { siteConfig } from "./site";
 
+const ogImage = `${siteConfig.url}/logo.png`;
+
 interface PageMetaOptions {
   title: string;
   description: string;
@@ -8,6 +10,7 @@ interface PageMetaOptions {
   keywords?: string[];
   type?: "website" | "article";
   publishedTime?: string;
+  noIndex?: boolean;
 }
 
 export function createMetadata({
@@ -17,6 +20,7 @@ export function createMetadata({
   keywords = [],
   type = "website",
   publishedTime,
+  noIndex = false,
 }: PageMetaOptions): Metadata {
   const url = `${siteConfig.url}${path}`;
   const fullTitle =
@@ -27,11 +31,19 @@ export function createMetadata({
   return {
     title: fullTitle,
     description,
+    applicationName: siteConfig.name,
     keywords: [...siteConfig.keywords, ...keywords],
-    authors: [{ name: "AMU BATCH X Development Team" }],
-    creator: "AMU BATCH X Development Team",
+    authors: [{ name: `${siteConfig.name} Team`, url: siteConfig.url }],
+    creator: siteConfig.name,
+    publisher: siteConfig.name,
     metadataBase: new URL(siteConfig.url),
     alternates: { canonical: url },
+    category: "education",
+    formatDetection: {
+      email: false,
+      address: false,
+      telephone: false,
+    },
     openGraph: {
       title: fullTitle,
       description,
@@ -39,16 +51,40 @@ export function createMetadata({
       siteName: siteConfig.name,
       locale: "en_IN",
       type,
+      images: [
+        {
+          url: ogImage,
+          width: 512,
+          height: 512,
+          alt: `${siteConfig.name} — Department of Computer Science App`,
+        },
+      ],
       ...(publishedTime && { publishedTime }),
     },
     twitter: {
       card: "summary_large_image",
       title: fullTitle,
       description,
+      images: [ogImage],
     },
-    robots: {
-      index: true,
-      follow: true,
+    robots: noIndex
+      ? { index: false, follow: false }
+      : {
+          index: true,
+          follow: true,
+          googleBot: {
+            index: true,
+            follow: true,
+            "max-image-preview": "large",
+            "max-snippet": -1,
+            "max-video-preview": -1,
+          },
+        },
+    other: {
+      "mobile-web-app-capable": "yes",
+      "apple-mobile-web-app-title": siteConfig.name,
+      "apple-mobile-web-app-capable": "yes",
+      "apple-mobile-web-app-status-bar-style": "default",
     },
   };
 }

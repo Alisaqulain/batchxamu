@@ -22,13 +22,13 @@ export function FinalCTA() {
           Download the Department of Computer Science app and keep everything
           important in one place.
         </p>
-        <div className="mt-8 flex flex-wrap justify-center gap-3">
-          <DownloadButton size="lg" variant="light" />
+        <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:justify-center">
+          <DownloadButton size="lg" variant="light" className="w-full sm:w-auto" />
           <Button
             href="/features"
-            variant="secondary"
+            variant="outline"
             size="lg"
-            className="border-white/20 bg-transparent text-white hover:bg-white/10"
+            className="w-full border-white/60 bg-white/10 text-white hover:bg-white/20 sm:w-auto"
           >
             Explore Features
             <ArrowRight className="h-4 w-4" aria-hidden="true" />

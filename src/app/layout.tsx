@@ -1,9 +1,14 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { DM_Sans, Source_Serif_4 } from "next/font/google";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { siteConfig } from "@/lib/site";
 import { createMetadata } from "@/lib/metadata";
+import {
+  getMobileAppJsonLd,
+  getOrganizationJsonLd,
+  getWebsiteJsonLd,
+} from "@/lib/seo";
 import "./globals.css";
 
 const dmSans = DM_Sans({
@@ -19,22 +24,25 @@ const sourceSerif = Source_Serif_4({
 });
 
 export const metadata: Metadata = createMetadata({
-  title: "Department of Computer Science Student Platform",
+  title: "Department of Computer Science Student App",
   description: siteConfig.description,
 });
 
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  name: siteConfig.name,
-  description: siteConfig.description,
-  url: siteConfig.url,
-  publisher: {
-    "@type": "Organization",
-    name: "AMU BATCH X Development Team",
-    url: siteConfig.url,
-  },
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#166534" },
+    { media: "(prefers-color-scheme: dark)", color: "#14532D" },
+  ],
 };
+
+const structuredData = [
+  getWebsiteJsonLd(),
+  getOrganizationJsonLd(),
+  getMobileAppJsonLd(),
+];
 
 export default function RootLayout({
   children,
@@ -42,14 +50,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${dmSans.variable} ${sourceSerif.variable} h-full`}>
+    <html lang="en-IN" className={`${dmSans.variable} ${sourceSerif.variable} h-full`}>
       <head>
         <link rel="icon" href="/logo.png" type="image/png" sizes="any" />
         <link rel="apple-touch-icon" href="/logo.png" />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
+        {structuredData.map((data, index) => (
+          <script
+            key={index}
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+          />
+        ))}
       </head>
       <body className="flex min-h-full flex-col antialiased">
         <Navbar />

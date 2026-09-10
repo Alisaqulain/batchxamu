@@ -5,55 +5,41 @@ import { cn } from "@/lib/utils";
 
 interface LogoProps {
   showText?: boolean;
-  size?: "sm" | "md" | "lg";
+  size?: "nav" | "footer" | "hero";
   className?: string;
 }
 
 const sizeMap = {
-  sm: { img: 48, text: "text-sm", sub: "text-[10px]" },
-  md: { img: 56, text: "text-base sm:text-lg", sub: "text-[10px] sm:text-xs" },
-  lg: { img: 72, text: "text-xl", sub: "text-sm" },
+  nav: 52,
+  footer: 64,
+  hero: 80,
 };
 
 export function Logo({
-  showText = true,
-  size = "md",
+  showText = false,
+  size = "nav",
   className,
 }: LogoProps) {
-  const config = sizeMap[size];
+  const imgSize = sizeMap[size];
 
   return (
     <Link
       href="/"
-      className={cn("group flex min-w-0 items-center gap-3", className)}
+      className={cn("group inline-flex shrink-0 items-center gap-3", className)}
+      aria-label={`${siteConfig.name} home`}
     >
       <Image
         src="/logo.png"
-        alt={`${siteConfig.name} logo`}
-        width={config.img}
-        height={config.img}
-        className="shrink-0 rounded-2xl transition-transform duration-200 group-hover:scale-105"
-        priority
+        alt={siteConfig.name}
+        width={imgSize}
+        height={imgSize}
+        className="rounded-2xl transition-transform duration-200 group-hover:scale-[1.03]"
+        priority={size === "nav"}
       />
       {showText && (
-        <div className="min-w-0 leading-tight">
-          <span
-            className={cn(
-              "block font-bold tracking-tight text-foreground",
-              config.text
-            )}
-          >
-            {siteConfig.name}
-          </span>
-          <span
-            className={cn(
-              "hidden font-medium text-muted sm:block",
-              config.sub
-            )}
-          >
-            Dept. of Computer Science
-          </span>
-        </div>
+        <span className="text-lg font-bold tracking-tight text-foreground">
+          {siteConfig.name}
+        </span>
       )}
     </Link>
   );
