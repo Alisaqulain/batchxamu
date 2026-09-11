@@ -23,7 +23,7 @@ export function DeveloperCard({ developer }: DeveloperCardProps) {
     <article
       id={slugify(developer.name)}
       className={cn(
-        "group scroll-mt-24 overflow-hidden rounded-2xl border border-border border-t-4 bg-surface transition-all duration-200 hover:-translate-y-1 hover:shadow-lg",
+        "surface-card group scroll-mt-24 overflow-hidden border-t-4",
         accentMap[developer.accent] ?? "border-t-primary"
       )}
     >

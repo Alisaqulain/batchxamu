@@ -31,10 +31,10 @@ export function Navbar() {
   return (
     <header
       className={cn(
-        "sticky top-0 z-50 transition-all duration-300",
+        "sticky top-0 z-50 transition-[background-color,box-shadow,border-color] duration-300",
         scrolled
-          ? "border-b border-border bg-white/95 shadow-sm backdrop-blur-md"
-          : "bg-white/90 backdrop-blur-sm"
+          ? "border-b border-border/80 bg-white/92 shadow-[0_8px_30px_rgb(12_26_18_/_0.06)] backdrop-blur-md"
+          : "border-b border-transparent bg-white/80 backdrop-blur-sm"
       )}
     >
       <nav
@@ -43,7 +43,7 @@ export function Navbar() {
       >
         <Logo size="nav" />
 
-        <ul className="hidden flex-1 items-center justify-center gap-1 xl:flex">
+        <ul className="hidden flex-1 items-center justify-center gap-0.5 xl:flex">
           {centerNavLinks.map((link) => (
             <li key={link.href}>
               <Link
@@ -52,7 +52,7 @@ export function Navbar() {
                   "rounded-lg px-3 py-2 text-sm font-medium transition-colors",
                   pathname === link.href
                     ? "bg-primary-light text-primary"
-                    : "text-muted hover:bg-slate-50 hover:text-foreground"
+                    : "text-muted hover:bg-[#eef2ef] hover:text-foreground"
                 )}
               >
                 {link.label}
@@ -67,7 +67,7 @@ export function Navbar() {
 
           <button
             type="button"
-            className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-xl border border-border bg-white text-foreground shadow-sm hover:bg-slate-50 xl:hidden"
+            className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-xl border border-border bg-white text-foreground shadow-sm hover:bg-[#eef2ef] xl:hidden"
             onClick={() => setOpen(!open)}
             aria-expanded={open}
             aria-label={open ? "Close menu" : "Open menu"}
@@ -78,13 +78,19 @@ export function Navbar() {
       </nav>
 
       {open && (
-        <div className="fixed inset-0 top-[73px] z-40 bg-black/20 xl:hidden" onClick={() => setOpen(false)} aria-hidden="true" />
+        <div
+          className="fixed inset-0 top-[73px] z-40 bg-[#0c1a12]/25 xl:hidden"
+          onClick={() => setOpen(false)}
+          aria-hidden="true"
+        />
       )}
 
       <div
         className={cn(
-          "border-t border-border bg-white transition-all duration-300 xl:hidden",
-          open ? "max-h-[70vh] overflow-y-auto opacity-100" : "max-h-0 overflow-hidden opacity-0 border-t-0"
+          "border-t border-border bg-white transition-[max-height,opacity] duration-300 ease-out xl:hidden",
+          open
+            ? "max-h-[70vh] overflow-y-auto opacity-100"
+            : "max-h-0 overflow-hidden opacity-0 border-t-0"
         )}
       >
         <ul className="space-y-1 px-4 py-4 sm:px-6">
@@ -92,7 +98,7 @@ export function Navbar() {
             <li key={link.href}>
               <Link
                 href={link.href}
-                className="flex min-h-[44px] items-center rounded-xl px-4 text-sm font-medium text-foreground hover:bg-primary-light/40"
+                className="flex min-h-[44px] items-center rounded-xl px-4 text-sm font-medium text-foreground hover:bg-primary-light/50"
                 onClick={() => setOpen(false)}
               >
                 {link.label}

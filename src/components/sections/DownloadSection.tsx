@@ -31,13 +31,13 @@ export function DownloadSection() {
               resources close at hand.
             </p>
 
-            <div className="mt-8 flex flex-wrap gap-3">
-              <DownloadButton size="lg" variant="light" />
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+              <DownloadButton size="lg" variant="light" className="w-full sm:w-auto" />
               <Button
                 href="/features"
-                variant="secondary"
+                variant="outline"
                 size="lg"
-                className="border-white/20 bg-white/10 text-white hover:bg-white/20"
+                className="w-full border-white/50 bg-white/10 text-white hover:bg-white/20 sm:w-auto"
               >
                 Explore the platform
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
@@ -47,7 +47,7 @@ export function DownloadSection() {
             <div className="mt-8 flex items-center gap-4">
               <Image
                 src="/logo.png"
-                alt="MCA 26 app icon"
+                alt={`${siteConfig.name} app icon`}
                 width={72}
                 height={72}
                 className="rounded-2xl"

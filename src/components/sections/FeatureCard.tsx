@@ -11,16 +11,10 @@ interface FeatureCardProps {
   accent?: "green" | "neutral" | "coral";
 }
 
-const accentStyles = {
-  green: "group-hover:border-primary/40 group-hover:bg-primary-light/20",
-  neutral: "group-hover:border-border group-hover:shadow-md",
-  coral: "group-hover:border-accent-coral/50 group-hover:bg-accent-red-light/20",
-};
-
 const iconStyles = {
-  green: "bg-primary-light text-primary group-hover:bg-primary/10",
-  neutral: "bg-slate-100 text-foreground group-hover:bg-slate-200/80",
-  coral: "bg-accent-red-light text-accent-red group-hover:bg-accent-coral/30",
+  green: "bg-primary-light text-primary group-hover:bg-primary group-hover:text-white",
+  neutral: "bg-[#eef2ef] text-foreground group-hover:bg-foreground group-hover:text-white",
+  coral: "bg-accent-red-light text-accent-red group-hover:bg-accent-red group-hover:text-white",
 };
 
 export function FeatureCard({
@@ -31,16 +25,11 @@ export function FeatureCard({
   accent = "green",
 }: FeatureCardProps) {
   return (
-    <article
-      className={cn(
-        "group rounded-2xl border border-border bg-surface p-5 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md",
-        accentStyles[accent]
-      )}
-    >
+    <article className="surface-card group p-5">
       <div className="mb-4 flex items-start justify-between gap-3">
         <div
           className={cn(
-            "flex h-10 w-10 items-center justify-center rounded-xl transition-colors",
+            "flex h-11 w-11 items-center justify-center rounded-xl transition-colors duration-200",
             iconStyles[accent]
           )}
         >
@@ -48,7 +37,9 @@ export function FeatureCard({
         </div>
         <StatusBadge status={status} />
       </div>
-      <h3 className="text-base font-semibold text-foreground">{title}</h3>
+      <h3 className="text-base font-semibold tracking-tight text-foreground">
+        {title}
+      </h3>
       <p className="mt-2 text-sm leading-relaxed text-muted">{description}</p>
     </article>
   );

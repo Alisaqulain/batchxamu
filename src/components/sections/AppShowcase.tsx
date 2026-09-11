@@ -1,56 +1,54 @@
-"use client";
-
-import { motion } from "motion/react";
 import { SectionHeader } from "@/components/ui/SectionHeader";
+import { AnimateOnScroll } from "@/components/ui/AnimateOnScroll";
 
 const screens = [
-  { title: "Dashboard", color: "from-primary/20 to-primary-light" },
-  { title: "Attendance", color: "from-primary-light to-surface" },
-  { title: "Timetable", color: "from-slate-100 to-surface" },
-  { title: "Notices", color: "from-accent-red-light to-surface" },
-  { title: "Notes", color: "from-primary-light/80 to-surface" },
+  { title: "Dashboard", accent: "bg-primary/15" },
+  { title: "Attendance", accent: "bg-primary-light" },
+  { title: "Timetable", accent: "bg-slate-100" },
+  { title: "Notices", accent: "bg-accent-red-light" },
+  { title: "Notes", accent: "bg-primary-light/80" },
 ];
 
 export function AppShowcase() {
   return (
-    <section className="overflow-hidden border-y border-border bg-background py-20 sm:py-28">
+    <section className="overflow-hidden border-y border-border bg-[#f1f4f0] py-20 sm:py-28">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <SectionHeader
           label="Product Preview"
           title="See the app in action."
-          description="A growing digital platform for the Department of Computer Science — starting with the features students use every day."
+          description="A digital platform for the Department of Computer Science — starting with the features students use every day."
         />
 
-        <div className="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory lg:justify-center lg:overflow-visible">
+        <div className="flex gap-4 overflow-x-auto pb-2 snap-x snap-mandatory [-ms-overflow-style:none] [scrollbar-width:none] lg:justify-center lg:overflow-visible [&::-webkit-scrollbar]:hidden">
           {screens.map((screen, i) => (
-            <motion.div
-              key={screen.title}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ delay: i * 0.1, duration: 0.5 }}
-              whileHover={{ y: -8 }}
-              className={`relative min-w-[200px] flex-shrink-0 snap-center rounded-[1.75rem] border border-border bg-gradient-to-b ${screen.color} p-3 shadow-lg sm:min-w-[220px] ${i === 2 ? "lg:scale-105 lg:shadow-xl" : ""}`}
-              style={{ zIndex: screens.length - i }}
-            >
-              <div className="rounded-[1.35rem] bg-slate-950 p-4">
-                <div className="mb-3 text-[10px] font-bold uppercase tracking-wider text-primary-bright">
-                  {screen.title}
-                </div>
-                <div className="space-y-2">
-                  <div className="h-2 w-3/4 rounded bg-slate-700" />
-                  <div className="h-2 w-full rounded bg-slate-800" />
-                  <div className="h-2 w-5/6 rounded bg-slate-800" />
-                  <div className="mt-3 grid grid-cols-2 gap-1.5">
-                    <div className="h-8 rounded-lg bg-primary/20" />
-                    <div className="h-8 rounded-lg bg-slate-800" />
+            <AnimateOnScroll key={screen.title} delay={i * 70}>
+              <div
+                className={`group relative min-w-[200px] flex-shrink-0 snap-center rounded-[1.75rem] border border-border ${screen.accent} p-3 shadow-[var(--shadow-soft)] transition-transform duration-300 hover:-translate-y-2 sm:min-w-[220px] ${
+                  i === 2 ? "lg:scale-105 lg:shadow-[var(--shadow-lift)]" : "lg:mt-4"
+                }`}
+                style={{ zIndex: screens.length - Math.abs(i - 2) }}
+              >
+                <div className="rounded-[1.35rem] bg-[#07110c] p-4">
+                  <div className="mb-3 text-[10px] font-bold uppercase tracking-wider text-primary-bright">
+                    {screen.title}
+                  </div>
+                  <div className="space-y-2">
+                    <div className="h-2 w-3/4 rounded bg-[#1f3428]" />
+                    <div className="h-2 w-full rounded bg-[#15241c]" />
+                    <div className="h-2 w-5/6 rounded bg-[#15241c]" />
+                    <div className="mt-3 grid grid-cols-2 gap-1.5">
+                      <div className="h-8 rounded-lg bg-primary/25" />
+                      <div className="h-8 rounded-lg bg-[#15241c]" />
+                    </div>
                   </div>
                 </div>
               </div>
-            </motion.div>
+            </AnimateOnScroll>
           ))}
         </div>
-        <p className="mt-6 text-center text-xs text-muted">UI mockups — sample demo screens</p>
+        <p className="mt-6 text-center text-xs text-muted">
+          UI mockups — sample demo screens
+        </p>
       </div>
     </section>
   );
