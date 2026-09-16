@@ -10,6 +10,11 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  experimental: {
+    serverActions: {
+      bodySizeLimit: "100mb",
+    },
+  },
   async redirects() {
     return [
       { source: "/alumni", destination: "/", permanent: true },

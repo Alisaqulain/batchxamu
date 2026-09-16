@@ -60,7 +60,7 @@ export const futurePlatformFeatures: FutureFeature[] = [
     id: "public-website",
     title: "Public Website",
     description:
-      "This website is part of the platform strategy — for downloads, marketing, SEO, and student resources.",
+      "This website is part of the platform strategy: for downloads, announcements, and student resources.",
     status: "live",
     items: [
       "App downloads and announcements",

@@ -22,7 +22,7 @@ export function AnimateOnScroll({
     if (!el) return;
 
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setVisible(true);
+      requestAnimationFrame(() => setVisible(true));
       return;
     }
 

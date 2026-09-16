@@ -6,7 +6,7 @@ export const courses: Course[] = [
     name: "MCA",
     programType: "Postgraduate",
     description:
-      "Master of Computer Applications — the primary program currently supported by MCA 26.",
+      "Master of Computer Applications: the primary program currently supported by MCA 26.",
     resources: [
       "Attendance & timetable",
       "Notes & assignments",

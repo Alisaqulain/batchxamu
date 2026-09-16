@@ -1,42 +1,57 @@
 import { createMetadata } from "@/lib/metadata";
 import { PageHeader } from "@/components/ui/PageHeader";
+import { ShieldCheck, Database, Lock, Bell, Cookie, FileCheck } from "lucide-react";
+import { siteConfig } from "@/lib/site";
 
 export const metadata = createMetadata({
-  title: "Privacy Policy",
-  description: "Privacy policy for the MCA 26 academic platform and website.",
+  title: "Privacy Policy & Student Data Sovereignty",
+  description:
+    "AMU BATCH X is built with complete student privacy: zero third-party tracking cookies, zero ad SDKs, and 100% on-device SQLite storage.",
   path: "/privacy",
 });
 
-const sections = [
+const privacyPrinciples = [
   {
-    title: "Information We Collect",
+    icon: Database,
+    title: "1. On-Device Local SQLite Storage",
+    subtitle: "Your Academic Data Never Leaves Your Smartphone",
     content:
-      "The MCA 26 mobile application may collect academic information necessary for platform functionality, such as attendance records, class schedules, and user account details. This website collects information you voluntarily provide through the contact form (name, email, subject, message).",
+      "Unlike traditional cloud portals that log student movements, all attendance registers, safe bunk margin tallies, course selections, and lecture schedules in AMU BATCH X are stored strictly inside your phone's encrypted SQLite database. If you clear app storage or uninstall the application, your attendance history is deleted entirely.",
   },
   {
-    title: "How We Use Information",
+    icon: ShieldCheck,
+    title: "2. Zero Commercial Trackers & Zero Advertising SDKs",
+    subtitle: "Student Privacy by Principle",
     content:
-      "Information collected through the app is used to provide academic services to enrolled students. Contact form data, when backend integration is enabled, will be used solely to respond to your inquiries.",
+      "AMU BATCH X is an academic operating platform created by students for students. It contains zero third-party telemetry, zero user behavior trackers, and zero commercial advertising networks. We do not profile student habits, sell telemetry data, or monetize academic interactions in any form.",
   },
   {
-    title: "Data Sharing",
+    icon: Bell,
+    title: "3. Verified Notice Delivery & Push Tokens",
+    subtitle: "Minimal Functional Communication",
     content:
-      "We do not sell personal information. Academic data is shared only as necessary for platform functionality within the Department of Computer Science academic context.",
+      "To receive instant push notifications regarding exam schedule revisions, hall shifts (CS-01 to Unix Labs), and official circulars, the app securely registers a push device token with standard notification dispatch servers. This token is used exclusively for department broadcast dispatches and is never tied to your personal identity.",
   },
   {
-    title: "Data Security",
+    icon: Cookie,
+    title: "4. Zero Cookie Tracking on Web",
+    subtitle: "Cookie-Free Architecture",
     content:
-      "We implement reasonable technical measures to protect user data. However, no method of electronic storage is completely secure.",
+      "This official website (www.amubatchx.app) does not set advertising, cross-site tracking, or profiling cookies. The only client-side storage utilized is browser localStorage for functional interface preferences (such as remembering that you acknowledged the student privacy banner).",
   },
   {
-    title: "Third-Party Services",
+    icon: Lock,
+    title: "5. Transport Layer Security (TLS 1.3)",
+    subtitle: "Encrypted Network Communications",
     content:
-      "The website may link to external services such as GitHub and LinkedIn. These services have their own privacy policies.",
+      "All syllabus downloads, solved laboratory programs, previous year question papers, and official department circulars fetched from the student server pipeline are transmitted over modern TLS 1.3 encrypted connections with strict certificate validation.",
   },
   {
-    title: "Contact",
+    icon: FileCheck,
+    title: "6. Departmental Scope & Inquiries",
+    subtitle: "Governance & Academic Context",
     content:
-      "For privacy-related questions, use the contact page on this website to reach the MCA 26 development team.",
+      "AMU BATCH X is developed and maintained by student software engineers within the Department of Computer Science, Faculty of Science, Aligarh Muslim University. For questions or privacy inquiries, contact the engineering team via our contact portal or directly at saqulainali110@gmail.com.",
   },
 ];
 
@@ -44,22 +59,58 @@ export default function PrivacyPage() {
   return (
     <>
       <PageHeader
-        label="Legal"
-        title="Privacy Policy"
-        description="Last updated: March 2026. This policy describes how MCA 26 handles information on the website and mobile application."
+        label="Data Protection & Privacy"
+        title="Student Privacy & Data Sovereignty"
+        description="Last updated: March 2026. How AMU BATCH X protects student autonomy through local storage, zero trackers, and complete transparency."
       />
 
-      <section className="py-16 sm:py-20">
-        <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-          <div className="space-y-8">
-            {sections.map((section) => (
-              <article key={section.title}>
-                <h2 className="font-display text-xl font-semibold text-foreground">
-                  {section.title}
+      <section className="py-14 sm:py-20 border-b border-border bg-background">
+        <div className="mx-auto max-w-[1536px] px-4 sm:px-8 lg:px-12 xl:px-16">
+          {/* Key Guarantee Banner */}
+          <div className="mx-auto max-w-4xl rounded-2xl border border-primary/30 bg-primary-light/40 p-6 sm:p-8 mb-12 shadow-xs">
+            <div className="flex items-start gap-4">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary text-white shadow-xs">
+                <ShieldCheck className="h-5 w-5" />
+              </div>
+              <div>
+                <h2 className="font-display text-lg sm:text-xl font-bold text-foreground">
+                  Our Core Privacy Guarantee to AMU Students
                 </h2>
-                <p className="mt-3 leading-relaxed text-muted">{section.content}</p>
-              </article>
-            ))}
+                <p className="mt-1.5 text-xs sm:text-sm leading-relaxed text-muted font-sans">
+                  We believe educational tools should never exploit student attention or harvest academic data. AMU BATCH X does not require account sign-ups to view timetables or calculate attendance margins, and your daily attendance data is kept 100% on your Android device.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Privacy Articles Grid */}
+          <div className="mx-auto max-w-4xl space-y-6">
+            {privacyPrinciples.map((item) => {
+              const Icon = item.icon;
+              return (
+                <article
+                  key={item.title}
+                  className="ledger-card border border-border bg-surface p-6 sm:p-8 transition-all hover:border-border-light"
+                >
+                  <div className="flex items-start gap-4">
+                    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-primary/25 bg-primary-light text-primary mt-1">
+                      <Icon className="h-4 w-4" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <h3 className="font-display text-lg font-bold text-foreground">
+                        {item.title}
+                      </h3>
+                      <p className="font-mono-code text-xs font-semibold text-primary mt-0.5">
+                        {item.subtitle}
+                      </p>
+                      <p className="mt-3 text-xs sm:text-sm leading-relaxed text-muted font-sans">
+                        {item.content}
+                      </p>
+                    </div>
+                  </div>
+                </article>
+              );
+            })}
           </div>
         </div>
       </section>

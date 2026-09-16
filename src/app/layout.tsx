@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Fraunces, Plus_Jakarta_Sans } from "next/font/google";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { DownloadModalProvider } from "@/components/ui/DownloadModal";
 import { siteConfig } from "@/lib/site";
 import { createMetadata } from "@/lib/metadata";
 import {
@@ -9,6 +10,8 @@ import {
   getOrganizationJsonLd,
   getWebsiteJsonLd,
 } from "@/lib/seo";
+import { StickyMobileCTA } from "@/components/ui/StickyMobileCTA";
+import { CookieBanner } from "@/components/ui/CookieBanner";
 import "./globals.css";
 
 const plusJakarta = Plus_Jakarta_Sans({
@@ -55,8 +58,8 @@ export default function RootLayout({
       className={`${plusJakarta.variable} ${fraunces.variable} h-full`}
     >
       <head>
-        <link rel="icon" href="/logo.png" type="image/png" sizes="any" />
-        <link rel="apple-touch-icon" href="/logo.png" />
+        <link rel="icon" href="/icon.png" type="image/png" sizes="32x32" />
+        <link rel="apple-touch-icon" href="/apple-icon.png" sizes="180x180" />
         {structuredData.map((data, index) => (
           <script
             key={index}
@@ -66,9 +69,13 @@ export default function RootLayout({
         ))}
       </head>
       <body className="flex min-h-full flex-col antialiased">
-        <Navbar />
-        <main className="flex-1">{children}</main>
-        <Footer />
+        <DownloadModalProvider>
+          <Navbar />
+          <main className="flex-1 w-full overflow-x-hidden">{children}</main>
+          <Footer />
+          <StickyMobileCTA />
+          <CookieBanner />
+        </DownloadModalProvider>
       </body>
     </html>
   );

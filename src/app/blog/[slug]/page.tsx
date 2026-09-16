@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, Clock, User } from "lucide-react";
+import { ArrowLeft, Clock, User, Calendar, Download } from "lucide-react";
 import { getAllBlogSlugs, getBlogPost } from "@/data/blog";
 import { createMetadata } from "@/lib/metadata";
 import { formatDate } from "@/lib/utils";
@@ -34,7 +34,7 @@ function renderContent(content: string) {
     if (block.startsWith("**") && block.endsWith("**")) {
       const text = block.slice(2, -2);
       return (
-        <h2 key={index} className="font-display text-xl font-semibold text-foreground">
+        <h2 key={index} className="font-display text-xl sm:text-2xl font-bold text-foreground mt-8 mb-3">
           {text}
         </h2>
       );
@@ -42,14 +42,18 @@ function renderContent(content: string) {
     if (block.startsWith("- ")) {
       const items = block.split("\n").map((line) => line.replace(/^- /, ""));
       return (
-        <ul key={index}>
-          {items.map((item) => (
-            <li key={item}>{item}</li>
+        <ul key={index} className="my-4 space-y-2 list-disc pl-5 text-sm text-muted leading-relaxed">
+          {items.map((item, i) => (
+            <li key={i}>{item}</li>
           ))}
         </ul>
       );
     }
-    return <p key={index}>{block}</p>;
+    return (
+      <p key={index} className="my-4 text-sm sm:text-base text-muted leading-relaxed">
+        {block}
+      </p>
+    );
   });
 }
 
@@ -76,48 +80,81 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <article>
-        <header className="border-b border-border bg-surface">
-          <div className="mx-auto max-w-3xl px-4 py-12 sm:px-6 lg:px-8">
-            <Link
-              href="/blog"
-              className="mb-6 inline-flex items-center gap-1 text-sm text-muted transition-colors hover:text-primary"
-            >
-              <ArrowLeft className="h-4 w-4" aria-hidden="true" />
-              Back to blog
-            </Link>
+      <article className="border-b border-border bg-background py-10 sm:py-16">
+        <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+          <Link
+            href="/blog"
+            className="inline-flex items-center gap-1.5 font-mono-code text-xs font-semibold text-muted transition-colors hover:text-primary mb-8"
+          >
+            <ArrowLeft className="h-3.5 w-3.5" aria-hidden="true" />
+            <span>Back to All Articles</span>
+          </Link>
 
-            <div className="mb-4 flex flex-wrap gap-2">
+          {/* Article Header */}
+          <header className="border-b border-border pb-8">
+            <div className="flex flex-wrap gap-2 mb-4">
               {post.tags.map((tag) => (
                 <span
                   key={tag}
-                  className="rounded-md bg-primary/5 px-2 py-0.5 text-xs font-medium text-primary"
+                  className="rounded border border-primary/20 bg-primary-light px-2.5 py-0.5 font-mono-code text-xs font-bold text-primary"
                 >
                   {tag}
                 </span>
               ))}
             </div>
 
-            <h1 className="font-display text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
+            <h1 className="font-display text-2xl font-bold tracking-tight text-foreground sm:text-4xl lg:text-[2.6rem] lg:leading-[1.2]">
               {post.title}
             </h1>
 
-            <div className="mt-4 flex flex-wrap gap-4 text-sm text-muted">
-              <span className="flex items-center gap-1">
-                <User className="h-4 w-4" aria-hidden="true" />
-                {post.author}
+            <p className="mt-4 text-base leading-relaxed text-muted font-medium">
+              {post.excerpt}
+            </p>
+
+            <div className="mt-6 flex flex-wrap items-center gap-4 font-mono-code text-xs text-muted border-t border-border/60 pt-4">
+              <span className="flex items-center gap-1.5">
+                <User className="h-3.5 w-3.5 text-primary" />
+                <span>{post.author}</span>
               </span>
-              <span>{formatDate(post.date)}</span>
-              <span className="flex items-center gap-1">
-                <Clock className="h-4 w-4" aria-hidden="true" />
-                {post.readTime}
+              <span className="h-1 w-1 rounded-full bg-border" aria-hidden="true" />
+              <span className="flex items-center gap-1.5">
+                <Calendar className="h-3.5 w-3.5 text-accent-terracotta" />
+                <span>{formatDate(post.date)}</span>
+              </span>
+              <span className="h-1 w-1 rounded-full bg-border" aria-hidden="true" />
+              <span className="flex items-center gap-1.5">
+                <Clock className="h-3.5 w-3.5 text-primary" />
+                <span>{post.readTime}</span>
               </span>
             </div>
-          </div>
-        </header>
+          </header>
 
-        <div className="mx-auto max-w-3xl px-4 py-12 sm:px-6 lg:px-8">
-          <div className="prose-blog">{renderContent(post.content)}</div>
+          {/* Article Content */}
+          <div className="py-8 prose-blog">
+            {renderContent(post.content)}
+          </div>
+
+          {/* Footer Author Box */}
+          <div className="mt-12 rounded-2xl border border-border bg-surface p-6 sm:p-8 flex items-center justify-between">
+            <div>
+              <span className="font-mono-code text-xs font-bold uppercase tracking-wider text-primary">
+                Published by
+              </span>
+              <h4 className="font-display text-base font-bold text-foreground mt-0.5">
+                MCA 2026 Student Engineering Team
+              </h4>
+              <p className="text-xs text-muted mt-1">
+                Department of Computer Science, Aligarh Muslim University.
+              </p>
+            </div>
+            <Link
+              href="/download"
+              className="hidden sm:inline-flex items-center gap-1.5 rounded-lg bg-primary text-white px-4 py-2 font-mono-code text-xs font-bold hover:bg-primary-hover transition-colors shadow-xs"
+            >
+              <Download className="h-3.5 w-3.5" />
+              <span>Get Android App</span>
+            </Link>
+          </div>
         </div>
       </article>
     </>

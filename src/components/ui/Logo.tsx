@@ -10,13 +10,13 @@ interface LogoProps {
 }
 
 const sizeMap = {
-  nav: 52,
-  footer: 64,
-  hero: 80,
+  nav: 38,
+  footer: 46,
+  hero: 64,
 };
 
 export function Logo({
-  showText = false,
+  showText = true,
   size = "nav",
   className,
 }: LogoProps) {
@@ -25,21 +25,26 @@ export function Logo({
   return (
     <Link
       href="/"
-      className={cn("group inline-flex shrink-0 items-center gap-3", className)}
+      className={cn("group inline-flex shrink-0 items-center gap-2.5", className)}
       aria-label={`${siteConfig.name} home`}
     >
       <Image
         src="/logo.png"
-        alt={siteConfig.name}
+        alt={`${siteConfig.name} official application icon`}
         width={imgSize}
         height={imgSize}
-        className="rounded-2xl transition-transform duration-200 group-hover:scale-[1.03]"
+        className="rounded-xl border border-border/80 transition-transform duration-200 group-hover:scale-[1.03] object-cover"
         priority={size === "nav"}
       />
       {showText && (
-        <span className="text-lg font-bold tracking-tight text-foreground">
-          {siteConfig.name}
-        </span>
+        <div className="flex flex-col">
+          <span className="font-display text-base font-bold tracking-tight text-foreground group-hover:text-primary transition-colors leading-tight">
+            AMU BATCH X
+          </span>
+          <span className="font-mono-code text-xs font-medium text-muted tracking-tight">
+            DoCS · Aligarh
+          </span>
+        </div>
       )}
     </Link>
   );

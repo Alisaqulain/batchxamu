@@ -1,41 +1,38 @@
 import { Hero } from "@/components/sections/Hero";
-import { WhyAppSection } from "@/components/sections/WhyAppSection";
-import { AppShowcase } from "@/components/sections/AppShowcase";
-import { FeatureGrid } from "@/components/sections/FeatureGrid";
-import { StickyFeatures } from "@/components/sections/StickyFeatures";
-import { AttendancePreview } from "@/components/sections/AttendancePreview";
-import { TimetablePreview } from "@/components/sections/TimetablePreview";
-import { NotificationPreview } from "@/components/sections/NotificationPreview";
-import { TeacherSection } from "@/components/sections/TeacherSection";
-import { MockTestSection } from "@/components/sections/MockTestSection";
-import { DepartmentSection } from "@/components/sections/DepartmentSection";
-import { ProgramsSection } from "@/components/sections/ProgramsSection";
-import { AppBenefitsSection } from "@/components/sections/AppBenefitsSection";
-import { RoadmapSection } from "@/components/sections/RoadmapSection";
-import { DeveloperSection } from "@/components/sections/DeveloperSection";
-import { DownloadSection } from "@/components/sections/DownloadSection";
-import { FinalCTA } from "@/components/sections/FinalCTA";
+import { AppScreenshotGallery } from "@/components/sections/AppScreenshotGallery";
+import { CoreCapabilitiesAtlas } from "@/components/sections/CoreCapabilitiesAtlas";
+import { FragmentationLedger } from "@/components/sections/FragmentationLedger";
+import { FacultyDispatchLoop } from "@/components/sections/FacultyDispatchLoop";
+import { DepartmentArchitecture } from "@/components/sections/DepartmentArchitecture";
+import { TeamStudio } from "@/components/sections/TeamStudio";
+import { ReleaseTerminal } from "@/components/sections/ReleaseTerminal";
+import { getLatestAppVersion } from "@/lib/app-version";
 
-export default function HomePage() {
+export const revalidate = 60; // Refresh cache every 60s for public home
+
+export default async function HomePage() {
+  const latest = await getLatestAppVersion();
+
   return (
     <>
-      <Hero />
-      <WhyAppSection />
-      <AppShowcase />
-      <FeatureGrid />
-      <StickyFeatures />
-      <AttendancePreview />
-      <TimetablePreview />
-      <NotificationPreview />
-      <TeacherSection />
-      <MockTestSection />
-      <DepartmentSection />
-      <ProgramsSection />
-      <AppBenefitsSection />
-      <RoadmapSection />
-      <DeveloperSection />
-      <DownloadSection />
-      <FinalCTA />
+      {/* 01. APP: Identity, Value, Dominant Download & 3D Stage */}
+      <Hero latestVersion={latest.latest_version} />
+
+      {/* 02. EXPERIENCE: Authentic App Screenshots Gallery */}
+      <AppScreenshotGallery />
+
+      {/* 03. FEATURES: 4 Core Modules & Offline Utilities */}
+      <CoreCapabilitiesAtlas />
+
+      {/* 04. DETAILS: Campus Reality, Faculty Dispatch Loop, Architecture & Engineering Team */}
+      <FragmentationLedger />
+      <FacultyDispatchLoop />
+      <DepartmentArchitecture />
+      <TeamStudio />
+
+      {/* 05. INSTALL: Distribution Terminal & Installation Station */}
+      <ReleaseTerminal latest={latest} />
     </>
   );
 }
+

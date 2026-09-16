@@ -3,42 +3,53 @@ import type { FeatureStatus } from "@/types";
 
 const statusConfig: Record<
   FeatureStatus,
-  { label: string; className: string }
+  { label: string; className: string; dotClass: string }
 > = {
   live: {
-    label: "Live",
-    className: "bg-primary-light text-primary-deep border-primary-bright/30",
+    label: "Live in v1.0",
+    className: "bg-primary-light text-primary border-primary/25",
+    dotClass: "bg-primary-bright",
   },
   available: {
     label: "Available",
-    className: "bg-primary-light text-primary-deep border-primary-bright/30",
+    className: "bg-primary-light text-primary border-primary/25",
+    dotClass: "bg-primary",
   },
   "coming-soon": {
-    label: "Coming Soon",
-    className: "bg-accent-red-light text-accent-red border-accent-coral/50",
+    label: "In Development",
+    className: "bg-accent-red-light text-accent-terracotta border-accent-coral/30",
+    dotClass: "bg-accent-terracotta",
   },
   planned: {
-    label: "Planned",
-    className: "bg-slate-100 text-slate-600 border-slate-200",
+    label: "Roadmap",
+    className: "bg-surface-muted text-muted border-border",
+    dotClass: "bg-muted-light",
   },
 };
 
 interface StatusBadgeProps {
   status: FeatureStatus;
   className?: string;
+  showDot?: boolean;
 }
 
-export function StatusBadge({ status, className }: StatusBadgeProps) {
-  const config = statusConfig[status];
+export function StatusBadge({ status, className, showDot = true }: StatusBadgeProps) {
+  const config = statusConfig[status] || statusConfig.planned;
   return (
     <span
       className={cn(
-        "inline-flex items-center rounded-md border px-2 py-0.5 text-[10px] font-bold tracking-wider uppercase",
+        "inline-flex items-center gap-1.5 rounded-md border px-2 py-0.5 font-mono-code text-[11px] font-medium tracking-tight",
         config.className,
         className
       )}
     >
-      {config.label}
+      {showDot && (
+        <span
+          className={cn("h-1.5 w-1.5 rounded-full shrink-0", config.dotClass)}
+          aria-hidden="true"
+        />
+      )}
+      <span>{config.label}</span>
     </span>
   );
 }

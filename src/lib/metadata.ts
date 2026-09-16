@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { siteConfig } from "./site";
 
-const ogImage = `${siteConfig.url}/logo.png`;
+const ogImage = `${siteConfig.url}/og-image.png`;
 
 interface PageMetaOptions {
   title: string;
@@ -25,7 +25,7 @@ export function createMetadata({
   const url = `${siteConfig.url}${path}`;
   const fullTitle =
     path === ""
-      ? `${siteConfig.name} — ${title}`
+      ? `${siteConfig.name}: ${title}`
       : `${title} | ${siteConfig.name}`;
 
   return {
@@ -39,6 +39,16 @@ export function createMetadata({
     metadataBase: new URL(siteConfig.url),
     alternates: { canonical: url },
     category: "education",
+    icons: {
+      icon: [
+        { url: "/favicon.ico" },
+        { url: "/icon-32.png", sizes: "32x32", type: "image/png" },
+        { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
+      ],
+      apple: [
+        { url: "/apple-icon.png", sizes: "180x180", type: "image/png" },
+      ],
+    },
     formatDetection: {
       email: false,
       address: false,
@@ -54,9 +64,9 @@ export function createMetadata({
       images: [
         {
           url: ogImage,
-          width: 512,
-          height: 512,
-          alt: `${siteConfig.name} — Department of Computer Science App`,
+          width: 1200,
+          height: 630,
+          alt: `${siteConfig.name}: Department of Computer Science App Platform`,
         },
       ],
       ...(publishedTime && { publishedTime }),

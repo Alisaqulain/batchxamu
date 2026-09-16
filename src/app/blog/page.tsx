@@ -4,9 +4,9 @@ import { blogPosts } from "@/data/blog";
 import { BlogCard } from "@/components/sections/BlogCard";
 
 export const metadata = createMetadata({
-  title: "Blog",
+  title: "Engineering Blog & Insights",
   description:
-    "Articles about student platforms, academic technology, and the MCA 26 development journey.",
+    "Practical articles about digital academic platforms, student life, and building AMU BATCH X, written for students and developers.",
   path: "/blog",
 });
 
@@ -14,13 +14,13 @@ export default function BlogPage() {
   return (
     <>
       <PageHeader
-        label="Blog"
-        title="Insights & Updates"
-        description="Practical articles about digital academic platforms, student life, and building MCA 26 — written for students and developers."
+        label="Editorial & Engineering"
+        title="Insights, platform strategy, and development notes."
+        description="Essays and technical documentation on centralizing student life, academic infrastructure, and building AMU BATCH X."
       />
 
-      <section className="py-16 sm:py-20">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+      <section className="py-14 sm:py-20 border-b border-border bg-background">
+        <div className="mx-auto max-w-[1536px] px-4 sm:px-8 lg:px-12 xl:px-16">
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {blogPosts.map((post) => (
               <BlogCard key={post.slug} post={post} />
