@@ -55,7 +55,7 @@ export function ContactForm() {
     }
   }
 
-  const mailtoLink = `mailto:saqulainali110@gmail.com?subject=${encodeURIComponent(
+  const mailtoLink = `mailto:contact@amubatchx.app?subject=${encodeURIComponent(
     `[AMU BATCH X] ${formData.subject}`
   )}&body=${encodeURIComponent(
     `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
@@ -81,7 +81,7 @@ export function ContactForm() {
             className="inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-5 py-2.5 font-mono-code text-xs font-bold text-white shadow-xs hover:bg-primary-hover transition-colors"
           >
             <Mail className="h-4 w-4" />
-            <span>Open Email Draft to Developer</span>
+            <span>Open Email Draft to Student Team</span>
           </a>
           <Button
             variant="secondary"

@@ -11,8 +11,6 @@ export interface Developer {
   linkedin?: string;
   github?: string;
   portfolio?: string;
-  phone?: string;
-  phoneDisplay?: string;
 }
 
 export interface Feature {

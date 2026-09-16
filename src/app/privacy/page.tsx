@@ -51,7 +51,7 @@ const privacyPrinciples = [
     title: "6. Departmental Scope & Inquiries",
     subtitle: "Governance & Academic Context",
     content:
-      "AMU BATCH X is developed and maintained by student software engineers within the Department of Computer Science, Faculty of Science, Aligarh Muslim University. For questions or privacy inquiries, contact the engineering team via our contact portal or directly at saqulainali110@gmail.com.",
+      "AMU BATCH X is developed and maintained by student software engineers within the Department of Computer Science, Faculty of Science, Aligarh Muslim University. For questions or privacy inquiries, contact the engineering team via our contact portal or directly at contact@amubatchx.app.",
   },
 ];
 

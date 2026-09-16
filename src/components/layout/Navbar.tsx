@@ -76,6 +76,7 @@ export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [expandedMobileCategory, setExpandedMobileCategory] = useState<string | null>("platform");
+  const [activeSection, setActiveSection] = useState<string>("");
   const navRef = useRef<HTMLElement>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const pathname = usePathname();
@@ -87,13 +88,37 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Track active page section on scroll for landing page
+  useEffect(() => {
+    if (pathname !== "/") {
+      setActiveSection("");
+      return;
+    }
+    const sectionIds = ["download", "department", "capabilities", "screenshots"];
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY + 220;
+      for (const id of sectionIds) {
+        const el = document.getElementById(id);
+        if (el && el.offsetTop <= scrollPosition) {
+          setActiveSection(id);
+          return;
+        }
+      }
+      setActiveSection("");
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [pathname]);
+
   // Close dropdown on route change
   useEffect(() => {
     setActiveDropdown(null);
     setMobileOpen(false);
   }, [pathname]);
 
-  // Click outside and Escape key handler
+  // Click outside, touch outside, and Escape key handler
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
@@ -101,16 +126,19 @@ export function Navbar() {
         setMobileOpen(false);
       }
     };
-    const handleClickOutside = (e: MouseEvent) => {
+    const handlePointerDownOutside = (e: MouseEvent | TouchEvent) => {
       if (navRef.current && !navRef.current.contains(e.target as Node)) {
         setActiveDropdown(null);
+        setMobileOpen(false);
       }
     };
     window.addEventListener("keydown", handleKeyDown);
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("mousedown", handlePointerDownOutside);
+    document.addEventListener("touchstart", handlePointerDownOutside, { passive: true });
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("mousedown", handlePointerDownOutside);
+      document.removeEventListener("touchstart", handlePointerDownOutside);
     };
   }, []);
 
@@ -158,7 +186,9 @@ export function Navbar() {
         <ul className="hidden flex-1 items-center justify-center gap-1 xl:gap-2 lg:flex">
           {navDropdownCategories.map((cat) => {
             const isOpen = activeDropdown === cat.id;
-            const isCategoryActive = cat.items.some((item) => pathname === item.href);
+            const isCategoryActive =
+              cat.items.some((item) => pathname === item.href) ||
+              (pathname === "/" && Boolean(activeSection) && cat.items.some((item) => item.href === `/#${activeSection}`));
 
             return (
               <li
@@ -177,10 +207,13 @@ export function Navbar() {
                     isOpen
                       ? "bg-primary-light text-primary shadow-2xs ring-1 ring-primary/25"
                       : isCategoryActive
-                      ? "text-primary font-bold bg-primary-light/40"
+                      ? "text-primary font-bold bg-primary-light/60 border border-primary/25 shadow-2xs"
                       : "text-muted hover:bg-surface-muted hover:text-foreground"
                   )}
                 >
+                  {isCategoryActive && (
+                    <span className="h-1.5 w-1.5 rounded-full bg-primary" aria-hidden="true" />
+                  )}
                   <span>{cat.label}</span>
                   <ChevronDown
                     className={cn(
@@ -200,7 +233,7 @@ export function Navbar() {
                     <div className="rounded-2xl border border-border bg-surface/98 p-3 shadow-2xl backdrop-blur-xl ring-1 ring-black/5">
                       {/* Category Header */}
                       <div className="border-b border-border/70 px-3 pb-2.5 mb-1.5">
-                        <span className="font-mono-code text-[11px] font-bold uppercase tracking-wider text-primary">
+                        <span className="font-mono-code text-xs font-bold uppercase tracking-wider text-primary">
                           {cat.label} Directory
                         </span>
                         <p className="font-sans text-xs text-muted mt-0.5 leading-snug">
@@ -211,7 +244,9 @@ export function Navbar() {
                       {/* Item Links */}
                       <div className="space-y-1">
                         {cat.items.map((item) => {
-                          const isItemActive = pathname === item.href;
+                          const isItemActive =
+                            pathname === item.href ||
+                            (pathname === "/" && Boolean(activeSection) && item.href === `/#${activeSection}`);
                           return (
                             <Link
                               key={item.href}
@@ -220,7 +255,7 @@ export function Navbar() {
                               className={cn(
                                 "group flex items-start gap-3 rounded-xl p-2.5 transition-all",
                                 isItemActive
-                                  ? "bg-primary-light/80 text-primary"
+                                  ? "bg-primary-light/80 text-primary font-semibold"
                                   : "hover:bg-surface-muted/90 text-foreground"
                               )}
                             >
@@ -282,7 +317,8 @@ export function Navbar() {
             className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-lg border border-border bg-surface text-foreground shadow-xs hover:bg-surface-muted lg:hidden cursor-pointer"
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-expanded={mobileOpen}
-            aria-label={mobileOpen ? "Close navigation menu" : "Open navigation menu"}
+            aria-controls="mobile-navigation-menu"
+            aria-label={mobileOpen ? "Close menu" : "Open menu"}
           >
             {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
@@ -292,22 +328,26 @@ export function Navbar() {
       {/* Mobile Backdrop */}
       {mobileOpen && (
         <div
-          className="fixed inset-0 top-[65px] z-40 bg-foreground/40 backdrop-blur-xs lg:hidden animate-in fade-in-0 duration-200"
+          className="fixed inset-0 top-[60px] z-40 bg-foreground/40 backdrop-blur-xs lg:hidden animate-in fade-in-0 duration-200"
           onClick={() => setMobileOpen(false)}
+          onTouchEnd={() => setMobileOpen(false)}
           aria-hidden="true"
         />
       )}
 
       {/* Mobile Drawer with Multi-Category Accordion */}
       <div
+        id="mobile-navigation-menu"
+        role="region"
+        aria-label="Mobile Navigation"
         className={cn(
-          "border-t border-border bg-surface transition-[max-height,opacity] duration-300 ease-in-out lg:hidden",
+          "border-t border-border bg-surface transition-[max-height,opacity] duration-300 ease-in-out lg:hidden relative z-50",
           mobileOpen
-            ? "max-h-[85vh] overflow-y-auto opacity-100 shadow-2xl"
-            : "max-h-0 overflow-hidden opacity-0 border-t-0"
+            ? "max-h-[calc(100dvh-64px)] overflow-y-auto overscroll-contain opacity-100 shadow-2xl"
+            : "max-h-0 overflow-hidden opacity-0 border-t-0 pointer-events-none"
         )}
       >
-        <div className="px-4 py-5 sm:px-6 space-y-4">
+        <div className="px-3 py-4 sm:px-6 space-y-4">
           <div className="border-b border-border pb-2 flex items-center justify-between">
             <span className="font-mono-code text-[11px] font-bold uppercase tracking-wider text-primary">
               All Portal Pages & Modules
@@ -377,6 +417,18 @@ export function Navbar() {
                 </div>
               );
             })}
+          </div>
+
+          {/* Quick Direct Link to Changelog on Mobile */}
+          <div className="rounded-xl border border-border bg-surface-muted/60 p-2.5">
+            <Link
+              href="/download#changelog"
+              onClick={() => setMobileOpen(false)}
+              className="flex items-center justify-between font-mono-code text-xs font-semibold text-muted hover:text-primary transition-colors"
+            >
+              <span>Release Changelog & History</span>
+              <ChevronRight className="h-4 w-4 text-muted" />
+            </Link>
           </div>
 
           {/* Direct CTA Button in Mobile Drawer */}

@@ -23,7 +23,7 @@ export function Footer() {
   return (
     <footer className="mt-auto border-t border-border bg-surface">
 
-      <div className="mx-auto max-w-[1536px] px-4 py-12 sm:px-8 lg:px-12 xl:px-16 sm:py-16">
+      <div className="mx-auto max-w-[1536px] px-4 pt-12 pb-[calc(6rem+env(safe-area-inset-bottom,0px))] sm:px-8 sm:pt-16 sm:pb-[calc(6rem+env(safe-area-inset-bottom,0px))] lg:px-12 xl:px-16 lg:py-16">
         <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-5">
           {/* Main Brand Column (2 cols) */}
           <div className="lg:col-span-2">

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { PhoneMockup } from "@/components/ui/PhoneMockup";
 import {
   DailyTimetableAppScreen,
@@ -91,6 +91,7 @@ const screens = [
 
 export function AppScreenshotGallery() {
   const [activeScreen, setActiveScreen] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
 
   const handleNext = () => {
     setActiveScreen((prev) => (prev + 1) % screens.length);
@@ -100,11 +101,24 @@ export function AppScreenshotGallery() {
     setActiveScreen((prev) => (prev - 1 + screens.length) % screens.length);
   };
 
+  // Auto-advance screen every 4 seconds (within 3 to 5 second range)
+  useEffect(() => {
+    if (isPaused) return;
+    const timer = setTimeout(() => {
+      setActiveScreen((prev) => (prev + 1) % screens.length);
+    }, 4000);
+    return () => clearTimeout(timer);
+  }, [activeScreen, isPaused]);
+
   const current = screens[activeScreen];
 
   return (
     <section
       id="screenshots"
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+      onTouchStart={() => setIsPaused(true)}
+      onTouchEnd={() => setIsPaused(false)}
       className="scroll-mt-20 border-b border-border bg-gradient-to-b from-surface via-surface-muted/30 to-background py-16 sm:py-24 overflow-hidden"
     >
       <div className="mx-auto max-w-[1536px] px-4 sm:px-8 lg:px-12 xl:px-16">

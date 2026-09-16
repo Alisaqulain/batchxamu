@@ -53,6 +53,9 @@ export default function AboutPage() {
                   Why MCA 2026 students built AMU BATCH X
                 </h2>
                 <div className="mt-4 space-y-4 text-sm leading-relaxed text-muted sm:text-base">
+                  <p className="font-semibold text-foreground text-sm sm:text-base">
+                    AMU BATCH X is a student-focused digital academic platform built to simplify academic coordination and access to essential resources for the Department of Computer Science community in Aligarh.
+                  </p>
                   <p>
                     University education at the Department of Computer Science, Aligarh Muslim University, is intellectually demanding. Students juggle theoretical algorithms, intense database query tuning, multi-hour Unix operating system laboratories, and continuous internal evaluations.
                   </p>
@@ -60,8 +63,15 @@ export default function AboutPage() {
                     Yet for years, the logistics of student life remained fragmented across informal WhatsApp groups, lost PDF circulars, and crumpled paper schedules. Students were forced to constantly ask: &quot;Which room is the OS lab in today?&quot;, &quot;Has the 2 PM lecture been rescheduled?&quot;, or &quot;Am I safely above the 75 percent attendance threshold before mid-sems?&quot;
                   </p>
                   <p>
-                    AMU BATCH X was built by students Ali Saqulain, Sameer Ahmad, and Okasha Ansari to solve this fragmentation directly. Instead of chasing scattered messages, students now open a single dedicated application designed specifically for their curriculum.
+                    AMU BATCH X was built by students Ali Saqulain, Sameer Ahmad, and Okasha Ansari to solve this fragmentation directly. The platform provides:
                   </p>
+                  <ul className="list-disc pl-5 space-y-1.5 font-mono-code text-xs text-foreground/90">
+                    <li>Daily lecture timetable mapped to department halls CS-01 through CS-04 and Unix Labs</li>
+                    <li>75% attendance margin calculation with safe bunk allowance tallies</li>
+                    <li>Verified department notice dispatch feed with push alerting</li>
+                    <li>Academic vault with course syllabus notes, verified lab implementations, and exam PYQs</li>
+                    <li>Direct offline mobile application access with zero tracking or ads</li>
+                  </ul>
                 </div>
               </div>
 

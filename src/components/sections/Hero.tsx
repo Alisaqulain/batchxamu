@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { DownloadButton } from "@/components/ui/DownloadButton";
@@ -46,8 +46,21 @@ export function Hero({ latestVersion }: HeroProps = {}) {
   const displayVersion = latestVersion || siteConfig.appVersion;
   const [activeTab, setActiveTab] = useState("timetable");
   const [selectedDay, setSelectedDay] = useState("Mon");
+  const [isPaused, setIsPaused] = useState(false);
   const [heroRef, scrollProgress] = useScrollDepth<HTMLElement>({ threshold: 0.1 });
 
+  // Auto-advance hero app screen every 4 seconds (within 3 to 5 second range)
+  useEffect(() => {
+    if (isPaused) return;
+    const timer = setTimeout(() => {
+      setActiveTab((prev) => {
+        const currentIndex = heroTabs.findIndex((t) => t.id === prev);
+        const nextIndex = (currentIndex + 1) % heroTabs.length;
+        return heroTabs[nextIndex].id;
+      });
+    }, 4000);
+    return () => clearTimeout(timer);
+  }, [activeTab, isPaused]);
 
   // Subtle differential parallax offsets for 3D depth layers
   const backgroundLayerOffset = (scrollProgress - 0.5) * -35;
@@ -56,6 +69,10 @@ export function Hero({ latestVersion }: HeroProps = {}) {
   return (
     <section
       ref={heroRef}
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+      onTouchStart={() => setIsPaused(true)}
+      onTouchEnd={() => setIsPaused(false)}
       className="relative overflow-hidden border-b border-border bg-gradient-to-b from-surface via-background to-surface-muted/30 pt-8 pb-16 sm:pt-12 sm:pb-24"
     >
       {/* Background Architectural Grid & Atmospheric Depth */}
@@ -74,7 +91,7 @@ export function Hero({ latestVersion }: HeroProps = {}) {
               <span className="h-2 w-2 rounded-full bg-primary animate-pulse shrink-0" aria-hidden="true" />
               <span>Department of Computer Science</span>
               <span className="h-1 w-1 rounded-full bg-border shrink-0" aria-hidden="true" />
-              <span className="text-muted">AMU</span>
+              <span className="text-muted">Aligarh</span>
             </div>
 
             {/* App Branding Row */}
@@ -100,15 +117,15 @@ export function Hero({ latestVersion }: HeroProps = {}) {
                     v{displayVersion} Stable
                   </span>
                 </div>
-                <p className="mt-1 font-mono-code text-xs sm:text-sm font-semibold text-primary">
-                  The Computer Science Student Application
-                </p>
+                <h2 className="mt-1 font-mono-code text-xs sm:text-sm font-semibold text-primary">
+                  Department of Computer Science Student Platform
+                </h2>
               </div>
             </div>
 
             {/* Factual Value Narrative */}
             <p className="animate-rise animate-rise-delay-2 mt-5 text-sm sm:text-base text-muted leading-relaxed">
-              Engineered specifically for daily academic life at Aligarh Muslim University. Coordinates lecture schedules, Unix laboratory allocations, the strict 75 percent examination attendance threshold, and verified department circulars in one fast, offline Android application.
+              AMU BATCH X is a student-focused academic platform designed for the Department of Computer Science community in Aligarh. It simplifies academic coordination by providing daily lecture timetables, laboratory room allocations, the strict 75% attendance threshold tracking, verified department notices, assignments, study notes, exam information, and direct offline mobile app access.
             </p>
 
             {/* Primary Action Button Cluster */}
@@ -144,17 +161,17 @@ export function Hero({ latestVersion }: HeroProps = {}) {
             {/* Interactive Screen Director (Switches live phone view on the right) */}
             <div className="animate-rise animate-rise-delay-3 mt-8 w-full border-t border-border pt-6">
               <div className="flex items-center justify-between mb-3 font-mono-code text-xs">
-                <span className="font-bold text-foreground uppercase tracking-wider flex items-center gap-1.5">
-                  <Layers className="h-3.5 w-3.5 text-primary" />
+                <span className="font-bold text-foreground flex items-center gap-1.5">
+                  <Layers className="h-4 w-4 text-primary" />
                   <span>Live App Screen Director</span>
                 </span>
-                <span className="text-muted text-[11px]">Select to inspect</span>
+                <span className="text-muted text-xs">Select to inspect</span>
               </div>
 
               <div
                 role="tablist"
                 aria-label="App preview screen selector"
-                className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2"
+                className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5"
               >
                 {heroTabs.map((tab) => {
                   const Icon = tab.icon;
@@ -169,17 +186,17 @@ export function Hero({ latestVersion }: HeroProps = {}) {
                       aria-controls={`hero-panel-${tab.id}`}
                       onClick={() => setActiveTab(tab.id)}
                       className={cn(
-                        "flex flex-col items-start p-2.5 rounded-xl border font-mono-code text-left transition-all touch-manipulation cursor-pointer",
+                        "flex flex-col items-start p-3 rounded-xl border font-mono-code text-left transition-all touch-manipulation cursor-pointer",
                         isActive
                           ? "border-primary bg-primary-light text-primary shadow-2xs ring-1 ring-primary/20"
                           : "border-border bg-surface text-muted hover:border-border-light hover:text-foreground"
                       )}
                     >
-                      <div className="flex items-center gap-1.5 mb-1">
-                        <Icon className="h-3.5 w-3.5 shrink-0" />
+                      <div className="flex items-center gap-2 mb-1.5">
+                        <Icon className="h-4 w-4 shrink-0" />
                         <span className="font-bold text-xs truncate">{tab.label}</span>
                       </div>
-                      <span className="text-[10px] text-muted line-clamp-1 leading-tight">
+                      <span className="text-xs text-muted line-clamp-2 leading-normal">
                         {tab.description}
                       </span>
                     </button>
@@ -211,8 +228,8 @@ export function Hero({ latestVersion }: HeroProps = {}) {
                     <AttendanceAppScreen />
                   </PhoneMockup>
                 </div>
-                <div className="mt-2 text-center font-mono-code text-[11px] font-bold text-primary flex items-center justify-center gap-1">
-                  <ShieldCheck className="h-3 w-3" />
+                <div className="mt-2 text-center font-mono-code text-xs font-semibold text-primary flex items-center justify-center gap-1.5">
+                  <ShieldCheck className="h-3.5 w-3.5" />
                   <span>75% Margin Engine</span>
                 </div>
               </div>
@@ -286,8 +303,8 @@ export function Hero({ latestVersion }: HeroProps = {}) {
                     <NoticesAppScreen />
                   </PhoneMockup>
                 </div>
-                <div className="mt-2 text-center font-mono-code text-[11px] font-bold text-accent-terracotta flex items-center justify-center gap-1">
-                  <Bell className="h-3 w-3" />
+                <div className="mt-2 text-center font-mono-code text-xs font-semibold text-accent-terracotta flex items-center justify-center gap-1.5">
+                  <Bell className="h-3.5 w-3.5" />
                   <span>Push Notice Broadcast</span>
                 </div>
               </div>

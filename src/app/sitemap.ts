@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 import { siteConfig } from "@/lib/site";
-import { getAllBlogSlugs } from "@/data/blog";
+import { blogPosts } from "@/data/blog";
 
 const staticRoutes = [
   "",
@@ -22,15 +22,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = siteConfig.url;
 
   const staticPages = staticRoutes.map((route) => ({
-    url: `${baseUrl}${route}`,
-    lastModified: new Date(),
+    url: route === "" ? `${baseUrl}/` : `${baseUrl}${route}`,
     changeFrequency: route === "" || route === "/download" ? ("weekly" as const) : ("monthly" as const),
     priority: route === "" ? 1 : route === "/download" ? 0.95 : 0.7,
   }));
 
-  const blogPages = getAllBlogSlugs().map((slug) => ({
-    url: `${baseUrl}/blog/${slug}`,
-    lastModified: new Date(),
+  const blogPages = blogPosts.map((post) => ({
+    url: `${baseUrl}/blog/${post.slug}`,
+    lastModified: new Date(post.date),
     changeFrequency: "monthly" as const,
     priority: 0.6,
   }));

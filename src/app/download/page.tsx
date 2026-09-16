@@ -3,6 +3,7 @@ import { PageHeader } from "@/components/ui/PageHeader";
 import { DownloadButton } from "@/components/ui/DownloadButton";
 import { ShieldCheck, CheckCircle2, ExternalLink } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import { siteConfig } from "@/lib/site";
 import { getLatestAppVersion, resolveDownloadSource } from "@/lib/app-version";
 
@@ -227,9 +228,9 @@ export default async function DownloadPage() {
                 <div className="mt-6 border-t border-border pt-4 text-center">
                   <p className="font-mono-code text-[11px] text-muted">
                     Questions or install issues? Use our{" "}
-                    <a href="/contact" className="text-primary font-bold hover:underline">
+                    <Link href="/contact" className="text-primary font-bold hover:underline">
                       contact form
-                    </a>
+                    </Link>
                   </p>
                 </div>
               </div>

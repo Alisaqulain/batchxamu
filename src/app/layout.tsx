@@ -27,8 +27,9 @@ const fraunces = Fraunces({
 });
 
 export const metadata: Metadata = createMetadata({
-  title: "Department of Computer Science Student App",
+  title: "Department of Computer Science Student Platform",
   description: siteConfig.description,
+  path: "",
 });
 
 export const viewport: Viewport = {
@@ -58,8 +59,6 @@ export default function RootLayout({
       className={`${plusJakarta.variable} ${fraunces.variable} h-full`}
     >
       <head>
-        <link rel="icon" href="/icon.png" type="image/png" sizes="32x32" />
-        <link rel="apple-touch-icon" href="/apple-icon.png" sizes="180x180" />
         {structuredData.map((data, index) => (
           <script
             key={index}

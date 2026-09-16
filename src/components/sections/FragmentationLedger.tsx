@@ -85,12 +85,18 @@ export function FragmentationLedger() {
 
         {/* Editorial Comparative Audit Ledger Table */}
         <div className="mt-12 overflow-x-auto">
-          <div className="min-w-[760px] divide-y divide-border border-y border-border">
+          <div className="min-w-[820px] divide-y divide-border border-y border-border rounded-2xl overflow-hidden shadow-xs">
             {/* Table Header */}
-            <div className="grid grid-cols-12 py-3.5 font-mono-code text-xs font-bold uppercase tracking-wider text-muted bg-surface-muted/40 px-4">
+            <div className="grid grid-cols-12 py-4 font-mono-code text-xs font-bold text-muted bg-surface-muted px-6">
               <div className="col-span-3">Core Academic System</div>
-              <div className="col-span-4 text-accent-terracotta">Campus Disconnect (Before)</div>
-              <div className="col-span-4 text-primary">BATCH X Platform (Engineered)</div>
+              <div className="col-span-4 text-accent-terracotta flex items-center gap-1.5">
+                <AlertTriangle className="h-3.5 w-3.5" />
+                <span>Campus Disconnect (Before)</span>
+              </div>
+              <div className="col-span-4 text-primary flex items-center gap-1.5">
+                <CheckCircle2 className="h-3.5 w-3.5" />
+                <span>BATCH X Platform (Engineered)</span>
+              </div>
               <div className="col-span-1 text-right">Status</div>
             </div>
 
@@ -98,11 +104,11 @@ export function FragmentationLedger() {
             {auditItems.map((item, idx) => (
               <div
                 key={item.id}
-                className="grid grid-cols-12 py-6 px-4 gap-4 items-start hover:bg-surface-muted/30 transition-colors"
+                className="grid grid-cols-12 py-6 px-6 gap-6 items-start hover:bg-surface-muted/30 transition-colors bg-surface"
               >
                 {/* Column 1: System Function */}
                 <div className="col-span-3 pr-2">
-                  <span className="font-mono-code text-[11px] font-bold text-primary block mb-1">
+                  <span className="font-mono-code text-xs font-bold text-primary block mb-1">
                     0{idx + 1} · {item.tag}
                   </span>
                   <h3 className="font-display text-sm font-bold text-foreground">
@@ -111,10 +117,9 @@ export function FragmentationLedger() {
                 </div>
 
                 {/* Column 2: Problem / Fragmentation */}
-                <div className="col-span-4 pr-3 border-l border-border pl-4">
-                  <div className="flex items-center gap-1.5 text-xs font-bold text-accent-terracotta mb-1.5">
-                    <AlertTriangle className="h-3.5 w-3.5 shrink-0" />
-                    <span>{item.fragmentationTitle}</span>
+                <div className="col-span-4 pr-3 border-l border-border/80 pl-5">
+                  <div className="text-xs font-bold text-accent-terracotta mb-1">
+                    {item.fragmentationTitle}
                   </div>
                   <p className="text-xs leading-relaxed text-muted">
                     {item.fragmentationDetail}
@@ -122,10 +127,9 @@ export function FragmentationLedger() {
                 </div>
 
                 {/* Column 3: BATCH X Solution */}
-                <div className="col-span-4 pr-3 border-l border-border pl-4">
-                  <div className="flex items-center gap-1.5 text-xs font-bold text-primary mb-1.5">
-                    <CheckCircle2 className="h-3.5 w-3.5 shrink-0" />
-                    <span>{item.batchxSolution}</span>
+                <div className="col-span-4 pr-3 border-l border-border/80 pl-5">
+                  <div className="text-xs font-bold text-primary mb-1">
+                    {item.batchxSolution}
                   </div>
                   <p className="text-xs leading-relaxed text-muted">
                     {item.batchxDetail}
@@ -133,8 +137,8 @@ export function FragmentationLedger() {
                 </div>
 
                 {/* Column 4: Status */}
-                <div className="col-span-1 text-right border-l border-border pl-2">
-                  <span className="inline-block rounded bg-primary-light px-2 py-0.5 font-mono-code text-[10px] font-bold text-primary border border-primary/25">
+                <div className="col-span-1 text-right border-l border-border/80 pl-3">
+                  <span className="inline-block rounded-md bg-primary-light px-2 py-0.5 font-mono-code text-xs font-bold text-primary border border-primary/25">
                     {item.systemStatus}
                   </span>
                 </div>

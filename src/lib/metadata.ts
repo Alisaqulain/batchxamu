@@ -22,10 +22,10 @@ export function createMetadata({
   publishedTime,
   noIndex = false,
 }: PageMetaOptions): Metadata {
-  const url = `${siteConfig.url}${path}`;
+  const url = path === "" || path === "/" ? `${siteConfig.url}/` : `${siteConfig.url}${path}`;
   const fullTitle =
-    path === ""
-      ? `${siteConfig.name}: ${title}`
+    path === "" || path === "/"
+      ? "AMU BATCH X | Department of Computer Science Student Platform"
       : `${title} | ${siteConfig.name}`;
 
   return {
@@ -39,14 +39,17 @@ export function createMetadata({
     metadataBase: new URL(siteConfig.url),
     alternates: { canonical: url },
     category: "education",
+    manifest: "/site.webmanifest",
     icons: {
       icon: [
         { url: "/favicon.ico" },
-        { url: "/icon-32.png", sizes: "32x32", type: "image/png" },
-        { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
+        { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+        { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+        { url: "/android-chrome-192x192.png", sizes: "192x192", type: "image/png" },
+        { url: "/android-chrome-512x512.png", sizes: "512x512", type: "image/png" },
       ],
       apple: [
-        { url: "/apple-icon.png", sizes: "180x180", type: "image/png" },
+        { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
       ],
     },
     formatDetection: {

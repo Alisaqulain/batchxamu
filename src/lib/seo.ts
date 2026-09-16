@@ -4,15 +4,16 @@ export function getWebsiteJsonLd() {
   return {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    name: siteConfig.name,
-    alternateName: siteConfig.appName,
-    description: siteConfig.description,
-    url: siteConfig.url,
+    name: "AMU BATCH X",
+    alternateName: "AMU Batch X Platform",
+    description:
+      "A student-focused academic platform for the Department of Computer Science community in Aligarh.",
+    url: "https://www.amubatchx.app/",
     inLanguage: "en-IN",
     publisher: {
       "@type": "Organization",
-      name: siteConfig.name,
-      url: siteConfig.url,
+      name: "AMU BATCH X",
+      url: "https://www.amubatchx.app/",
       logo: `${siteConfig.url}/logo.png`,
     },
   };
@@ -21,12 +22,14 @@ export function getWebsiteJsonLd() {
 export function getMobileAppJsonLd() {
   return {
     "@context": "https://schema.org",
-    "@type": "MobileApplication",
-    name: siteConfig.name,
-    operatingSystem: "Android",
-    applicationCategory: "EducationalApplication",
-    description: siteConfig.description,
-    url: siteConfig.url,
+    "@type": "WebApplication",
+    name: "AMU BATCH X",
+    applicationCategory: "Education",
+    operatingSystem: "Android, iOS, Web",
+    description:
+      "A student-focused academic platform for the Department of Computer Science community in Aligarh.",
+    url: "https://www.amubatchx.app/",
+    image: `${siteConfig.url}/logo.png`,
     offers: {
       "@type": "Offer",
       price: "0",
@@ -34,7 +37,7 @@ export function getMobileAppJsonLd() {
     },
     author: {
       "@type": "Organization",
-      name: `${siteConfig.name} Development Team`,
+      name: "AMU BATCH X Student Development Team",
     },
   };
 }
@@ -43,10 +46,16 @@ export function getOrganizationJsonLd() {
   return {
     "@context": "https://schema.org",
     "@type": "Organization",
-    name: siteConfig.name,
-    url: siteConfig.url,
+    name: "AMU BATCH X",
+    url: "https://www.amubatchx.app/",
     logo: `${siteConfig.url}/logo.png`,
     sameAs: [siteConfig.githubOrg, siteConfig.linkedinOrg],
-    description: siteConfig.description,
+    description:
+      "A student-focused academic platform for the Department of Computer Science community in Aligarh.",
+    contactPoint: {
+      "@type": "ContactPoint",
+      email: "contact@amubatchx.app",
+      contactType: "student support",
+    },
   };
 }

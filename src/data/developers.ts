@@ -12,8 +12,6 @@ export const developers: Developer[] = [
     linkedin: "https://www.linkedin.com/in/ali-saqulain-7404a8287",
     github: "https://github.com/Alisaqulain",
     portfolio: "https://aliportfolio2026.vercel.app/",
-    phone: "+919457818861",
-    phoneDisplay: "+91 9457818861",
   },
   {
     name: "Sameer Ahmad",

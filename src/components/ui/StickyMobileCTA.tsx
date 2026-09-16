@@ -32,9 +32,9 @@ export function StickyMobileCTA() {
   return (
     <div
       className={cn(
-        "fixed bottom-0 left-0 right-0 z-40 lg:hidden",
+        "fixed bottom-0 left-0 right-0 z-40 lg:hidden max-w-full overflow-hidden",
         "border-t border-border/80 bg-surface/95 backdrop-blur-xl",
-        "px-4 py-2.5 shadow-[0_-10px_30px_rgba(0,0,0,0.15)]",
+        "px-4 pt-2.5 pb-[max(0.625rem,env(safe-area-inset-bottom,0.625rem))] shadow-[0_-10px_30px_rgba(0,0,0,0.15)]",
         "animate-in slide-in-from-bottom duration-250 ease-out"
       )}
     >

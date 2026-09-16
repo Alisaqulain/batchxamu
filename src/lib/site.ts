@@ -1,12 +1,12 @@
 export const siteConfig = {
   name: "AMU BATCH X",
   appName: "MCA 26",
-  fullName: "AMU BATCH X: Department of Computer Science Student Platform",
+  fullName: "AMU BATCH X | Department of Computer Science Student Platform",
   tagline: "Your Department. Your Academic Life. One App.",
   description:
-    "Discover AMU BATCH X, a digital academic platform designed to simplify student life with attendance, timetable, notices, notes, assignments, exams, mock tests and more.",
+    "AMU BATCH X is a student-focused academic platform for the Department of Computer Science community in Aligarh, providing timetable, attendance, notices, notes, assignments, exams and app access.",
   url: process.env.NEXT_PUBLIC_SITE_URL || "https://www.amubatchx.app",
-  supportEmail: "admin@amubatchx.app",
+  supportEmail: "contact@amubatchx.app",
   androidDownloadUrl:
     process.env.NEXT_PUBLIC_APP_DOWNLOAD_URL ||
     process.env.NEXT_PUBLIC_ANDROID_DOWNLOAD_URL ||

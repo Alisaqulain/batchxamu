@@ -12,8 +12,6 @@ export const metadata = createMetadata({
 });
 
 export default function ContactPage() {
-  const leadDev = developers[0];
-
   return (
     <>
       <PageHeader
@@ -54,14 +52,12 @@ export default function ContactPage() {
                 <p className="text-xs text-muted mt-1 leading-relaxed">
                   Faculty of Science, Aligarh Muslim University (AMU), Aligarh, Uttar Pradesh 202002, India.
                 </p>
-                {leadDev.phoneDisplay && (
-                  <div className="mt-4 pt-3 border-t border-border flex items-center justify-between font-mono-code text-xs">
-                    <span className="text-muted">Lead Developer Line:</span>
-                    <a href={`tel:${leadDev.phone}`} className="text-primary font-bold hover:underline">
-                      {leadDev.phoneDisplay}
-                    </a>
-                  </div>
-                )}
+                <div className="mt-4 pt-3 border-t border-border flex items-center justify-between font-mono-code text-xs">
+                  <span className="text-muted">Email:</span>
+                  <a href="mailto:contact@amubatchx.app" className="text-primary font-bold hover:underline">
+                    contact@amubatchx.app
+                  </a>
+                </div>
               </div>
 
               {/* Developer Team Links */}

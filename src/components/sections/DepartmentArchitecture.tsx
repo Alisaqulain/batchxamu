@@ -1,6 +1,7 @@
 import { ArrowRight, Check, GraduationCap, Building2 } from "lucide-react";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import Link from "next/link";
+import { cn } from "@/lib/utils";
 
 const academicPrograms = [
   {
@@ -132,7 +133,7 @@ export function DepartmentArchitecture() {
                   <h3 className="font-display text-base font-bold text-foreground">
                     {prog.degree}
                   </h3>
-                  <span className="font-mono-code text-[11px] text-muted block mt-0.5">
+                  <span className="font-mono-code text-xs text-muted block mt-0.5">
                     {prog.level}
                   </span>
                 </div>
@@ -142,7 +143,7 @@ export function DepartmentArchitecture() {
                 </p>
               </div>
 
-              <div className="mt-6 border-t border-border/70 pt-3 font-mono-code text-[11px] text-primary font-semibold flex items-center justify-between">
+              <div className="mt-6 border-t border-border/70 pt-3 font-mono-code text-xs text-primary font-semibold flex items-center justify-between">
                 <span>{prog.stats}</span>
                 <GraduationCap className="h-3.5 w-3.5" />
               </div>
@@ -153,44 +154,67 @@ export function DepartmentArchitecture() {
         {/* Three-Phase Platform Evolution Roadmap */}
         <div className="mt-16 border-t border-border pt-12">
           <div className="mb-8">
-            <span className="font-mono-code text-xs font-bold uppercase tracking-wider text-primary">
+            <span className="font-mono-code text-xs font-bold text-primary">
               PLATFORM LIFECYCLE & MILESTONES
             </span>
-            <h3 className="font-display text-xl font-bold text-foreground mt-1">
+            <h3 className="font-display text-xl sm:text-2xl font-bold text-foreground mt-1">
               Engineering Progression Timeline
             </h3>
+            <p className="mt-1 text-sm text-muted">
+              Chronological milestones tracking the architecture from current student client to department-wide research rollout.
+            </p>
           </div>
 
-          <div className="grid gap-6 md:grid-cols-3">
-            {roadmapMilestones.map((phase) => (
-              <div
-                key={phase.phase}
-                className="relative flex flex-col justify-between rounded-2xl border border-border bg-surface-muted/50 p-6"
-              >
-                <div>
-                  <div className="flex items-center justify-between border-b border-border/80 pb-3 font-mono-code text-xs">
-                    <span className="font-bold text-foreground">{phase.phase}</span>
-                    <span className="text-muted">{phase.timeframe}</span>
-                  </div>
+          <div className="relative">
+            {/* Connecting Timeline Track Line (Desktop) */}
+            <div className="hidden lg:block absolute top-7 left-12 right-12 h-0.5 bg-border z-0" aria-hidden="true" />
 
-                  <div className="mt-4 space-y-2.5">
-                    {phase.deliverables.map((item, itemIdx) => (
-                      <div
-                        key={itemIdx}
-                        className="flex items-start gap-2 text-xs text-muted font-mono-code leading-relaxed"
-                      >
-                        <Check className="h-3.5 w-3.5 shrink-0 text-primary mt-0.5" />
-                        <span>{item}</span>
+            <div className="grid gap-6 lg:grid-cols-3 relative z-10">
+              {roadmapMilestones.map((phase, phaseIdx) => (
+                <div
+                  key={phase.phase}
+                  className="relative flex flex-col justify-between rounded-2xl border border-border bg-surface p-6 shadow-xs hover:border-primary/40 transition-colors"
+                >
+                  <div>
+                    {/* Step Sequence Badge */}
+                    <div className="flex items-center justify-between border-b border-border/80 pb-3 font-mono-code text-xs">
+                      <div className="flex items-center gap-2">
+                        <span className={cn(
+                          "flex h-7 w-7 items-center justify-center rounded-lg font-bold shadow-2xs text-xs",
+                          phase.status === "live"
+                            ? "bg-primary text-white"
+                            : "bg-surface-muted text-muted border border-border"
+                        )}>
+                          0{phaseIdx + 1}
+                        </span>
+                        <span className="font-bold text-foreground">{phase.phase}</span>
                       </div>
-                    ))}
+                      <span className="text-muted">{phase.timeframe}</span>
+                    </div>
+
+                    <div className="mt-4 space-y-2.5">
+                      {phase.deliverables.map((item, itemIdx) => (
+                        <div
+                          key={itemIdx}
+                          className="flex items-start gap-2 text-xs text-muted font-mono-code leading-relaxed"
+                        >
+                          <Check className="h-3.5 w-3.5 shrink-0 text-primary mt-0.5" />
+                          <span>{item}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="mt-6 border-t border-border/70 pt-3 font-mono-code text-xs text-primary font-semibold flex items-center justify-between">
+                    <span>{phase.status === "live" ? "In Production" : "Planned Release"}</span>
+                    <span className={cn(
+                      "h-2 w-2 rounded-full",
+                      phase.status === "live" ? "bg-primary animate-pulse" : "bg-muted/40"
+                    )} />
                   </div>
                 </div>
-
-                <div className="mt-6 border-t border-border/70 pt-3 font-mono-code text-[11px] text-primary font-semibold">
-                  <span>{phase.status === "live" ? "In Production" : "Planned Release"}</span>
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
 

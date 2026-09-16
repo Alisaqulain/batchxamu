@@ -258,13 +258,13 @@ export function CoreCapabilitiesAtlas() {
                       type="button"
                       onClick={() => setActivePillar(pillar.id)}
                       className={cn(
-                        "inline-flex items-center gap-1.5 rounded-lg px-3 py-1 font-mono-code text-xs font-bold transition-colors touch-manipulation",
+                        "inline-flex min-h-[38px] items-center gap-2 rounded-xl px-4 py-2 font-mono-code text-xs font-bold transition-all touch-manipulation cursor-pointer border shadow-2xs",
                         isCurrent
-                          ? "bg-primary-light text-primary border border-primary/30"
-                          : "text-muted hover:text-primary hover:bg-surface-muted"
+                          ? "bg-primary text-white border-primary shadow-xs ring-2 ring-primary/20"
+                          : "border-border bg-surface text-foreground hover:border-primary/40 hover:bg-surface-muted hover:text-primary"
                       )}
                     >
-                      <Icon className="h-3.5 w-3.5" />
+                      <Icon className="h-4 w-4 shrink-0" />
                       <span>{isCurrent ? "Active on Phone" : "Inspect Screen"}</span>
                     </button>
                   </div>

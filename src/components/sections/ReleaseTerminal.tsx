@@ -53,7 +53,7 @@ export function ReleaseTerminal({ latest }: ReleaseTerminalProps) {
                     <p className="font-mono-code text-xs text-primary font-semibold">
                       Department of Computer Science Edition
                     </p>
-                    <p className="font-mono-code text-[11px] text-muted mt-0.5">
+                    <p className="font-mono-code text-xs text-muted mt-1">
                       Developed by MCA 2026 Student Engineering Team · Aligarh Muslim University
                     </p>
                   </div>
@@ -78,15 +78,15 @@ export function ReleaseTerminal({ latest }: ReleaseTerminalProps) {
                 {/* Technical Specifications List */}
                 <div className="mt-8 grid grid-cols-2 gap-3 border-t border-border pt-6 sm:grid-cols-3 text-xs font-mono-code">
                   <div>
-                    <span className="text-muted block text-[11px]">Platform</span>
+                    <span className="text-muted block text-xs">Platform</span>
                     <span className="font-semibold text-foreground mt-0.5 block">Android (Live) · iOS (In Dev)</span>
                   </div>
                   <div>
-                    <span className="text-muted block text-[11px]">Format</span>
+                    <span className="text-muted block text-xs">Format</span>
                     <span className="font-semibold text-foreground mt-0.5 block">{binarySize}</span>
                   </div>
                   <div>
-                    <span className="text-muted block text-[11px]">License</span>
+                    <span className="text-muted block text-xs">License</span>
                     <span className="font-semibold text-primary mt-0.5 block">Student Free</span>
                   </div>
                 </div>
@@ -96,7 +96,7 @@ export function ReleaseTerminal({ latest }: ReleaseTerminalProps) {
               <div className="lg:col-span-5 rounded-2xl border border-border bg-surface-muted p-6 sm:p-7">
                 <div className="flex items-center gap-2 mb-3">
                   <ShieldCheck className="h-4 w-4 text-primary" />
-                  <h3 className="font-mono-code text-xs font-bold uppercase tracking-wider text-primary">
+                  <h3 className="font-mono-code text-sm font-bold text-primary">
                     Installation Station
                   </h3>
                 </div>
@@ -110,7 +110,7 @@ export function ReleaseTerminal({ latest }: ReleaseTerminalProps) {
                       <h4 className="text-xs font-bold text-foreground">
                         Launch Platform Selection
                       </h4>
-                      <p className="mt-0.5 text-[11px] text-muted leading-relaxed">
+                      <p className="mt-0.5 text-xs text-muted leading-relaxed">
                         Tap &quot;Download App&quot; above to select the Android APK package.
                       </p>
                     </div>
@@ -124,7 +124,7 @@ export function ReleaseTerminal({ latest }: ReleaseTerminalProps) {
                       <h4 className="text-xs font-bold text-foreground">
                         Allow Direct APK Installation
                       </h4>
-                      <p className="mt-0.5 text-[11px] text-muted leading-relaxed">
+                      <p className="mt-0.5 text-xs text-muted leading-relaxed">
                         Select &quot;Install from unknown sources&quot; in Android security settings if prompted.
                       </p>
                     </div>
@@ -138,14 +138,14 @@ export function ReleaseTerminal({ latest }: ReleaseTerminalProps) {
                       <h4 className="text-xs font-bold text-foreground">
                         Open & Synchronize Timetable
                       </h4>
-                      <p className="mt-0.5 text-[11px] text-muted leading-relaxed">
+                      <p className="mt-0.5 text-xs text-muted leading-relaxed">
                         Open BATCH X to cache your daily timetable, 75% attendance ledger, and notice feed.
                       </p>
                     </div>
                   </div>
                 </div>
 
-                <div className="mt-6 rounded-lg border border-primary/20 bg-primary-light/50 p-3 text-[11px] text-primary-deep font-mono-code">
+                <div className="mt-6 rounded-lg border border-primary/20 bg-primary-light/50 p-3 text-xs text-primary-deep font-mono-code">
                   Verified student build: Zero tracking, no ads, completely self-contained.
                 </div>
               </div>
