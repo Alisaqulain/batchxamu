@@ -1,54 +1,54 @@
-import { AlertTriangle, CheckCircle2, ArrowRight, ShieldCheck, Layers } from "lucide-react";
+import { AlertTriangle, CheckCircle2, ArrowRight } from "lucide-react";
 import Link from "next/link";
 
 const auditItems = [
   {
     id: "notices",
-    functionName: "Official Circulars & Notice Dispatch",
-    tag: "Notice Architecture",
-    fragmentationTitle: "Lost in Informal WhatsApp Floods",
+    functionName: "Department notices",
+    tag: "Notices",
+    fragmentationTitle: "Buried in group chats",
     fragmentationDetail:
-      "Important exam notifications, room changes, and holiday lists get buried under hundreds of chat messages, jokes, and informal chatter.",
-    batchxSolution: "Dedicated Verified Notice Dispatch Feed",
+      "Exam notices, room changes and holiday lists get lost between hundreds of other messages.",
+    batchxSolution: "One notice feed",
     batchxDetail:
-      "Official announcements directly from department faculty. High-priority exam notices trigger instant push notifications to student phones.",
-    systemStatus: "Live v1.0",
+      "Department notices in one list. Urgent ones, like exam notices, also come as push notifications.",
+    systemStatus: "Live",
   },
   {
     id: "attendance",
-    functionName: "75% Attendance & Hall Ticket Eligibility",
-    tag: "Academic Compliance",
-    fragmentationTitle: "Uncertainty Before Examination Admit Cards",
+    functionName: "Attendance and the 75% rule",
+    tag: "Attendance",
+    fragmentationTitle: "Finding out too late",
     fragmentationDetail:
-      "Students calculate attendance by memory or rough paper notes, discovering they fall short of the strict AMU 75% rule when it is already too late.",
-    batchxSolution: "Mathematical Safety Margin Engine",
+      "Most students track attendance from memory and only find out they're short of 75% when admit cards come out.",
+    batchxSolution: "Attendance tracker",
     batchxDetail:
-      "Separate theory and laboratory registers calculate exact attendance percentages and tell you precisely how many classes you can afford to miss.",
-    systemStatus: "Live v1.0",
+      "Theory and lab attendance are tracked separately, and the app tells you how many classes you can still miss.",
+    systemStatus: "Live",
   },
   {
     id: "schedule",
-    functionName: "Lecture Timetable & Lab Slotting",
-    tag: "Daily Operations",
-    fragmentationTitle: "Confusing Room Allocations & Shifts",
+    functionName: "Timetable and labs",
+    tag: "Timetable",
+    fragmentationTitle: "Which room is it today?",
     fragmentationDetail:
-      "Students cross-reference crumpled PDF circulars or query classmates every morning whether lab sessions shifted between Unix Lab 1 or Lab 2.",
-    batchxSolution: "Live Daily Schedule with Offline SQLite Cache",
+      "Checking old PDFs or asking classmates every morning which room or lab a class is in.",
+    batchxSolution: "Daily timetable",
     batchxDetail:
-      "Class timings, room numbers (CS-01 to CS-04), and lab sessions organized by day, fully accessible without campus network connectivity.",
-    systemStatus: "Live v1.0",
+      "Class times, rooms (CS-01 to CS-04) and labs by day. Works offline.",
+    systemStatus: "Live",
   },
   {
     id: "resources",
-    functionName: "Curated Course Vault & Examination PYQs",
-    tag: "Academic Archive",
-    fragmentationTitle: "Scattered Drives & Expired Download Links",
+    functionName: "Notes and past papers",
+    tag: "Study material",
+    fragmentationTitle: "Scattered links",
     fragmentationDetail:
-      "Study notes, lab manuals, and previous year questions are scattered across informal personal links and expired cloud shares.",
-    batchxSolution: "Verified Subject Vault & 2021-2025 PYQ Archive",
+      "Notes, lab manuals and past papers are spread across personal drives, and the links often stop working.",
+    batchxSolution: "Notes by subject",
     batchxDetail:
-      "Organized unit-wise syllabus notes, verified lab implementations with code, and previous year semester papers maintained by student developers.",
-    systemStatus: "Live v1.0",
+      "Unit-wise notes, lab programs and previous year papers (2021 to 2025), organized by subject.",
+    systemStatus: "Live",
   },
 ];
 
@@ -58,17 +58,16 @@ export function FragmentationLedger() {
       <div className="mx-auto max-w-[1536px] px-4 sm:px-8 lg:px-12 xl:px-16">
         
         {/* Section Masthead */}
-        <div className="flex flex-col justify-between gap-4 border-b border-border pb-8 sm:flex-row sm:items-end">
+        <div data-reveal className="flex flex-col justify-between gap-4 border-b border-border pb-8 sm:flex-row sm:items-end">
           <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 rounded-md border border-accent-terracotta/30 bg-accent-red-light px-2.5 py-1 font-mono-code text-xs font-semibold text-accent-terracotta">
-              <Layers className="h-3.5 w-3.5" />
-              <span>DEPARTMENT INFRASTRUCTURE AUDIT</span>
-            </div>
-            <h2 className="mt-4 font-display text-2xl font-semibold tracking-tight text-foreground sm:text-4xl">
-              Why Computer Science students built their own platform.
+            <span className="font-mono-code text-xs font-semibold uppercase tracking-wider text-primary">
+              Why we built it
+            </span>
+            <h2 className="mt-2 font-display text-2xl font-semibold tracking-tight text-foreground sm:text-4xl">
+              Before and after AMU BATCH X
             </h2>
             <p className="mt-3 text-base leading-relaxed text-muted">
-              Managing lectures, Unix laboratory allocations, attendance cutoffs, and exam schedules requires precision. When academic information is scattered across informal channels, students lose time and risk exam debarment.
+              When class information is spread across group chats and PDFs, things get missed. Sometimes that means falling short on attendance.
             </p>
           </div>
 
@@ -77,7 +76,7 @@ export function FragmentationLedger() {
               href="/features"
               className="inline-flex items-center gap-1.5 font-mono-code text-xs font-bold text-primary hover:underline"
             >
-              <span>Explore full capabilities</span>
+              <span>See all features</span>
               <ArrowRight className="h-3.5 w-3.5" />
             </Link>
           </div>
@@ -85,17 +84,17 @@ export function FragmentationLedger() {
 
         {/* Editorial Comparative Audit Ledger Table */}
         <div className="mt-12 overflow-x-auto">
-          <div className="min-w-[820px] divide-y divide-border border-y border-border rounded-2xl overflow-hidden shadow-xs">
+          <div data-reveal-stagger className="min-w-[820px] divide-y divide-border border-y border-border rounded-2xl overflow-hidden shadow-xs">
             {/* Table Header */}
             <div className="grid grid-cols-12 py-4 font-mono-code text-xs font-bold text-muted bg-surface-muted px-6">
-              <div className="col-span-3">Core Academic System</div>
+              <div className="col-span-3">Area</div>
               <div className="col-span-4 text-accent-terracotta flex items-center gap-1.5">
                 <AlertTriangle className="h-3.5 w-3.5" />
-                <span>Campus Disconnect (Before)</span>
+                <span>Before</span>
               </div>
               <div className="col-span-4 text-primary flex items-center gap-1.5">
                 <CheckCircle2 className="h-3.5 w-3.5" />
-                <span>BATCH X Platform (Engineered)</span>
+                <span>With AMU BATCH X</span>
               </div>
               <div className="col-span-1 text-right">Status</div>
             </div>
@@ -145,17 +144,6 @@ export function FragmentationLedger() {
               </div>
             ))}
           </div>
-        </div>
-
-        {/* Audit Summary Footnote */}
-        <div className="mt-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4 font-mono-code text-xs text-muted">
-          <div className="flex items-center gap-2">
-            <ShieldCheck className="h-4 w-4 text-primary" />
-            <span>Audit compiled by MCA 2026 Batch Student Development Working Group</span>
-          </div>
-          <span className="text-primary font-semibold">
-            All 4 systems operational in v1.0.0 Stable APK
-          </span>
         </div>
 
       </div>

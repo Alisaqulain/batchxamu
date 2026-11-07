@@ -7,9 +7,10 @@ import Link from "next/link";
 import { createMetadata } from "@/lib/metadata";
 
 export const metadata = createMetadata({
-  title: "Admin Portal Authentication",
-  description: "Secure login for AMU BATCH X operations and release management.",
+  title: "Admin Login",
+  description: "Admin login for AMU BATCH X release management.",
   path: "/admin/login",
+  noIndex: true,
 });
 
 export default async function AdminLoginPage() {

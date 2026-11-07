@@ -57,10 +57,6 @@ body {
   color: var(--foreground);
   font-family: var(--font-sans-body), system-ui, -apple-system, sans-serif;
   overflow-x: hidden;
-  background-image:
-    radial-gradient(ellipse 90% 40% at 0% -5%, rgb(15 81 43 / 0.04), transparent),
-    radial-gradient(ellipse 70% 35% at 100% 0%, rgb(194 65 12 / 0.03), transparent);
-  background-attachment: fixed;
 }
 
 @supports (padding: max(0px)) {
@@ -248,6 +244,58 @@ body {
 .reveal.is-visible {
   opacity: 1;
   transform: translate3d(0, 0, 0);
+}
+
+/* ---- Scroll reveal + pointer tilt (driven by MotionProvider) ---- */
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  [data-tilt] {
+    position: relative;
+    transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+    will-change: transform;
+  }
+
+  [data-tilt]:hover {
+    box-shadow: var(--shadow-lift);
+  }
+
+  [data-tilt]::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), rgb(255 255 255 / 0.16), transparent 45%);
+    opacity: var(--glare, 0);
+    transition: opacity 0.3s ease;
+  }
+}
+
+@media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+  [data-reveal],
+  [data-reveal-stagger] > * {
+    opacity: 0;
+    transform: perspective(1200px) translate3d(0, 56px, 0) rotateX(12deg) scale(0.97);
+    transform-origin: 50% 100%;
+    transition:
+      opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 1s cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+
+  [data-reveal="left"] {
+    transform: perspective(1200px) translate3d(-70px, 0, 0) rotateY(12deg);
+  }
+
+  [data-reveal="right"] {
+    transform: perspective(1200px) translate3d(70px, 0, 0) rotateY(-12deg);
+  }
+
+  [data-reveal].is-revealed,
+  [data-reveal-stagger].is-revealed > * {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

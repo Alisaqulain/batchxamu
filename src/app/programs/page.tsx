@@ -6,7 +6,7 @@ import { CheckCircle2, Check } from "lucide-react";
 export const metadata = createMetadata({
   title: "Academic Programs",
   description:
-    "Explore the Computer Science academic programs supported by AMU BATCH X, including MCA, M.Sc. Computer Science, B.Sc. (Hons.), and Ph.D. research.",
+    "Department of Computer Science programs at AMU (MCA, M.Sc., B.Sc. (Hons.) and Ph.D.) and which ones AMU BATCH X supports today.",
   path: "/programs",
 });
 
@@ -14,11 +14,11 @@ const detailedPrograms = [
   {
     id: "mca",
     code: "MCA",
-    title: "Master in Computer Science and Applications",
+    title: "Master of Computer Applications",
     level: "Postgraduate · 2-Year Degree",
     status: "live" as const,
     overview:
-      "The flagship postgraduate program in the Department of Computer Science. Focuses on rigorous software engineering, systems design, and advanced computing applications.",
+      "A two-year postgraduate program covering software engineering, databases, networks and systems. This is the program AMU BATCH X was built for.",
     semesters: [
       {
         sem: "Semester I & II",
@@ -41,10 +41,10 @@ const detailedPrograms = [
       },
     ],
     highlights: [
-      "Dedicated daily lecture schedule mapped to halls CS-01 through CS-04",
-      "Separate theory and lab attendance tracking with 75% cutoff indicator",
-      "Verified course note archives and previous year question papers",
-      "Direct push notifications for class venue relocations and exam notices",
+      "Daily timetable with rooms CS-01 to CS-04",
+      "Theory and lab attendance against the 75% rule",
+      "Notes and previous year question papers",
+      "Push notifications for room changes and exam notices",
     ],
   },
   {
@@ -54,7 +54,7 @@ const detailedPrograms = [
     level: "Postgraduate · 2-Year Degree",
     status: "coming-soon" as const,
     overview:
-      "Advanced research-oriented postgraduate computing with specialized concentrations in Artificial Intelligence, Machine Learning, Cyber Security, and Digital Forensics.",
+      "A two-year postgraduate program with electives in areas such as AI, machine learning and cyber security.",
     semesters: [
       {
         sem: "Core & Specialization Tracks",
@@ -67,9 +67,9 @@ const detailedPrograms = [
       },
     ],
     highlights: [
-      "Shared department noticeboard and faculty directory integration",
-      "Specialized seminar hall and research lab scheduling",
-      "Co-curricular project guidance and paper reading repositories",
+      "Department notices and faculty directory",
+      "Timetable and seminar schedule (in development)",
+      "Project and reading material (planned)",
     ],
   },
   {
@@ -79,7 +79,7 @@ const detailedPrograms = [
     level: "Undergraduate · 3/4-Year Degree",
     status: "planned" as const,
     overview:
-      "Foundational undergraduate degree preparing students with strong mathematical principles, programming logic, computer architecture, and modern IT career readiness.",
+      "The undergraduate program, covering programming, mathematics and computer organization.",
     semesters: [
       {
         sem: "Foundational Sequence",
@@ -92,9 +92,9 @@ const detailedPrograms = [
       },
     ],
     highlights: [
-      "Multi-course architecture designed to onboard undergraduate batches",
-      "Department-wide academic calendar and holiday schedule",
-      "Introductory programming lab guides and code repositories",
+      "Timetable and attendance for undergraduate batches",
+      "Department calendar and holidays",
+      "Lab guides for introductory programming",
     ],
   },
   {
@@ -104,7 +104,7 @@ const detailedPrograms = [
     level: "Doctoral · Research Degree",
     status: "planned" as const,
     overview:
-      "Doctoral research program producing innovative contributions in distributed computing, machine learning, security protocols, and advanced computing algorithms.",
+      "The department's doctoral research program.",
     semesters: [
       {
         sem: "Research Activities",
@@ -116,8 +116,8 @@ const detailedPrograms = [
       },
     ],
     highlights: [
-      "Department noticeboard integration for viva-voce and thesis defense",
-      "Faculty directory and research group associations",
+      "Notices for seminars and viva-voce",
+      "Faculty directory",
     ],
   },
 ];
@@ -126,9 +126,9 @@ export default function ProgramsPage() {
   return (
     <>
       <PageHeader
-        label="Department Programs"
-        title="One platform built for the entire department."
-        description="While currently active for MCA 2026 students, the platform architecture is structured to serve every Computer Science program at Aligarh Muslim University."
+        label="Programs"
+        title="Programs in the Department of Computer Science"
+        description="AMU BATCH X fully supports the MCA 2026 batch today. Support for other programs is being added."
       />
 
       <section className="py-14 sm:py-20 border-b border-border bg-background">
@@ -139,7 +139,7 @@ export default function ProgramsPage() {
               <div
                 key={prog.id}
                 id={prog.id}
-                className="ledger-card overflow-hidden border border-border bg-surface p-6 sm:p-10"
+                data-reveal className="ledger-card overflow-hidden border border-border bg-surface p-6 sm:p-10"
               >
                 <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border pb-4">
                   <div className="flex items-center gap-3">
@@ -167,7 +167,7 @@ export default function ProgramsPage() {
                 <div className="mt-8 grid gap-6 lg:grid-cols-12">
                   <div className="lg:col-span-7 rounded-xl border border-border bg-surface-muted p-5">
                     <h4 className="font-mono-code text-xs font-bold uppercase tracking-wider text-foreground mb-3">
-                      Representative Coursework
+                      Example courses
                     </h4>
                     <div className="space-y-4">
                       {prog.semesters.map((s, idx) => (
@@ -190,7 +190,7 @@ export default function ProgramsPage() {
 
                   <div className="lg:col-span-5 rounded-xl border border-primary/20 bg-primary-light/40 p-5">
                     <h4 className="font-mono-code text-xs font-bold uppercase tracking-wider text-primary mb-3">
-                      Platform Integration
+                      In AMU BATCH X
                     </h4>
                     <ul className="space-y-2.5">
                       {prog.highlights.map((h, hIdx) => (
@@ -210,36 +210,36 @@ export default function ProgramsPage() {
           <div className="mt-16 ledger-card border border-border bg-surface p-6 sm:p-8">
             <div className="border-b border-border pb-4 mb-6">
               <span className="font-mono-code text-xs font-bold uppercase tracking-wider text-primary">
-                Institutional Hierarchy
+                Status
               </span>
               <h3 className="font-display text-xl font-bold text-foreground mt-1">
-                Department of Computer Science Academic Tree
+                Support by program
               </h3>
             </div>
 
             <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
               <div className="rounded-xl border border-primary/30 bg-primary-light p-4">
-                <span className="font-mono-code text-[10px] uppercase font-bold text-primary">Core Hub</span>
+                <span className="font-mono-code text-[10px] uppercase font-bold text-primary">Live</span>
                 <h4 className="font-bold text-sm text-foreground mt-1">MCA Program</h4>
-                <p className="text-xs text-muted mt-1">Batch of 2026 active with full timetable and attendance tracking.</p>
+                <p className="text-xs text-muted mt-1">MCA 2026 batch: timetable, attendance, notices and notes.</p>
               </div>
 
               <div className="rounded-xl border border-border bg-surface-muted p-4">
-                <span className="font-mono-code text-[10px] uppercase font-bold text-accent-terracotta">Staged Expansion</span>
+                <span className="font-mono-code text-[10px] uppercase font-bold text-accent-terracotta">In development</span>
                 <h4 className="font-bold text-sm text-foreground mt-1">M.Sc. Computer Science</h4>
-                <p className="text-xs text-muted mt-1">Curriculum and specialization pathways prepared for integration.</p>
+                <p className="text-xs text-muted mt-1">Notices work today. Timetable and subjects are being added.</p>
               </div>
 
               <div className="rounded-xl border border-border bg-surface-muted p-4">
-                <span className="font-mono-code text-[10px] uppercase font-bold text-muted">Undergraduate</span>
+                <span className="font-mono-code text-[10px] uppercase font-bold text-muted">Planned</span>
                 <h4 className="font-bold text-sm text-foreground mt-1">B.Sc. (Hons.)</h4>
-                <p className="text-xs text-muted mt-1">Multi-course architecture supports future undergraduate enrollment.</p>
+                <p className="text-xs text-muted mt-1">Planned after M.Sc.</p>
               </div>
 
               <div className="rounded-xl border border-border bg-surface-muted p-4">
-                <span className="font-mono-code text-[10px] uppercase font-bold text-muted">Doctoral</span>
+                <span className="font-mono-code text-[10px] uppercase font-bold text-muted">Planned</span>
                 <h4 className="font-bold text-sm text-foreground mt-1">Ph.D. Research</h4>
-                <p className="text-xs text-muted mt-1">Department seminar and research viva announcements layer.</p>
+                <p className="text-xs text-muted mt-1">Notices for seminars and viva-voce.</p>
               </div>
             </div>
           </div>

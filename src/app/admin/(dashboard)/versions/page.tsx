@@ -117,7 +117,7 @@ export default async function AdminVersionsPage() {
               <div className="mt-4 pt-3 border-t border-border/60 flex flex-wrap items-center justify-between gap-3 font-mono-code text-[11px] text-muted">
                 <div className="flex flex-wrap items-center gap-4">
                   <span>
-                    Minimum Supported OS: <strong className="text-foreground">v{ver.minimum_supported_version || "1.0.8"}</strong>
+                    Minimum Supported OS: <strong className="text-foreground">v{ver.minimum_supported_version || ver.latest_version}</strong>
                   </span>
                   <span>
                     Policy:{" "}

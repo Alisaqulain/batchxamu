@@ -20,9 +20,11 @@ const staticRoutes = [
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = siteConfig.url;
+  const lastModified = new Date();
 
   const staticPages = staticRoutes.map((route) => ({
     url: route === "" ? `${baseUrl}/` : `${baseUrl}${route}`,
+    lastModified,
     changeFrequency: route === "" || route === "/download" ? ("weekly" as const) : ("monthly" as const),
     priority: route === "" ? 1 : route === "/download" ? 0.95 : 0.7,
   }));

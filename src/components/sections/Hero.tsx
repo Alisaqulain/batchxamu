@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, type PointerEvent } from "react";
+import { motion, useMotionValue, useScroll, useSpring, useTransform } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
 import { DownloadButton } from "@/components/ui/DownloadButton";
@@ -24,30 +25,55 @@ import {
   WifiOff,
   ArrowRight,
   Layers,
-  MapPin,
 } from "lucide-react";
-import { siteConfig } from "@/lib/site";
-import { cn } from "@/lib/utils";
-import { useScrollDepth } from "@/hooks/useScrollDepth";
+import { useLatestRelease } from "@/components/ui/DownloadModal";
+import { cn, formatVersion } from "@/lib/utils";
 
 const heroTabs = [
-  { id: "timetable", label: "Timetable", icon: Calendar, description: "Lecture halls CS-01 to CS-04 & Unix labs" },
-  { id: "grid", label: "Weekly Grid", icon: LayoutGrid, description: "Full 5-day master lab & class roster" },
-  { id: "attendance", label: "75% Attendance", icon: ClipboardCheck, description: "Theory & lab aggregate safety margins" },
-  { id: "notices", label: "Notice Feed", icon: Bell, description: "Official department circulars with push alerts" },
-  { id: "vault", label: "Study Vault", icon: BookOpen, description: "Curated notes & previous year exam questions" },
+  { id: "timetable", label: "Today", icon: Calendar, description: "Today's classes and rooms" },
+  { id: "grid", label: "Week", icon: LayoutGrid, description: "The full weekly timetable" },
+  { id: "attendance", label: "Attendance", icon: ClipboardCheck, description: "Where you stand against 75%" },
+  { id: "notices", label: "Notices", icon: Bell, description: "Department notices" },
+  { id: "vault", label: "Notes", icon: BookOpen, description: "Notes and past papers" },
 ];
 
-interface HeroProps {
-  latestVersion?: string;
-}
-
-export function Hero({ latestVersion }: HeroProps = {}) {
-  const displayVersion = latestVersion || siteConfig.appVersion;
+export function Hero() {
+  const displayVersion = formatVersion(useLatestRelease().version);
   const [activeTab, setActiveTab] = useState("timetable");
   const [selectedDay, setSelectedDay] = useState("Mon");
   const [isPaused, setIsPaused] = useState(false);
-  const [heroRef, scrollProgress] = useScrollDepth<HTMLElement>({ threshold: 0.1 });
+  const heroRef = useRef<HTMLElement>(null);
+
+  // Scroll-linked 3D: as the hero scrolls away the phones tilt back and fan out.
+  const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
+  const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 26, mass: 0.4 });
+  const centerRotateX = useTransform(progress, [0, 1], [0, 24]);
+  const centerY = useTransform(progress, [0, 1], [0, -90]);
+  const centerScale = useTransform(progress, [0, 1], [1, 0.88]);
+  const sideX = useTransform(progress, [0, 1], [70, 200]);
+  const sideXNeg = useTransform(sideX, (v) => -v);
+  const sideRotate = useTransform(progress, [0, 1], [16, 40]);
+  const sideRotateNeg = useTransform(sideRotate, (v) => -v);
+  const sideY = useTransform(progress, [0, 1], [0, 70]);
+  const textY = useTransform(progress, [0, 1], [0, -70]);
+  const textOpacity = useTransform(progress, [0, 0.8], [1, 0.15]);
+
+  // Pointer parallax: the whole device stage leans toward the cursor.
+  const pointerX = useMotionValue(0);
+  const pointerY = useMotionValue(0);
+  const stageRotateY = useSpring(useTransform(pointerX, [-0.5, 0.5], [-9, 9]), { stiffness: 90, damping: 18 });
+  const stageRotateX = useSpring(useTransform(pointerY, [-0.5, 0.5], [7, -7]), { stiffness: 90, damping: 18 });
+
+  const handleStagePointer = (e: PointerEvent<HTMLDivElement>) => {
+    if (e.pointerType === "touch") return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    pointerX.set((e.clientX - rect.left) / rect.width - 0.5);
+    pointerY.set((e.clientY - rect.top) / rect.height - 0.5);
+  };
+  const resetStagePointer = () => {
+    pointerX.set(0);
+    pointerY.set(0);
+  };
 
   // Auto-advance hero app screen every 4 seconds (within 3 to 5 second range)
   useEffect(() => {
@@ -62,10 +88,6 @@ export function Hero({ latestVersion }: HeroProps = {}) {
     return () => clearTimeout(timer);
   }, [activeTab, isPaused]);
 
-  // Subtle differential parallax offsets for 3D depth layers
-  const backgroundLayerOffset = (scrollProgress - 0.5) * -35;
-  const foregroundLayerOffset = (scrollProgress - 0.5) * 15;
-
   return (
     <section
       ref={heroRef}
@@ -73,22 +95,21 @@ export function Hero({ latestVersion }: HeroProps = {}) {
       onMouseLeave={() => setIsPaused(false)}
       onTouchStart={() => setIsPaused(true)}
       onTouchEnd={() => setIsPaused(false)}
-      className="relative overflow-hidden border-b border-border bg-gradient-to-b from-surface via-background to-surface-muted/30 pt-8 pb-16 sm:pt-12 sm:pb-24"
+      className="relative overflow-hidden border-b border-border bg-surface pt-8 pb-16 sm:pt-12 sm:pb-24"
     >
-      {/* Background Architectural Grid & Atmospheric Depth */}
       <div className="pointer-events-none absolute inset-0 arch-grid opacity-50" />
-      <div className="pointer-events-none absolute -top-32 right-10 h-[500px] w-[500px] rounded-full bg-primary/6 blur-3xl" />
-      <div className="pointer-events-none absolute top-48 -left-20 h-[400px] w-[400px] rounded-full bg-primary/4 blur-3xl" />
 
       <div className="relative z-10 mx-auto max-w-[1536px] px-4 sm:px-8 lg:px-12 xl:px-16">
         {/* Asymmetrical Editorial Composition: Desktop Grid (5 Cols Text / 7 Cols 3D Stage) */}
         <div className="grid gap-12 lg:grid-cols-12 lg:items-center">
           
           {/* Left Column: Academic Masthead & Action Directives */}
-          <div className="lg:col-span-5 flex flex-col items-start text-left">
+          <motion.div
+            style={{ y: textY, opacity: textOpacity }}
+            className="lg:col-span-5 flex flex-col items-start text-left"
+          >
             {/* Department Identity Pill */}
             <div className="animate-rise inline-flex items-center gap-2 rounded-full border border-primary/25 bg-surface px-3 py-1 font-mono-code text-[11px] sm:text-xs font-semibold text-primary shadow-2xs">
-              <span className="h-2 w-2 rounded-full bg-primary animate-pulse shrink-0" aria-hidden="true" />
               <span>Department of Computer Science</span>
               <span className="h-1 w-1 rounded-full bg-border shrink-0" aria-hidden="true" />
               <span className="text-muted">Aligarh</span>
@@ -96,8 +117,7 @@ export function Hero({ latestVersion }: HeroProps = {}) {
 
             {/* App Branding Row */}
             <div className="animate-rise animate-rise-delay-1 mt-5 flex items-center gap-4">
-              <div className="relative group shrink-0">
-                <div className="absolute -inset-1 rounded-[22px] bg-gradient-to-tr from-primary to-primary-bright opacity-25 blur-xs group-hover:opacity-45 transition-opacity" />
+              <div className="relative shrink-0">
                 <Image
                   src="/logo.png"
                   alt="AMU BATCH X official application icon"
@@ -114,18 +134,18 @@ export function Hero({ latestVersion }: HeroProps = {}) {
                     AMU BATCH X
                   </h1>
                   <span className="rounded-md bg-primary-light px-2 py-0.5 font-mono-code text-[11px] font-bold text-primary border border-primary/25">
-                    v{displayVersion} Stable
+                    {displayVersion}
                   </span>
                 </div>
                 <h2 className="mt-1 font-mono-code text-xs sm:text-sm font-semibold text-primary">
-                  Department of Computer Science Student Platform
+                  Student app for AMU Computer Science
                 </h2>
               </div>
             </div>
 
             {/* Factual Value Narrative */}
             <p className="animate-rise animate-rise-delay-2 mt-5 text-sm sm:text-base text-muted leading-relaxed">
-              AMU BATCH X is a student-focused academic platform designed for the Department of Computer Science community in Aligarh. It simplifies academic coordination by providing daily lecture timetables, laboratory room allocations, the strict 75% attendance threshold tracking, verified department notices, assignments, study notes, exam information, and direct offline mobile app access.
+              Your timetable, attendance, department notices and notes in one app. Built by students of the Department of Computer Science at Aligarh Muslim University. Free, and works offline.
             </p>
 
             {/* Primary Action Button Cluster */}
@@ -135,7 +155,7 @@ export function Hero({ latestVersion }: HeroProps = {}) {
                 href="#capabilities"
                 className="inline-flex min-h-[46px] items-center justify-center gap-2 rounded-xl border border-border bg-surface px-5 py-2.5 font-mono-code text-xs sm:text-sm font-semibold text-foreground hover:border-primary/40 hover:bg-surface-muted transition-colors text-center touch-manipulation"
               >
-                <span>Inspect Capabilities</span>
+                <span>See features</span>
                 <ArrowRight className="h-4 w-4 text-primary" />
               </Link>
             </div>
@@ -144,17 +164,17 @@ export function Hero({ latestVersion }: HeroProps = {}) {
             <div className="animate-rise animate-rise-delay-3 mt-5 flex flex-wrap items-center gap-2 sm:gap-3 text-[11px] sm:text-xs font-mono-code text-muted">
               <span className="inline-flex items-center gap-1">
                 <Smartphone className="h-3.5 w-3.5 text-primary" />
-                Android (Live) · iOS (In Dev)
+                Android · iOS coming later
               </span>
               <span className="h-1 w-1 rounded-full bg-border" aria-hidden="true" />
               <span className="inline-flex items-center gap-1">
                 <WifiOff className="h-3.5 w-3.5 text-primary" />
-                100% Offline SQLite
+                Works offline
               </span>
               <span className="h-1 w-1 rounded-full bg-border" aria-hidden="true" />
               <span className="inline-flex items-center gap-1">
                 <ShieldCheck className="h-3.5 w-3.5 text-primary" />
-                Student Built · Zero Ads
+                No ads
               </span>
             </div>
 
@@ -163,9 +183,8 @@ export function Hero({ latestVersion }: HeroProps = {}) {
               <div className="flex items-center justify-between mb-3 font-mono-code text-xs">
                 <span className="font-bold text-foreground flex items-center gap-1.5">
                   <Layers className="h-4 w-4 text-primary" />
-                  <span>Live App Screen Director</span>
+                  <span>Preview the app</span>
                 </span>
-                <span className="text-muted text-xs">Select to inspect</span>
               </div>
 
               <div
@@ -204,113 +223,116 @@ export function Hero({ latestVersion }: HeroProps = {}) {
                 })}
               </div>
             </div>
-          </div>
+          </motion.div>
 
-          {/* Right Column: 3D Spatial Device Stage */}
+          {/* Right Column: 3D device stage */}
           <div className="lg:col-span-7 relative flex items-center justify-center pt-4 lg:pt-0">
-            <div className="perspective-deep w-full max-w-[680px] py-4 relative flex items-center justify-center min-h-[580px] sm:min-h-[640px]">
-              
-              {/* Secondary Layer Left: 3D Rotated Phone (Attendance Engine) */}
-              <div
-                onClick={() => setActiveTab("attendance")}
-                style={{
-                  transform: `translate3d(-140px, ${backgroundLayerOffset}px, -70px) rotateY(16deg) rotateX(2deg) scale(0.88)`,
-                }}
-                className={cn(
-                  "hidden md:block absolute left-2 top-10 w-[280px] sm:w-[300px] cursor-pointer preserve-3d transition-all duration-500 z-0",
-                  "opacity-70 hover:opacity-95 hover:scale-92 select-none",
-                  activeTab === "attendance" && "opacity-95 ring-2 ring-primary/40 rounded-[48px]"
-                )}
-                title="Click to bring 75% Attendance Ledger into focus"
+            <div
+              onPointerMove={handleStagePointer}
+              onPointerLeave={resetStagePointer}
+              className="perspective-deep w-full max-w-[680px] py-4 relative flex items-center justify-center min-h-[580px] sm:min-h-[640px]"
+            >
+              <motion.div
+                style={{ rotateX: stageRotateX, rotateY: stageRotateY, transformStyle: "preserve-3d" }}
+                className="relative flex w-full items-center justify-center"
               >
-                <div className="shadow-3d-layer rounded-[44px] overflow-hidden">
-                  <PhoneMockup className="shadow-none">
-                    <AttendanceAppScreen />
-                  </PhoneMockup>
-                </div>
-                <div className="mt-2 text-center font-mono-code text-xs font-semibold text-primary flex items-center justify-center gap-1.5">
-                  <ShieldCheck className="h-3.5 w-3.5" />
-                  <span>75% Margin Engine</span>
-                </div>
-              </div>
-
-              {/* Central Primary Phone: Dominant Foreground Screen */}
-              <div
-                style={{
-                  transform: `translate3d(0, ${foregroundLayerOffset}px, 40px)`,
-                }}
-                className="relative z-20 w-full max-w-[310px] sm:max-w-[350px] preserve-3d transition-transform duration-300"
-              >
-                {/* Floating Context Pill: Live Status */}
-                <div className="hidden sm:flex absolute -left-14 top-20 z-30 items-center gap-1.5 rounded-xl border border-primary/20 bg-surface/95 px-3 py-1.5 text-xs font-mono-code font-bold text-primary shadow-md backdrop-blur-md">
-                  <span className="relative flex h-2 w-2">
-                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-75" />
-                    <span className="relative inline-flex h-2 w-2 rounded-full bg-primary" />
-                  </span>
-                  <span>75% Cutoff Calculated</span>
-                </div>
-
-                {/* Floating Context Pill: Campus Location */}
-                <div className="hidden sm:flex absolute -right-12 top-48 z-30 items-center gap-1.5 rounded-xl border border-accent-terracotta/25 bg-surface/95 px-3 py-1.5 text-xs font-mono-code font-bold text-accent-terracotta shadow-md backdrop-blur-md">
-                  <MapPin className="h-3.5 w-3.5 text-accent-terracotta shrink-0" />
-                  <span>Halls CS-01 to CS-04</span>
-                </div>
-
-                {/* Floating Context Pill: Push Notifications */}
-                <div className="hidden sm:flex absolute -left-10 bottom-24 z-30 items-center gap-1.5 rounded-xl border border-border bg-surface/95 px-3 py-1.5 text-xs font-mono-code font-bold text-foreground shadow-md backdrop-blur-md">
-                  <WifiOff className="h-3.5 w-3.5 text-primary shrink-0" />
-                  <span>Full Offline SQLite</span>
-                </div>
-
-                {/* Primary Hardware Frame with Deep Contact Shadow */}
-                <div className="shadow-3d-phone rounded-[48px]">
-                  <PhoneMockup>
-                    <div
-                      role="tabpanel"
-                      id={`hero-panel-${activeTab}`}
-                      aria-labelledby={`hero-tab-${activeTab}`}
-                      className="h-full"
-                    >
-                      {activeTab === "timetable" && (
-                        <DailyTimetableAppScreen priority />
-                      )}
-                      {activeTab === "grid" && (
-                        <FullTimetableAppScreen priority />
-                      )}
-                      {activeTab === "attendance" && <AttendanceAppScreen priority />}
-                      {activeTab === "notices" && <NoticesAppScreen priority />}
-                      {activeTab === "vault" && <VaultAppScreen priority />}
+                {/* Left phone: attendance */}
+                <motion.button
+                  type="button"
+                  onClick={() => setActiveTab("attendance")}
+                  aria-label="Show attendance screen"
+                  initial={{ opacity: 0, x: 120, rotateY: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, x: 0, rotateY: 0, scale: 1 }}
+                  transition={{ duration: 1.1, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                  className="hidden xl:block absolute left-0 top-10 z-0 w-[270px] cursor-pointer select-none text-left"
+                >
+                  <motion.div
+                    style={{ x: sideXNeg, y: sideY, rotateY: sideRotate, z: -80, scale: 0.86, transformStyle: "preserve-3d" }}
+                    className={cn(
+                      "transition-opacity duration-300 opacity-75 hover:opacity-100",
+                      activeTab === "attendance" && "opacity-100"
+                    )}
+                  >
+                    <div className={cn("shadow-3d-layer rounded-[44px] overflow-hidden", activeTab === "attendance" && "ring-2 ring-primary/40")}>
+                      <PhoneMockup className="shadow-none">
+                        <AttendanceAppScreen />
+                      </PhoneMockup>
                     </div>
-                  </PhoneMockup>
-                </div>
-              </div>
+                    <div className="mt-2 text-center font-mono-code text-xs font-semibold text-primary flex items-center justify-center gap-1.5">
+                      <ShieldCheck className="h-3.5 w-3.5" />
+                      <span>Attendance</span>
+                    </div>
+                  </motion.div>
+                </motion.button>
 
-              {/* Secondary Layer Right: 3D Rotated Phone (Notice Feed) */}
-              <div
-                onClick={() => setActiveTab("notices")}
-                style={{
-                  transform: `translate3d(140px, ${backgroundLayerOffset}px, -70px) rotateY(-16deg) rotateX(2deg) scale(0.88)`,
-                }}
-                className={cn(
-                  "hidden md:block absolute right-2 top-10 w-[280px] sm:w-[300px] cursor-pointer preserve-3d transition-all duration-500 z-0",
-                  "opacity-70 hover:opacity-95 hover:scale-92 select-none",
-                  activeTab === "notices" && "opacity-95 ring-2 ring-accent-terracotta/40 rounded-[48px]"
-                )}
-                title="Click to bring Notice Dispatch Feed into focus"
-              >
-                <div className="shadow-3d-layer rounded-[44px] overflow-hidden">
-                  <PhoneMockup className="shadow-none">
-                    <NoticesAppScreen />
-                  </PhoneMockup>
-                </div>
-                <div className="mt-2 text-center font-mono-code text-xs font-semibold text-accent-terracotta flex items-center justify-center gap-1.5">
-                  <Bell className="h-3.5 w-3.5" />
-                  <span>Push Notice Broadcast</span>
-                </div>
-              </div>
+                {/* Center phone: the selected screen */}
+                <motion.div
+                  initial={{ opacity: 0, y: 120, rotateX: 30 }}
+                  animate={{ opacity: 1, y: 0, rotateX: 0 }}
+                  transition={{ duration: 1.1, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+                  className="relative z-20 w-full max-w-[310px] sm:max-w-[350px]"
+                  style={{ transformStyle: "preserve-3d" }}
+                >
+                  <motion.div
+                    style={{ rotateX: centerRotateX, y: centerY, scale: centerScale, z: 40, transformStyle: "preserve-3d" }}
+                    className="shadow-3d-phone rounded-[48px]"
+                  >
+                    <PhoneMockup>
+                      <div
+                        role="tabpanel"
+                        id={`hero-panel-${activeTab}`}
+                        aria-labelledby={`hero-tab-${activeTab}`}
+                        className="h-full"
+                      >
+                        <motion.div
+                          key={activeTab}
+                          initial={{ opacity: 0, x: 24 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                          className="h-full"
+                        >
+                          {activeTab === "timetable" && <DailyTimetableAppScreen priority />}
+                          {activeTab === "grid" && <FullTimetableAppScreen priority />}
+                          {activeTab === "attendance" && <AttendanceAppScreen priority />}
+                          {activeTab === "notices" && <NoticesAppScreen priority />}
+                          {activeTab === "vault" && <VaultAppScreen priority />}
+                        </motion.div>
+                      </div>
+                    </PhoneMockup>
+                  </motion.div>
+                </motion.div>
+
+                {/* Right phone: notices */}
+                <motion.button
+                  type="button"
+                  onClick={() => setActiveTab("notices")}
+                  aria-label="Show notices screen"
+                  initial={{ opacity: 0, x: -120, rotateY: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, x: 0, rotateY: 0, scale: 1 }}
+                  transition={{ duration: 1.1, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                  className="hidden xl:block absolute right-0 top-10 z-0 w-[270px] cursor-pointer select-none text-left"
+                >
+                  <motion.div
+                    style={{ x: sideX, y: sideY, rotateY: sideRotateNeg, z: -80, scale: 0.86, transformStyle: "preserve-3d" }}
+                    className={cn(
+                      "transition-opacity duration-300 opacity-75 hover:opacity-100",
+                      activeTab === "notices" && "opacity-100"
+                    )}
+                  >
+                    <div className={cn("shadow-3d-layer rounded-[44px] overflow-hidden", activeTab === "notices" && "ring-2 ring-accent-terracotta/40")}>
+                      <PhoneMockup className="shadow-none">
+                        <NoticesAppScreen />
+                      </PhoneMockup>
+                    </div>
+                    <div className="mt-2 text-center font-mono-code text-xs font-semibold text-accent-terracotta flex items-center justify-center gap-1.5">
+                      <Bell className="h-3.5 w-3.5" />
+                      <span>Notices</span>
+                    </div>
+                  </motion.div>
+                </motion.button>
+              </motion.div>
             </div>
           </div>
-
         </div>
       </div>
     </section>

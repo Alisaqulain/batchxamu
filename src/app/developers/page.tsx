@@ -8,48 +8,48 @@ import Link from "next/link";
 import { siteConfig } from "@/lib/site";
 
 export const metadata = createMetadata({
-  title: "Engineering Team",
+  title: "Developers",
   description:
-    "Meet the student developers behind AMU BATCH X at the Department of Computer Science, Aligarh Muslim University: Ali Saqulain, Sameer Ahmad, and Okasha Ansari.",
+    "AMU BATCH X is built by Ali Saqulain and Sameer Ahmad, students at the Department of Computer Science, Aligarh Muslim University.",
   path: "/developers",
 });
 
 const techStack = [
-  { tech: "Next.js & React 19", role: "Web Portal, SEO & App Distribution Engine" },
-  { tech: "Tailwind CSS v4", role: "High-contrast collegiate design system & responsive layout" },
-  { tech: "Android Native / Kotlin", role: "Mobile application with offline SQLite and priority push alerts" },
-  { tech: "TypeScript 5", role: "End-to-end type safety across data schemas and UI models" },
+  { tech: "Next.js and React", role: "This website and APK downloads" },
+  { tech: "Tailwind CSS", role: "Styling" },
+  { tech: "Android", role: "The mobile app, with offline storage and push notifications" },
+  { tech: "Supabase", role: "Release management and APK hosting" },
 ];
 
 export default function DevelopersPage() {
   return (
     <>
       <PageHeader
-        label="Engineering"
-        title="Built by students who sit in the same classrooms."
-        description="AMU BATCH X was created by MCA students at the Department of Computer Science to solve real daily campus coordination challenges."
+        label="Developers"
+        title="The people behind AMU BATCH X"
+        description="AMU BATCH X is built by two MCA students at the Department of Computer Science, Aligarh Muslim University."
       />
 
       <section className="py-14 sm:py-20 border-b border-border bg-background">
         <div className="mx-auto max-w-[1536px] px-4 sm:px-8 lg:px-12 xl:px-16">
           {/* Engineering Mission Statement */}
-          <div className="ledger-card border border-border bg-surface p-6 sm:p-10 mb-12">
+          <div data-reveal className="ledger-card border border-border bg-surface p-6 sm:p-10 mb-12">
             <div className="max-w-3xl">
               <span className="font-mono-code text-xs font-bold uppercase tracking-wider text-primary">
-                Student Engineering Philosophy
+                Why we built it
               </span>
               <h2 className="font-display text-2xl font-bold text-foreground mt-2 sm:text-3xl">
-                Software built from genuine campus necessity.
+                We needed it ourselves.
               </h2>
               <p className="mt-3 text-sm leading-relaxed text-muted sm:text-base">
-                We did not build this platform as a generic coding exercise. Every semester, students scrambled across WhatsApp groups to find out where an afternoon lab had been shifted, or tried to calculate whether they were short of the 75 percent attendance threshold before mid-semester exams. We decided to solve this directly by building a purpose-driven platform for our department.
+                Every semester we were digging through WhatsApp groups to find out where a lab had moved, or working out by hand whether we were still above 75% attendance. So we built an app for it.
               </p>
             </div>
 
             {/* Architecture Stack */}
             <div className="mt-8 border-t border-border pt-6">
               <span className="font-mono-code text-xs font-bold uppercase tracking-wider text-muted block mb-3">
-                Core Technology Stack
+                Tech stack
               </span>
               <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
                 {techStack.map((st) => (
@@ -66,18 +66,18 @@ export default function DevelopersPage() {
           <div className="space-y-6">
             <div className="border-b border-border pb-3">
               <span className="font-mono-code text-xs font-bold uppercase tracking-wider text-primary">
-                Core Development Team
+                Team
               </span>
               <h3 className="font-display text-xl font-bold text-foreground mt-1">
-                Student Architects & Engineers
+                Developers
               </h3>
             </div>
 
-            <div className="grid gap-6 md:grid-cols-3">
+            <div className="grid gap-6 md:grid-cols-2 max-w-4xl">
               {developers.map((dev) => (
                 <article
                   key={dev.name}
-                  className="ledger-card flex flex-col justify-between border border-border bg-surface p-6 sm:p-7"
+                  data-reveal className="ledger-card flex flex-col justify-between border border-border bg-surface p-6 sm:p-7"
                 >
                   <div>
                     <div className="flex items-center gap-4">
@@ -163,14 +163,14 @@ export default function DevelopersPage() {
               <div className="flex items-center gap-2">
                 <GitBranch className="h-4 w-4 text-primary" />
                 <span className="font-mono-code text-xs font-bold uppercase tracking-wider text-primary">
-                  Open Student Collaboration
+                  Contribute
                 </span>
               </div>
               <h3 className="font-display text-xl font-bold text-foreground mt-2">
-                Contribute code, lecture notes, or mock questions.
+                Send us code, notes or questions.
               </h3>
               <p className="mt-2 text-xs leading-relaxed text-muted sm:text-sm">
-                We welcome pull requests, verified syllabus notes, solved semester question papers, and bug reports from across the Department of Computer Science.
+                Pull requests, notes, solved question papers and bug reports are all welcome.
               </p>
             </div>
 
@@ -182,13 +182,13 @@ export default function DevelopersPage() {
                 className="inline-flex items-center justify-center gap-2 rounded-lg border border-border bg-surface px-4 py-2 font-mono-code text-xs font-semibold text-foreground hover:border-primary/40 hover:bg-surface-muted transition-colors"
               >
                 <GithubIcon className="h-4 w-4" />
-                <span>Visit GitHub Repository</span>
+                <span>GitHub</span>
               </a>
               <Link
                 href="/contact"
                 className="inline-flex items-center justify-center gap-2 rounded-lg bg-primary text-white px-4 py-2 font-mono-code text-xs font-semibold hover:bg-primary-hover transition-colors shadow-xs"
               >
-                <span>Submit Feedback</span>
+                <span>Send feedback</span>
                 <ArrowRight className="h-3.5 w-3.5" />
               </Link>
             </div>

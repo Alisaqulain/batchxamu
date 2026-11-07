@@ -28,7 +28,7 @@ function validate(data: FormData): FormErrors {
   }
   if (!data.subject.trim()) errors.subject = "Subject is required";
   if (!data.message.trim()) {
-    errors.message = "Message content is required";
+    errors.message = "Message is required";
   } else if (data.message.trim().length < 10) {
     errors.message = "Message must be at least 10 characters";
   }
@@ -72,7 +72,7 @@ export function ContactForm() {
           Message Prepared Successfully
         </h3>
         <p className="mt-2 text-xs leading-relaxed text-muted sm:text-sm max-w-md mx-auto">
-          Thank you for reaching out, {formData.name}. You can send this message directly to the development team inbox via your email client.
+          Thanks, {formData.name}. Open the draft below to send your message from your email app.
         </p>
 
         <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:justify-center">
@@ -81,7 +81,7 @@ export function ContactForm() {
             className="inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-5 py-2.5 font-mono-code text-xs font-bold text-white shadow-xs hover:bg-primary-hover transition-colors"
           >
             <Mail className="h-4 w-4" />
-            <span>Open Email Draft to Student Team</span>
+            <span>Open email draft</span>
           </a>
           <Button
             variant="secondary"
@@ -99,9 +99,9 @@ export function ContactForm() {
 
   const fields: { key: keyof FormData; label: string; placeholder: string; type?: string; rows?: number }[] = [
     { key: "name", label: "Your Full Name", placeholder: "e.g. Tariq Khan" },
-    { key: "email", label: "University or Personal Email", placeholder: "e.g. student@myamu.ac.in", type: "email" },
+    { key: "email", label: "Email", placeholder: "e.g. student@myamu.ac.in", type: "email" },
     { key: "subject", label: "Subject", placeholder: "e.g. Question regarding Timetable or Notes" },
-    { key: "message", label: "Message / Feedback", placeholder: "Share your question, bug report, or contribution...", rows: 5 },
+    { key: "message", label: "Message", placeholder: "Your question, bug report or idea", rows: 5 },
   ];
 
   return (
@@ -153,7 +153,7 @@ export function ContactForm() {
 
       <Button type="submit" size="lg" className="w-full sm:w-auto">
         <Send className="h-4 w-4" aria-hidden="true" />
-        <span>Submit Message</span>
+        <span>Continue</span>
       </Button>
     </form>
   );

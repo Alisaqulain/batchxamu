@@ -4,6 +4,7 @@ import { ArrowLeft, Clock, User, Calendar, Download } from "lucide-react";
 import { getAllBlogSlugs, getBlogPost } from "@/data/blog";
 import { createMetadata } from "@/lib/metadata";
 import { formatDate } from "@/lib/utils";
+import { siteConfig } from "@/lib/site";
 
 interface BlogPostPageProps {
   params: Promise<{ slug: string }>;
@@ -63,13 +64,23 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
   if (!post) notFound();
 
+  const url = `${siteConfig.url}/blog/${post.slug}`;
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
     headline: post.title,
     description: post.excerpt,
     datePublished: post.date,
-    author: { "@type": "Person", name: post.author },
+    url,
+    mainEntityOfPage: url,
+    image: `${siteConfig.url}/og-image.png`,
+    inLanguage: "en-IN",
+    author: { "@type": "Organization", name: post.author, url: `${siteConfig.url}/` },
+    publisher: {
+      "@type": "Organization",
+      name: siteConfig.name,
+      logo: { "@type": "ImageObject", url: `${siteConfig.url}/logo.png` },
+    },
     keywords: post.tags.join(", "),
   };
 
@@ -87,7 +98,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             className="inline-flex items-center gap-1.5 font-mono-code text-xs font-semibold text-muted transition-colors hover:text-primary mb-8"
           >
             <ArrowLeft className="h-3.5 w-3.5" aria-hidden="true" />
-            <span>Back to All Articles</span>
+            <span>All posts</span>
           </Link>
 
           {/* Article Header */}
@@ -138,10 +149,10 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           <div className="mt-12 rounded-2xl border border-border bg-surface p-6 sm:p-8 flex items-center justify-between">
             <div>
               <span className="font-mono-code text-xs font-bold uppercase tracking-wider text-primary">
-                Published by
+                Written by
               </span>
               <h4 className="font-display text-base font-bold text-foreground mt-0.5">
-                MCA 2026 Student Engineering Team
+                {post.author}
               </h4>
               <p className="text-xs text-muted mt-1">
                 Department of Computer Science, Aligarh Muslim University.
@@ -152,7 +163,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               className="hidden sm:inline-flex items-center gap-1.5 rounded-lg bg-primary text-white px-4 py-2 font-mono-code text-xs font-bold hover:bg-primary-hover transition-colors shadow-xs"
             >
               <Download className="h-3.5 w-3.5" />
-              <span>Get Android App</span>
+              <span>Get the app</span>
             </Link>
           </div>
         </div>

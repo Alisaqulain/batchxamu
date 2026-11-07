@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import { motion, useScroll, useSpring, useTransform } from "motion/react";
 import { PhoneMockup } from "@/components/ui/PhoneMockup";
 import {
   DailyTimetableAppScreen,
@@ -24,68 +25,68 @@ import { cn } from "@/lib/utils";
 const screens = [
   {
     id: "dailyTimetable",
-    title: "Daily Class Timetable",
-    shortTitle: "Daily",
-    subtitle: "Halls CS-01 to CS-04 & Unix Labs",
+    title: "Today's timetable",
+    shortTitle: "Today",
+    subtitle: "Rooms CS-01 to CS-04 and the labs",
     description:
-      "Structured Monday through Friday roster reflecting the real Department of Computer Science schedule. Highlights ongoing lectures with room numbers, instructor names, and timing intervals.",
+      "Today's classes with the room, teacher and time. The class that's on right now is highlighted.",
     icon: Calendar,
     color: "text-primary",
-    badge: "Daily Schedule",
+    badge: "Timetable",
     time: "14:15",
-    tags: ["Hall CS-01", "Unix Lab 2", "Break Schedule", "Live Indicator"],
+    tags: ["Rooms", "Labs", "Breaks", "Current class"],
   },
   {
     id: "attendance",
-    title: "75% Attendance Engine",
+    title: "Attendance",
     shortTitle: "Attendance",
-    subtitle: "Theory & Practical Laboratory Cutoff Margin Tracker",
+    subtitle: "Theory and lab, against the 75% rule",
     description:
-      "Calculates your exact aggregate and course-wise percentages. Shows precisely how many classes you can afford to miss while remaining safely eligible for examination admit cards.",
+      "Your overall and per-subject attendance, and how many classes you can still miss before you drop below 75%.",
     icon: ClipboardCheck,
     color: "text-primary",
-    badge: "AMU 75% Cutoff Guard",
+    badge: "75% rule",
     time: "09:41",
-    tags: ["Theory & Lab Split", "Cutoff Warning", "Safe Margin Math", "Local Storage"],
+    tags: ["Theory and lab", "Warnings", "Classes left to miss", "Stored on phone"],
   },
   {
     id: "notices",
-    title: "Verified Department Notice Feed",
+    title: "Notices",
     shortTitle: "Notices",
-    subtitle: "Direct Circulars & Instant Push Alerts",
+    subtitle: "Department notices with push notifications",
     description:
-      "Official announcements categorized into Exams, Class Relocations, and Academic Deadlines. Urgent examination notices trigger immediate push broadcasts straight to student phones.",
+      "Notices sorted into exams, room changes and deadlines. Urgent exam notices also come as push notifications.",
     icon: Bell,
     color: "text-accent-terracotta",
-    badge: "Push Notifications",
+    badge: "Notices",
     time: "10:20",
-    tags: ["Exam Schedules", "Hall Relocations", "Sub-5s Push", "Searchable"],
+    tags: ["Exams", "Room changes", "Push notifications", "Search"],
   },
   {
     id: "vault",
-    title: "Academic Vault & PYQ Library",
-    shortTitle: "Vault",
-    subtitle: "Curated Study Material & Semester Exam Archives",
+    title: "Notes",
+    shortTitle: "Notes",
+    subtitle: "Notes, lab programs and past papers",
     description:
-      "Organized unit-wise study notes, solved laboratory program code with sample outputs, and 2021-2025 previous year semester examination question papers curated by the student development team.",
+      "Unit-wise notes, solved lab programs with sample output, and question papers from 2021 to 2025.",
     icon: BookOpen,
     color: "text-primary",
-    badge: "Offline Archive",
+    badge: "Study material",
     time: "16:45",
-    tags: ["Unit-Wise Notes", "Solved Lab Code", "2021-2025 PYQs", "Offline Access"],
+    tags: ["Unit-wise notes", "Lab programs", "Past papers", "Offline"],
   },
   {
     id: "fullTimetable",
-    title: "Weekly Timetable Matrix",
-    shortTitle: "Matrix",
-    subtitle: "Full 5-Day Department Schedule & Lab Matrix",
+    title: "Weekly timetable",
+    shortTitle: "Week",
+    subtitle: "Monday to Friday at a glance",
     description:
-      "Complete Monday to Friday master timetable matrix for the Department of Computer Science. Displays parallel practical lab batches, seminar sessions, and faculty lecture allocations at a single glance.",
+      "The whole week in one grid, including lab batches, seminars and which teacher takes each class.",
     icon: LayoutGrid,
     color: "text-primary",
-    badge: "Full Matrix Grid",
+    badge: "Timetable",
     time: "11:30",
-    tags: ["5-Day Overview", "Parallel Lab Batches", "Faculty Allocations", "Offline Grid"],
+    tags: ["Full week", "Lab batches", "Teachers", "Offline"],
   },
 ];
 
@@ -112,6 +113,15 @@ export function AppScreenshotGallery() {
 
   const current = screens[activeScreen];
 
+  // The phone stage rises and tilts flat as the section scrolls into view.
+  const stageRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: stageRef, offset: ["start end", "center center"] });
+  const stageProgress = useSpring(scrollYProgress, { stiffness: 110, damping: 24, mass: 0.4 });
+  const stageRotateX = useTransform(stageProgress, [0, 1], [38, 0]);
+  const stageScale = useTransform(stageProgress, [0, 1], [0.82, 1]);
+  const stageY = useTransform(stageProgress, [0, 1], [120, 0]);
+  const stageOpacity = useTransform(stageProgress, [0, 0.5], [0, 1]);
+
   return (
     <section
       id="screenshots"
@@ -119,22 +129,21 @@ export function AppScreenshotGallery() {
       onMouseLeave={() => setIsPaused(false)}
       onTouchStart={() => setIsPaused(true)}
       onTouchEnd={() => setIsPaused(false)}
-      className="scroll-mt-20 border-b border-border bg-gradient-to-b from-surface via-surface-muted/30 to-background py-16 sm:py-24 overflow-hidden"
+      className="scroll-mt-20 border-b border-border bg-background py-16 sm:py-24 overflow-hidden"
     >
       <div className="mx-auto max-w-[1536px] px-4 sm:px-8 lg:px-12 xl:px-16">
         
         {/* Section Masthead */}
-        <div className="flex flex-col justify-between gap-4 border-b border-border pb-8 lg:flex-row lg:items-end">
+        <div data-reveal className="flex flex-col justify-between gap-4 border-b border-border pb-8 lg:flex-row lg:items-end">
           <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 rounded-md border border-primary/25 bg-primary-light px-2.5 py-1 font-mono-code text-xs font-semibold text-primary">
-              <Smartphone className="h-3.5 w-3.5" />
-              <span>SPATIAL APP SCREEN SHOWCASE</span>
-            </div>
-            <h2 className="mt-4 font-display text-2xl font-semibold tracking-tight text-foreground sm:text-4xl">
-              Authentic mobile interface. No sketches or marketing mockups.
+            <span className="font-mono-code text-xs font-semibold uppercase tracking-wider text-primary">
+              Screenshots
+            </span>
+            <h2 className="mt-2 font-display text-2xl font-semibold tracking-tight text-foreground sm:text-4xl">
+              Screens from the app
             </h2>
             <p className="mt-2 text-base text-muted">
-              Inspect the real application screens as rendered on Android. Click any screen or use controls to step into spatial focus.
+              These are the actual Android screens. Click one to take a closer look.
             </p>
           </div>
 
@@ -186,7 +195,10 @@ export function AppScreenshotGallery() {
         </div>
 
         {/* 3D Spatial Screen Presentation (Desktop) / Fluid Carousel (Mobile) */}
-        <div className="mt-12">
+        <div ref={stageRef} className="mt-12 perspective-deep">
+          <motion.div
+            style={{ rotateX: stageRotateX, scale: stageScale, y: stageY, opacity: stageOpacity, transformStyle: "preserve-3d" }}
+          >
           {/* Desktop 3D Spatial Stage */}
           <div className="hidden lg:flex perspective-deep items-center justify-center py-6 min-h-[560px] relative">
             {screens.map((screen, idx) => {
@@ -221,7 +233,7 @@ export function AppScreenshotGallery() {
                   onClick={() => setActiveScreen(idx)}
                   style={{ transform, zIndex }}
                   className={cn(
-                    "absolute transition-all duration-500 ease-out w-[320px] preserve-3d select-none rounded-[48px]",
+                    "absolute transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] w-[320px] preserve-3d select-none rounded-[48px]",
                     opacity
                   )}
                   title={`Click to inspect ${screen.title}`}
@@ -251,8 +263,10 @@ export function AppScreenshotGallery() {
             </div>
           </div>
 
+          </motion.div>
+
           {/* Detailed Editorial Caption Bar for Active Screen */}
-          <div className="mt-8 rounded-2xl border border-border bg-surface p-6 sm:p-8 shadow-xs">
+          <div data-reveal className="mt-8 rounded-2xl border border-border bg-surface p-6 sm:p-8 shadow-xs">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-border/80 pb-4">
               <div>
                 <div className="flex items-center gap-2">
@@ -263,9 +277,15 @@ export function AppScreenshotGallery() {
                     {current.badge}
                   </span>
                 </div>
-                <h3 className="font-display text-xl sm:text-2xl font-bold text-foreground mt-1">
+                <motion.h3
+                  key={current.id}
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4 }}
+                  className="font-display text-xl sm:text-2xl font-bold text-foreground mt-1"
+                >
                   {current.title}
-                </h3>
+                </motion.h3>
               </div>
 
               <span className="font-mono-code text-xs text-muted">

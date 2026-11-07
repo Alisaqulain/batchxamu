@@ -19,6 +19,9 @@ const nextConfig: NextConfig = {
     return [
       { source: "/alumni", destination: "/", permanent: true },
       { source: "/courses", destination: "/programs", permanent: true },
+      // Merged into other posts.
+      { source: "/blog/building-better-student-experience", destination: "/blog", permanent: true },
+      { source: "/blog/future-of-digital-university-platforms", destination: "/blog", permanent: true },
     ];
   },
 };

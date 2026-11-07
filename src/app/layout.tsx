@@ -10,8 +10,11 @@ import {
   getOrganizationJsonLd,
   getWebsiteJsonLd,
 } from "@/lib/seo";
+import { getLatestRelease } from "@/lib/app-version";
 import { StickyMobileCTA } from "@/components/ui/StickyMobileCTA";
 import { CookieBanner } from "@/components/ui/CookieBanner";
+import { MotionProvider } from "@/components/motion/MotionProvider";
+import "lenis/dist/lenis.css";
 import "./globals.css";
 
 const plusJakarta = Plus_Jakarta_Sans({
@@ -27,7 +30,7 @@ const fraunces = Fraunces({
 });
 
 export const metadata: Metadata = createMetadata({
-  title: "Department of Computer Science Student Platform",
+  title: siteConfig.fullName,
   description: siteConfig.description,
   path: "",
 });
@@ -42,17 +45,23 @@ export const viewport: Viewport = {
   ],
 };
 
-const structuredData = [
-  getWebsiteJsonLd(),
-  getOrganizationJsonLd(),
-  getMobileAppJsonLd(),
-];
+// The latest app version is read here and shared with every page, so all
+// routes are regenerated at most every 60s. Admin release actions also call
+// revalidatePath("/", "layout") to refresh them immediately.
+export const revalidate = 60;
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const release = await getLatestRelease();
+  const structuredData = [
+    getWebsiteJsonLd(),
+    getOrganizationJsonLd(),
+    getMobileAppJsonLd(release),
+  ];
+
   return (
     <html
       lang="en-IN"
@@ -68,13 +77,15 @@ export default function RootLayout({
         ))}
       </head>
       <body className="flex min-h-full flex-col antialiased">
-        <DownloadModalProvider>
-          <Navbar />
-          <main className="flex-1 w-full overflow-x-hidden">{children}</main>
-          <Footer />
-          <StickyMobileCTA />
-          <CookieBanner />
-        </DownloadModalProvider>
+        <MotionProvider>
+          <DownloadModalProvider initialRelease={release}>
+            <Navbar />
+            <main className="flex-1 w-full overflow-x-hidden">{children}</main>
+            <Footer />
+            <StickyMobileCTA />
+            <CookieBanner />
+          </DownloadModalProvider>
+        </MotionProvider>
       </body>
     </html>
   );

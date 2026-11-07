@@ -25,7 +25,8 @@ export async function GET() {
       },
       {
         headers: {
-          "Cache-Control": "public, s-maxage=30, stale-while-revalidate=120",
+          // Short edge cache so a new release shows up within ~30s everywhere.
+          "Cache-Control": "public, max-age=0, s-maxage=30, must-revalidate",
         },
       }
     );

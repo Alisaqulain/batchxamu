@@ -10,7 +10,6 @@ import {
   Moon,
   ShieldCheck,
   Clock,
-  Sparkles,
   CheckCircle2,
 } from "lucide-react";
 import { DownloadButton } from "@/components/ui/DownloadButton";
@@ -33,69 +32,69 @@ export function CoreCapabilitiesAtlas() {
     {
       id: "attendance" as PillarId,
       stepNumber: "01",
-      title: "75% Attendance & Hall Ticket Engine",
-      subtitle: "Theory & Laboratory Margins Calculated Independently",
+      title: "Attendance",
+      subtitle: "Theory and lab tracked separately",
       icon: ClipboardCheck,
-      badge: "AMU Regulation",
+      badge: "75% rule",
       time: "09:41",
       description:
-        "At Aligarh Muslim University, students must maintain 75 percent attendance across theory and laboratory sessions to receive semester examination admit cards. BATCH X calculates your exact safety margin in real time, alerting you before you enter the debarment zone.",
+        "AMU requires 75% attendance in theory and lab classes to get your exam admit card. The app keeps count for each subject and tells you where you stand before it becomes a problem.",
       points: [
-        "Separate accounting for classroom lectures and multi-hour practical lab sessions.",
-        "Calculates exact safe-absence allowance: know precisely how many classes you can miss while staying above 75%.",
-        "Early warning indicators highlight subjects nearing the 80% caution threshold.",
-        "All data stored locally on your device with complete student privacy.",
+        "Lectures and labs are counted separately.",
+        "Shows how many classes you can still miss and stay above 75%.",
+        "Subjects close to the limit are highlighted.",
+        "Your attendance data stays on your phone.",
       ],
     },
     {
       id: "timetable" as PillarId,
       stepNumber: "02",
-      title: "Daily Timetable & Laboratory Venue Slotting",
-      subtitle: "Mapped to Lecture Halls CS-01 through CS-04 and Unix Labs",
+      title: "Timetable",
+      subtitle: "Rooms CS-01 to CS-04 and the labs",
       icon: Calendar,
-      badge: "Department Roster",
+      badge: "Daily schedule",
       time: "14:10",
       description:
-        "Reflects the actual weekly schedule of the Department of Computer Science. Displays ongoing lectures, venue changes, and lab shifts so you never show up at the wrong department hall.",
+        "The department's weekly timetable, with the room and teacher for each class, so you know where to go.",
       points: [
-        "Structured Monday to Friday class schedule with lecture timings and faculty names.",
-        "Clear demarcation between standard lecture rooms (CS-01 to CS-04) and Unix/Systems laboratories.",
-        "Live ongoing class indicator with real-time room and teacher allocations.",
-        "Cached in local storage on Android: accessible without campus Wi-Fi or cellular signal.",
+        "Monday to Friday, with times and teacher names.",
+        "Lecture rooms and labs are shown differently.",
+        "Highlights the class that's on right now.",
+        "Works without internet.",
       ],
     },
     {
       id: "notices" as PillarId,
       stepNumber: "03",
-      title: "Verified Department Notice Dispatch Feed",
-      subtitle: "Emergency Exam Shifts & Class Reschedules with Push Alerts",
+      title: "Notices",
+      subtitle: "Exam changes and class updates, with push notifications",
       icon: Bell,
-      badge: "Verified Feed",
+      badge: "Department notices",
       time: "10:20",
       description:
-        "Eliminates reliance on cluttered WhatsApp groups and forwarded screenshots. A direct, noise-free dispatch channel delivering official departmental announcements straight from faculty coordinators.",
+        "Department notices in one feed, instead of forwarded screenshots in group chats.",
       points: [
-        "Categorized into Exam Circulars, Room Relocations, Submission Deadlines, and University Notices.",
-        "High-priority alert broadcast for same-day schedule shifts or lab timing revisions.",
-        "Sub-5-second push alerting prevents wasted commutes across campus.",
-        "Searchable archive of all past department notices and circulars.",
+        "Sorted into exams, room changes, deadlines and university notices.",
+        "Same-day changes are marked as urgent.",
+        "Push notifications for urgent notices.",
+        "Search through older notices.",
       ],
     },
     {
       id: "vault" as PillarId,
       stepNumber: "04",
-      title: "Academic Vault & PYQ Question Archive",
-      subtitle: "Curated Study Material, Lab Code & Semester Exam Archives",
+      title: "Notes",
+      subtitle: "Study material, lab programs and past papers",
       icon: BookOpen,
-      badge: "Curated Archive",
+      badge: "Study material",
       time: "16:45",
       description:
-        "Centralized study repository built and maintained by the student development team. Organizes syllabus notes, verified lab implementations, and past semester question papers.",
+        "Notes, lab programs and previous year papers, organized by subject.",
       points: [
-        "Unit-wise study notes for Data Structures, Computer Networks, Operating Systems, and DBMS.",
-        "Solved laboratory program guides with syntax-highlighted code samples.",
-        "Semester question papers spanning 2021 to 2025 with syllabus mapping.",
-        "One-tap offline caching for studying in areas with limited campus connectivity.",
+        "Unit-wise notes for Data Structures, Networks, Operating Systems and DBMS.",
+        "Solved lab programs with code.",
+        "Question papers from 2021 to 2025.",
+        "Save files for offline reading.",
       ],
     },
   ];
@@ -108,17 +107,16 @@ export function CoreCapabilitiesAtlas() {
       <div className="mx-auto max-w-[1536px] px-4 sm:px-8 lg:px-12 xl:px-16">
         
         {/* Section Masthead */}
-        <div className="flex flex-col justify-between gap-4 border-b border-border pb-8 sm:flex-row sm:items-end">
+        <div data-reveal className="flex flex-col justify-between gap-4 border-b border-border pb-8 sm:flex-row sm:items-end">
           <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 rounded-md border border-primary/25 bg-primary-light px-2.5 py-1 font-mono-code text-xs font-semibold text-primary">
-              <Sparkles className="h-3.5 w-3.5" />
-              <span>SYSTEM ARCHITECTURE & CAPABILITIES</span>
-            </div>
-            <h2 className="mt-4 font-display text-2xl font-semibold tracking-tight text-foreground sm:text-4xl">
-              Four core modules engineered for daily student life.
+            <span className="font-mono-code text-xs font-semibold uppercase tracking-wider text-primary">
+              Features
+            </span>
+            <h2 className="mt-2 font-display text-2xl font-semibold tracking-tight text-foreground sm:text-4xl">
+              What&apos;s in the app
             </h2>
             <p className="mt-2 text-base text-muted">
-              Explore the four primary systems that eliminate academic friction for Department of Computer Science students.
+              Attendance, timetable, notices and notes. Pick one to see it on the phone.
             </p>
           </div>
 
@@ -137,12 +135,9 @@ export function CoreCapabilitiesAtlas() {
                 <div className="rounded-2xl border border-border bg-surface-muted/60 p-5 sm:p-7 shadow-xs">
                   {/* Phone Header Strip */}
                   <div className="flex items-center justify-between border-b border-border pb-3 font-mono-code text-xs">
-                    <span className="font-bold text-primary flex items-center gap-1.5">
-                      <span className="h-2 w-2 rounded-full bg-primary animate-pulse" />
-                      <span>LIVE MODULE VIEW</span>
-                    </span>
+                    <span className="font-bold text-primary">App preview</span>
                     <span className="rounded bg-surface px-2 py-0.5 font-bold text-foreground border border-border">
-                      {activePillar.toUpperCase()}
+                      {pillars.find((p) => p.id === activePillar)?.title}
                     </span>
                   </div>
 
@@ -168,7 +163,7 @@ export function CoreCapabilitiesAtlas() {
                   {/* Device Caption & Quick Pill Selector */}
                   <div className="mt-6 border-t border-border pt-4">
                     <div className="flex items-center justify-between font-mono-code text-xs text-muted mb-2">
-                      <span>Tap module to switch phone screen:</span>
+                      <span>Show screen:</span>
                     </div>
                     <div className="grid grid-cols-2 gap-2">
                       {pillars.map((p) => {
@@ -187,7 +182,7 @@ export function CoreCapabilitiesAtlas() {
                             )}
                           >
                             <Icon className="h-3.5 w-3.5 shrink-0" />
-                            <span className="truncate">{p.title.split(" ")[0]}</span>
+                            <span className="truncate">{p.title}</span>
                           </button>
                         );
                       })}
@@ -206,7 +201,7 @@ export function CoreCapabilitiesAtlas() {
                               : "text-muted hover:text-foreground"
                           )}
                         >
-                          Daily Schedule
+                          Day
                         </button>
                         <button
                           type="button"
@@ -218,7 +213,7 @@ export function CoreCapabilitiesAtlas() {
                               : "text-muted hover:text-foreground"
                           )}
                         >
-                          Weekly Matrix
+                          Week
                         </button>
                       </div>
                     )}
@@ -238,6 +233,7 @@ export function CoreCapabilitiesAtlas() {
                 <div
                   key={pillar.id}
                   id={`capability-${pillar.id}`}
+                  data-reveal="right"
                   className={cn(
                     "relative border-b border-border pb-12 transition-all duration-300",
                     isCurrent && "pt-1"
@@ -265,7 +261,7 @@ export function CoreCapabilitiesAtlas() {
                       )}
                     >
                       <Icon className="h-4 w-4 shrink-0" />
-                      <span>{isCurrent ? "Active on Phone" : "Inspect Screen"}</span>
+                      <span>{isCurrent ? "Showing" : "Show on phone"}</span>
                     </button>
                   </div>
 
@@ -301,7 +297,7 @@ export function CoreCapabilitiesAtlas() {
                       <div className="flex items-center justify-between border-b border-border/80 pb-2 text-[11px] font-bold text-muted">
                         <span>Course / Subject</span>
                         <span>Current %</span>
-                        <span>Safety Margin</span>
+                        <span>Can miss</span>
                       </div>
                       <div className="mt-2.5 space-y-2">
                         <div className="flex items-center justify-between text-xs">
@@ -310,7 +306,7 @@ export function CoreCapabilitiesAtlas() {
                           </span>
                           <span className="font-bold text-primary">90.0%</span>
                           <span className="rounded bg-primary-light px-2 py-0.5 text-primary font-bold border border-primary/20">
-                            +6 Safe
+                            6 classes
                           </span>
                         </div>
                         <div className="flex items-center justify-between text-xs">
@@ -319,7 +315,7 @@ export function CoreCapabilitiesAtlas() {
                           </span>
                           <span className="font-bold text-primary">85.0%</span>
                           <span className="rounded bg-primary-light px-2 py-0.5 text-primary font-bold border border-primary/20">
-                            +2 Safe
+                            2 classes
                           </span>
                         </div>
                         <div className="flex items-center justify-between text-xs">
@@ -328,7 +324,7 @@ export function CoreCapabilitiesAtlas() {
                           </span>
                           <span className="font-bold text-accent-terracotta">78.0%</span>
                           <span className="rounded bg-accent-red-light px-2 py-0.5 text-accent-terracotta font-bold border border-accent-coral/30">
-                            Caution (0 Margin)
+                            None left
                           </span>
                         </div>
                       </div>
@@ -364,14 +360,14 @@ export function CoreCapabilitiesAtlas() {
         </div>
 
         {/* Offline & Architecture Foundation Ribbon */}
-        <div className="mt-16 grid gap-4 sm:grid-cols-2 lg:grid-cols-4 font-mono-code text-xs">
+        <div data-reveal-stagger className="mt-16 grid gap-4 sm:grid-cols-2 lg:grid-cols-4 font-mono-code text-xs">
           <div className="rounded-xl border border-border bg-surface-muted/60 p-4 flex items-center gap-3">
             <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary text-white">
               <WifiOff className="h-4 w-4" />
             </div>
             <div>
-              <span className="font-bold text-foreground block">100% Offline SQLite</span>
-              <span className="text-muted text-[11px]">Zero network dependency</span>
+              <span className="font-bold text-foreground block">Works offline</span>
+              <span className="text-muted text-[11px]">Data stored on your phone</span>
             </div>
           </div>
 
@@ -380,8 +376,8 @@ export function CoreCapabilitiesAtlas() {
               <ShieldCheck className="h-4 w-4" />
             </div>
             <div>
-              <span className="font-bold text-foreground block">Student Privacy Guard</span>
-              <span className="text-muted text-[11px]">No external tracking SDKs</span>
+              <span className="font-bold text-foreground block">No tracking</span>
+              <span className="text-muted text-[11px]">No ads or analytics SDKs</span>
             </div>
           </div>
 
@@ -390,8 +386,8 @@ export function CoreCapabilitiesAtlas() {
               <Moon className="h-4 w-4" />
             </div>
             <div>
-              <span className="font-bold text-foreground block">High-Contrast OLED</span>
-              <span className="text-muted text-[11px]">Optimized for night study</span>
+              <span className="font-bold text-foreground block">Dark theme</span>
+              <span className="text-muted text-[11px]">Easier on the eyes at night</span>
             </div>
           </div>
 
@@ -400,8 +396,8 @@ export function CoreCapabilitiesAtlas() {
               <Clock className="h-4 w-4" />
             </div>
             <div>
-              <span className="font-bold text-foreground block">Sub-5s Push Alerts</span>
-              <span className="text-muted text-[11px]">Instant notice delivery</span>
+              <span className="font-bold text-foreground block">Push notifications</span>
+              <span className="text-muted text-[11px]">For urgent notices</span>
             </div>
           </div>
         </div>

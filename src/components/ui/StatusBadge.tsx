@@ -6,7 +6,7 @@ const statusConfig: Record<
   { label: string; className: string; dotClass: string }
 > = {
   live: {
-    label: "Live in v1.0",
+    label: "Live",
     className: "bg-primary-light text-primary border-primary/25",
     dotClass: "bg-primary-bright",
   },
@@ -21,7 +21,7 @@ const statusConfig: Record<
     dotClass: "bg-accent-terracotta",
   },
   planned: {
-    label: "Roadmap",
+    label: "Planned",
     className: "bg-surface-muted text-muted border-border",
     dotClass: "bg-muted-light",
   },

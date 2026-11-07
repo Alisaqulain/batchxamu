@@ -16,7 +16,7 @@ export default async function HomePage() {
   return (
     <>
       {/* 01. APP: Identity, Value, Dominant Download & 3D Stage */}
-      <Hero latestVersion={latest.latest_version} />
+      <Hero />
 
       {/* 02. EXPERIENCE: Authentic App Screenshots Gallery */}
       <AppScreenshotGallery />

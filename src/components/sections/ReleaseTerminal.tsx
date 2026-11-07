@@ -2,6 +2,7 @@ import Image from "next/image";
 import { ShieldCheck, ArrowRight } from "lucide-react";
 import { DownloadButton } from "@/components/ui/DownloadButton";
 import { siteConfig } from "@/lib/site";
+import { formatVersion } from "@/lib/utils";
 import Link from "next/link";
 import { AppVersion } from "@/lib/supabase";
 
@@ -10,27 +11,26 @@ interface ReleaseTerminalProps {
 }
 
 export function ReleaseTerminal({ latest }: ReleaseTerminalProps) {
-  const versionTag = latest?.latest_version || siteConfig.appVersion;
-  const binarySize = latest?.apk_file_size || "Universal arm64 APK";
+  const versionTag = formatVersion(latest?.latest_version || siteConfig.fallbackAppVersion);
+  const binarySize = latest?.apk_file_size || "Android APK";
 
   return (
     <section id="download" className="scroll-mt-20 border-b border-border bg-surface py-16 sm:py-24">
       <div className="mx-auto max-w-[1536px] px-4 sm:px-8 lg:px-12 xl:px-16">
-        <div className="overflow-hidden rounded-2xl border border-border bg-surface shadow-xs">
+        <div data-reveal className="overflow-hidden rounded-2xl border border-border bg-surface shadow-xs">
           
           {/* Top Terminal Bar */}
           <div className="flex flex-wrap items-center justify-between border-b border-border bg-surface-muted px-6 py-4">
             <div className="flex items-center gap-3">
-              <span className="h-2.5 w-2.5 rounded-full bg-primary-bright animate-pulse" />
               <span className="font-mono-code text-xs font-bold uppercase tracking-wider text-foreground">
-                Distribution Station // Department Release Channel
+                Download
               </span>
             </div>
             <div className="flex items-center gap-3 font-mono-code text-xs text-muted">
               <span className="rounded bg-primary-light px-2 py-0.5 font-bold text-primary border border-primary/20">
-                v{versionTag} Stable
+                {versionTag}
               </span>
-              <span>Android (Live) · iOS (In Dev)</span>
+              <span>Android · iOS coming later</span>
             </div>
           </div>
 
@@ -51,16 +51,13 @@ export function ReleaseTerminal({ latest }: ReleaseTerminalProps) {
                       {siteConfig.name}
                     </h2>
                     <p className="font-mono-code text-xs text-primary font-semibold">
-                      Department of Computer Science Edition
-                    </p>
-                    <p className="font-mono-code text-xs text-muted mt-1">
-                      Developed by MCA 2026 Student Engineering Team · Aligarh Muslim University
+                      Department of Computer Science, AMU
                     </p>
                   </div>
                 </div>
 
                 <p className="mt-6 text-sm leading-relaxed text-muted sm:text-base">
-                  Install the verified Android package to start tracking your daily lecture schedule, laboratory attendance, 75 percent examination margin, and verified department circulars. The iOS release is currently in active development.
+                  Install the APK on your Android phone to get your timetable, attendance and department notices. An iOS version is in development.
                 </p>
 
                 {/* Primary Download CTA */}
@@ -70,7 +67,7 @@ export function ReleaseTerminal({ latest }: ReleaseTerminalProps) {
                     href="/download"
                     className="inline-flex items-center justify-center gap-2 rounded-xl border border-border bg-surface px-5 py-2.5 font-mono-code text-xs font-semibold text-foreground hover:border-primary/40 hover:bg-surface-muted transition-colors text-center"
                   >
-                    <span>Installation Guide & Changelog</span>
+                    <span>Install guide and release notes</span>
                     <ArrowRight className="h-3.5 w-3.5 text-muted" />
                   </Link>
                 </div>
@@ -79,15 +76,15 @@ export function ReleaseTerminal({ latest }: ReleaseTerminalProps) {
                 <div className="mt-8 grid grid-cols-2 gap-3 border-t border-border pt-6 sm:grid-cols-3 text-xs font-mono-code">
                   <div>
                     <span className="text-muted block text-xs">Platform</span>
-                    <span className="font-semibold text-foreground mt-0.5 block">Android (Live) · iOS (In Dev)</span>
+                    <span className="font-semibold text-foreground mt-0.5 block">Android 8.0+</span>
                   </div>
                   <div>
-                    <span className="text-muted block text-xs">Format</span>
+                    <span className="text-muted block text-xs">Size</span>
                     <span className="font-semibold text-foreground mt-0.5 block">{binarySize}</span>
                   </div>
                   <div>
-                    <span className="text-muted block text-xs">License</span>
-                    <span className="font-semibold text-primary mt-0.5 block">Student Free</span>
+                    <span className="text-muted block text-xs">Price</span>
+                    <span className="font-semibold text-primary mt-0.5 block">Free</span>
                   </div>
                 </div>
               </div>
@@ -97,7 +94,7 @@ export function ReleaseTerminal({ latest }: ReleaseTerminalProps) {
                 <div className="flex items-center gap-2 mb-3">
                   <ShieldCheck className="h-4 w-4 text-primary" />
                   <h3 className="font-mono-code text-sm font-bold text-primary">
-                    Installation Station
+                    How to install
                   </h3>
                 </div>
 
@@ -108,10 +105,10 @@ export function ReleaseTerminal({ latest }: ReleaseTerminalProps) {
                     </span>
                     <div>
                       <h4 className="text-xs font-bold text-foreground">
-                        Launch Platform Selection
+                        Download the APK
                       </h4>
                       <p className="mt-0.5 text-xs text-muted leading-relaxed">
-                        Tap &quot;Download App&quot; above to select the Android APK package.
+                        Tap &quot;Download App&quot; and choose Android.
                       </p>
                     </div>
                   </div>
@@ -122,10 +119,10 @@ export function ReleaseTerminal({ latest }: ReleaseTerminalProps) {
                     </span>
                     <div>
                       <h4 className="text-xs font-bold text-foreground">
-                        Allow Direct APK Installation
+                        Allow the install
                       </h4>
                       <p className="mt-0.5 text-xs text-muted leading-relaxed">
-                        Select &quot;Install from unknown sources&quot; in Android security settings if prompted.
+                        If Android asks, allow installing apps from this source.
                       </p>
                     </div>
                   </div>
@@ -136,17 +133,17 @@ export function ReleaseTerminal({ latest }: ReleaseTerminalProps) {
                     </span>
                     <div>
                       <h4 className="text-xs font-bold text-foreground">
-                        Open & Synchronize Timetable
+                        Open the app
                       </h4>
                       <p className="mt-0.5 text-xs text-muted leading-relaxed">
-                        Open BATCH X to cache your daily timetable, 75% attendance ledger, and notice feed.
+                        Pick your batch. Your timetable and notices load and are saved for offline use.
                       </p>
                     </div>
                   </div>
                 </div>
 
                 <div className="mt-6 rounded-lg border border-primary/20 bg-primary-light/50 p-3 text-xs text-primary-deep font-mono-code">
-                  Verified student build: Zero tracking, no ads, completely self-contained.
+                  No ads and no tracking.
                 </div>
               </div>
             </div>

@@ -12,40 +12,40 @@ import {
 import Link from "next/link";
 
 export const metadata = createMetadata({
-  title: "Faculty Platform Blueprint",
+  title: "For Teachers",
   description:
-    "Explore the planned AMU BATCH X teacher dashboard: class rescheduling, digital attendance management, notice publishing, and instant student push notifications.",
+    "Planned AMU BATCH X tools for teachers: rescheduling classes, marking attendance and sending notices to students.",
   path: "/teachers",
 });
 
 const facultyModules = [
   {
-    title: "Class Rescheduling & Relocation",
-    desc: "When a lecture needs to be moved to an alternate time or a lab shifted from Lab 1 to Lab 2, the instructor selects the subject and publishes the change in seconds.",
-    impact: "Eliminates empty classroom visits and informal WhatsApp forwards.",
+    title: "Moving a class",
+    desc: "To move a lecture or switch a lab from Lab 1 to Lab 2, pick the subject, set the new time or room, and publish.",
+    impact: "Students aren't left waiting in an empty room.",
     icon: Calendar,
-    tag: "Sub-5s Push Dispatch",
+    tag: "Timetable",
   },
   {
-    title: "Digital Attendance Ledger Sync",
-    desc: "Facilitates digital recording or verification of classroom attendance, synchronizing directly with students 75 percent eligibility margin.",
-    impact: "Zero surprises or discrepancy disputes before semester admit card issuance.",
+    title: "Attendance",
+    desc: "Mark or confirm attendance digitally. Students see the same numbers in their app.",
+    impact: "Fewer disputes when admit cards are issued.",
     icon: ClipboardCheck,
-    tag: "Transparent Records",
+    tag: "Attendance",
   },
   {
-    title: "Assignment Publishing & Problem Sets",
-    desc: "Upload lab problem sets, project guidelines, and deadline parameters directly to enrolled student profiles.",
-    impact: "Centralized submission tracking with clear timestamp verification.",
+    title: "Assignments",
+    desc: "Share lab problem sets, project guidelines and deadlines with the class.",
+    impact: "Everyone gets the same deadline, with a record of when it was posted.",
     icon: FileUp,
-    tag: "Course Vault Sync",
+    tag: "Assignments",
   },
   {
-    title: "High-Priority Department Notices",
-    desc: "Broadcast official academic circulars, mid-semester test timings, and make-up lecture alerts directly from course instructors.",
-    impact: "Guaranteed student visibility with priority banner alerts on Android.",
+    title: "Notices",
+    desc: "Send circulars, mid-semester test timings and extra class announcements to your students.",
+    impact: "Urgent notices arrive as push notifications.",
     icon: BellRing,
-    tag: "Priority Broadcast",
+    tag: "Notices",
   },
 ];
 
@@ -53,9 +53,9 @@ export default function TeachersPage() {
   return (
     <>
       <PageHeader
-        label="Faculty Portal"
-        title="Closing the communication loop on campus."
-        description="A dedicated instructor dashboard in active development to connect Department of Computer Science faculty directly with student devices."
+        label="For teachers"
+        title="Tools for teachers (in development)"
+        description="We're building a simple dashboard for teachers in the Department of Computer Science to update classes, attendance and notices. It isn't available yet."
       />
 
       <section className="py-14 sm:py-20 border-b border-border bg-background">
@@ -65,11 +65,11 @@ export default function TeachersPage() {
             <div className="flex items-center gap-3">
               <StatusBadge status="coming-soon" />
               <span className="text-xs sm:text-sm font-semibold text-accent-terracotta">
-                Phase 2 Architecture: In Active Development
+                Not available yet
               </span>
             </div>
             <p className="text-xs text-muted">
-              Designed in collaboration with MCA students and academic workflows.
+              Planned features are listed below and may change.
             </p>
           </div>
 
@@ -80,7 +80,7 @@ export default function TeachersPage() {
               return (
                 <div
                   key={m.title}
-                  className="ledger-card border border-border bg-surface p-6 sm:p-8 flex flex-col justify-between"
+                  data-reveal className="ledger-card border border-border bg-surface p-6 sm:p-8 flex flex-col justify-between"
                 >
                   <div>
                     <div className="flex items-center justify-between border-b border-border pb-3">
@@ -103,7 +103,7 @@ export default function TeachersPage() {
 
                   <div className="mt-6 rounded-lg bg-surface-muted p-3 border border-border/80 text-xs text-foreground font-medium flex items-center gap-2">
                     <CheckCircle2 className="h-4 w-4 text-primary shrink-0" />
-                    <span>Impact: {m.impact}</span>
+                    <span>{m.impact}</span>
                   </div>
                 </div>
               );
@@ -114,35 +114,35 @@ export default function TeachersPage() {
           <div className="mt-14 ledger-card border border-border bg-surface p-6 sm:p-8">
             <div className="border-b border-border pb-4 mb-6">
               <span className="font-mono-code text-xs font-bold uppercase tracking-wider text-primary">
-                Classroom Dispatch Sequence
+                Example
               </span>
               <h3 className="font-display text-xl font-bold text-foreground mt-1">
-                How an Instructor Dispatches a Schedule Update in 3 Steps
+                Moving a class in three steps
               </h3>
             </div>
 
             <div className="grid gap-6 sm:grid-cols-3 font-mono-code text-xs">
               <div className="rounded-xl border border-border bg-surface-muted p-5">
                 <span className="text-primary font-bold text-sm block">Step 01</span>
-                <h4 className="font-bold text-foreground text-sm mt-2">Select Course & Action</h4>
+                <h4 className="font-bold text-foreground text-sm mt-2">Pick the class</h4>
                 <p className="text-muted mt-1 leading-relaxed text-xs">
-                  Instructor selects CSM-203 Operating Systems and selects &quot;Reschedule to Thursday 11:00 AM (Room CS-03)&quot;.
+                  For example, CSM-203 Operating Systems, moved to Thursday 11:00 AM in CS-03.
                 </p>
               </div>
 
               <div className="rounded-xl border border-border bg-surface-muted p-5">
                 <span className="text-primary font-bold text-sm block">Step 02</span>
-                <h4 className="font-bold text-foreground text-sm mt-2">Log Verification</h4>
+                <h4 className="font-bold text-foreground text-sm mt-2">Check the room</h4>
                 <p className="text-muted mt-1 leading-relaxed text-xs">
-                  The portal validates venue availability to avoid room conflicts with other department batches and signs the update.
+                  The dashboard checks that the room isn&apos;t already booked by another batch.
                 </p>
               </div>
 
               <div className="rounded-xl border border-border bg-surface-muted p-5">
                 <span className="text-primary font-bold text-sm block">Step 03</span>
-                <h4 className="font-bold text-foreground text-sm mt-2">Instant Student Push</h4>
+                <h4 className="font-bold text-foreground text-sm mt-2">Students are notified</h4>
                 <p className="text-muted mt-1 leading-relaxed text-xs">
-                  Within 5 seconds, all enrolled students receive a priority notification on their phone, and the weekly timetable refreshes.
+                  Students in that class get a notification and their timetable updates.
                 </p>
               </div>
             </div>
@@ -152,10 +152,10 @@ export default function TeachersPage() {
           <div className="mt-10 rounded-2xl border border-border bg-surface-muted p-6 sm:p-8 flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
             <div>
               <h3 className="font-display text-lg font-bold text-foreground">
-                Have feedback on faculty workflows?
+                Are you a teacher in the department?
               </h3>
               <p className="mt-1 text-xs text-muted sm:text-sm">
-                We are actively interviewing department instructors and batch representatives to refine this tool.
+                We&apos;d like to hear what would actually help you before we build it.
               </p>
             </div>
             <div className="shrink-0">
@@ -163,7 +163,7 @@ export default function TeachersPage() {
                 href="/contact"
                 className="inline-flex items-center gap-2 rounded-lg border border-border bg-surface px-4 py-2 font-mono-code text-xs font-semibold text-foreground hover:border-primary/40 hover:bg-primary-light/40 transition-colors"
               >
-                <span>Share workflow suggestions</span>
+                <span>Get in touch</span>
                 <ArrowRight className="h-3.5 w-3.5" />
               </Link>
             </div>

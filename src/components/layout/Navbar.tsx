@@ -29,7 +29,8 @@ import {
 import { navDropdownCategories, type NavDropdownItem } from "@/data/navigation";
 import { DownloadButton } from "@/components/ui/DownloadButton";
 import { Logo } from "@/components/ui/Logo";
-import { cn } from "@/lib/utils";
+import { useLatestRelease } from "@/components/ui/DownloadModal";
+import { cn, formatVersion } from "@/lib/utils";
 
 function NavIcon({ name, className }: { name: string; className?: string }) {
   const iconProps = { className: cn("h-4 w-4 shrink-0", className) };
@@ -72,6 +73,8 @@ function NavIcon({ name, className }: { name: string; className?: string }) {
 }
 
 export function Navbar() {
+  const latestVersion = formatVersion(useLatestRelease().version);
+  const badgeFor = (item: NavDropdownItem) => (item.versionBadge ? latestVersion : item.badge);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
@@ -275,9 +278,9 @@ export function Navbar() {
                                   <span className="font-mono-code text-xs font-bold text-foreground group-hover:text-primary truncate">
                                     {item.title}
                                   </span>
-                                  {item.badge && (
+                                  {badgeFor(item) && (
                                     <span className="rounded bg-primary-light px-1.5 py-0.2 font-mono-code text-[10px] font-bold text-primary border border-primary/20">
-                                      {item.badge}
+                                      {badgeFor(item)}
                                     </span>
                                   )}
                                 </div>
@@ -404,9 +407,9 @@ export function Navbar() {
                           >
                             <NavIcon name={item.iconName} className="h-3.5 w-3.5" />
                             <span className="flex-1 truncate">{item.title}</span>
-                            {item.badge && (
+                            {badgeFor(item) && (
                               <span className="rounded bg-primary-light px-1.5 py-0.5 text-[10px] font-bold text-primary border border-primary/20">
-                                {item.badge}
+                                {badgeFor(item)}
                               </span>
                             )}
                           </Link>

@@ -61,7 +61,7 @@ export function AdminApkTable({ versions }: Props) {
     setEditItem(ver);
     setEditTitle(ver.update_title || "");
     setEditDescription(ver.update_description || "");
-    setEditMinVersion(ver.minimum_supported_version || "1.0.8");
+    setEditMinVersion(ver.minimum_supported_version || ver.latest_version);
     setEditForceUpdate(ver.force_update);
     setFeedback(null);
   };
@@ -303,7 +303,7 @@ export function AdminApkTable({ versions }: Props) {
 
                   {/* Min version */}
                   <td className="py-3.5 px-4 text-muted">
-                    v{ver.minimum_supported_version || "1.0.8"}
+                    v{ver.minimum_supported_version || ver.latest_version}
                   </td>
 
                   {/* Force Update */}

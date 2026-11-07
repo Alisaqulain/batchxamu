@@ -5,9 +5,9 @@ import { developers } from "@/data/developers";
 import { MapPin, ExternalLink } from "lucide-react";
 
 export const metadata = createMetadata({
-  title: "Contact the Team",
+  title: "Contact",
   description:
-    "Get in touch with the AMU BATCH X student development team for questions, feedback, contributions, or project inquiries.",
+    "Questions, bug reports or feedback about AMU BATCH X? Get in touch with the student team behind the app.",
   path: "/contact",
 });
 
@@ -15,9 +15,9 @@ export default function ContactPage() {
   return (
     <>
       <PageHeader
-        label="Contact & Feedback"
-        title="Direct communication with the student team."
-        description="Have questions about the timetable, suggestions for new features, or notes to share with the batch? Reach out to the development team."
+        label="Contact"
+        title="Get in touch"
+        description="Questions about the app, ideas for features, or notes to share with the batch? Send us a message."
       />
 
       <section className="py-14 sm:py-20 border-b border-border bg-background">
@@ -25,12 +25,12 @@ export default function ContactPage() {
           <div className="grid gap-12 lg:grid-cols-12">
             {/* Left Column: Contact Form */}
             <div className="lg:col-span-7">
-              <div className="ledger-card border border-border bg-surface p-6 sm:p-8">
+              <div data-reveal className="ledger-card border border-border bg-surface p-6 sm:p-8">
                 <span className="font-mono-code text-xs font-bold uppercase tracking-wider text-primary">
-                  Inquiry Portal
+                  Message
                 </span>
                 <h2 className="font-display text-xl font-bold text-foreground mt-1 mb-6">
-                  Send a Note to the Developers
+                  Write to us
                 </h2>
                 <ContactForm />
               </div>
@@ -39,11 +39,11 @@ export default function ContactPage() {
             {/* Right Column: Channels & Developer Roster */}
             <div className="lg:col-span-5 space-y-6">
               {/* Campus Location Card */}
-              <div className="ledger-card border border-border bg-surface p-6">
+              <div data-reveal className="ledger-card border border-border bg-surface p-6">
                 <div className="flex items-center gap-2 border-b border-border pb-3 mb-4">
                   <MapPin className="h-4 w-4 text-accent-terracotta" />
                   <h3 className="font-mono-code text-xs font-bold uppercase tracking-wider text-foreground">
-                    Campus Department Address
+                    Address
                   </h3>
                 </div>
                 <p className="font-semibold text-sm text-foreground">
@@ -61,12 +61,12 @@ export default function ContactPage() {
               </div>
 
               {/* Developer Team Links */}
-              <div className="ledger-card border border-border bg-surface p-6">
+              <div data-reveal className="ledger-card border border-border bg-surface p-6">
                 <span className="font-mono-code text-xs font-bold uppercase tracking-wider text-primary">
-                  Student Engineers
+                  Team
                 </span>
                 <h3 className="font-display text-lg font-bold text-foreground mt-1 mb-4">
-                  Connect Directly
+                  Developers
                 </h3>
 
                 <ul className="space-y-3">

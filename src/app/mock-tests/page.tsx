@@ -12,7 +12,7 @@ import {
 export const metadata = createMetadata({
   title: "Mock Tests & Practice",
   description:
-    "Systematic examination practice for Computer Science students: subject tests, previous year question banks, timed mock exams, and analytics.",
+    "Planned mock tests for Computer Science students at AMU: subject tests, previous year questions and timed practice exams.",
   path: "/mock-tests",
 });
 
@@ -20,46 +20,46 @@ const subjectTestRoster = [
   {
     code: "CSM-201",
     subject: "Data Structures & Algorithms",
-    topics: "Binary Trees, Graphs, Sorting Algorithms, Dynamic Programming",
+    topics: "Trees, graphs, sorting, dynamic programming",
     questions: 25,
     duration: "35 mins",
-    tier: "Free Practice",
+    tier: "Practice",
     status: "planned" as const,
   },
   {
     code: "CSM-202",
     subject: "Database Management Systems",
-    topics: "Relational Algebra, SQL Queries, Normalization, Transactions & Locking",
+    topics: "Relational algebra, SQL, normalization, transactions",
     questions: 30,
     duration: "40 mins",
-    tier: "Free Practice",
+    tier: "Practice",
     status: "planned" as const,
   },
   {
     code: "CSM-203",
     subject: "Operating Systems",
-    topics: "CPU Scheduling, Virtual Memory, Semaphore Synchronization, Deadlock Avoidance",
+    topics: "CPU scheduling, virtual memory, semaphores, deadlocks",
     questions: 50,
     duration: "60 mins",
-    tier: "Full Mock Test",
+    tier: "Full test",
     status: "planned" as const,
   },
   {
     code: "CSM-204",
     subject: "Computer Networks",
-    topics: "OSI Layering, TCP/IP Handshake, Subnetting, Congestion Control",
+    topics: "OSI model, TCP/IP, subnetting, congestion control",
     questions: 40,
     duration: "50 mins",
-    tier: "Full Mock Test",
+    tier: "Full test",
     status: "planned" as const,
   },
   {
     code: "PYQ-SOLVED",
-    subject: "AMU MCA Entrance & Semester Solved Papers",
-    topics: "Curated collection of previous 5 years examination papers with step-by-step solutions",
+    subject: "Solved past papers",
+    topics: "Semester papers from the last five years, with worked solutions",
     questions: 100,
     duration: "120 mins",
-    tier: "Archive Vault",
+    tier: "Past papers",
     status: "planned" as const,
   },
 ];
@@ -69,8 +69,8 @@ export default function MockTestsPage() {
     <>
       <PageHeader
         label="Mock Tests"
-        title="Prepare systematically for semester exams."
-        description="A planned examination practice environment featuring subject question banks, previous year solved papers, and timed full-length assessments."
+        title="Mock tests (planned)"
+        description="Subject-wise practice questions, solved past papers and timed tests. This isn't available yet."
       />
 
       <section className="py-14 sm:py-20 border-b border-border bg-background">
@@ -80,11 +80,11 @@ export default function MockTestsPage() {
             <div className="flex items-center gap-3">
               <StatusBadge status="planned" />
               <span className="text-xs sm:text-sm font-semibold text-primary-deep">
-                Phase 3 Module: Examination Engine Specifications
+                Not available yet
               </span>
             </div>
             <p className="text-xs text-muted">
-              Curated by senior students and past batch top-performers.
+              Questions will be written and checked by senior students.
             </p>
           </div>
 
@@ -92,10 +92,10 @@ export default function MockTestsPage() {
           <div className="space-y-4">
             <div className="border-b border-border pb-3">
               <span className="font-mono-code text-xs font-bold uppercase tracking-wider text-primary">
-                Syllabus Question Bank Roster
+                Subjects
               </span>
               <h2 className="font-display text-xl font-bold text-foreground mt-1">
-                Core Subject Mock Assessments
+                What we plan to cover
               </h2>
             </div>
 
@@ -103,7 +103,7 @@ export default function MockTestsPage() {
               {subjectTestRoster.map((test) => (
                 <div
                   key={test.code}
-                  className="ledger-card flex flex-col justify-between border border-border bg-surface p-6"
+                  data-reveal className="ledger-card flex flex-col justify-between border border-border bg-surface p-6"
                 >
                   <div>
                     <div className="flex items-center justify-between border-b border-border pb-3">
@@ -143,13 +143,13 @@ export default function MockTestsPage() {
           {/* Tier Structure: Free Practice vs Full Mocks */}
           <div className="mt-16 grid gap-6 md:grid-cols-2">
             {/* Free Tier */}
-            <div className="ledger-card border border-primary/30 bg-surface p-6 sm:p-8">
+            <div data-reveal className="ledger-card border border-primary/30 bg-surface p-6 sm:p-8">
               <div className="flex items-center justify-between border-b border-border pb-4">
                 <div>
                   <h3 className="font-display text-xl font-bold text-primary">
-                    Free Practice Tier
+                    Practice
                   </h3>
-                  <p className="text-xs text-muted mt-0.5">Always available for every enrolled student</p>
+                  <p className="text-xs text-muted mt-0.5">Free for every student</p>
                 </div>
                 <span className="font-mono-code text-xs font-bold text-primary bg-primary-light px-2.5 py-1 rounded-md border border-primary/20">
                   FREE
@@ -166,18 +166,18 @@ export default function MockTestsPage() {
               </ul>
 
               <div className="mt-8 border-t border-border pt-4 text-xs font-mono-code text-muted">
-                Zero paywalls on foundational syllabus questions.
+                Syllabus questions will always be free.
               </div>
             </div>
 
             {/* Premium Full-Length Tier */}
-            <div className="ledger-card border border-border bg-surface-muted p-6 sm:p-8">
+            <div data-reveal className="ledger-card border border-border bg-surface-muted p-6 sm:p-8">
               <div className="flex items-center justify-between border-b border-border pb-4">
                 <div>
                   <h3 className="font-display text-xl font-bold text-foreground">
-                    Comprehensive Mock Exams
+                    Full mock tests
                   </h3>
-                  <p className="text-xs text-muted mt-0.5">Full semester simulation and analytics</p>
+                  <p className="text-xs text-muted mt-0.5">Timed tests with results</p>
                 </div>
                 <StatusBadge status="planned" />
               </div>
@@ -192,7 +192,7 @@ export default function MockTestsPage() {
               </ul>
 
               <div className="mt-8 border-t border-border pt-4 text-xs font-mono-code text-muted">
-                Includes batch percentile ranking and weak-topic analysis.
+                Shows which topics you need to work on.
               </div>
             </div>
           </div>

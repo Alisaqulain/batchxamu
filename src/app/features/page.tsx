@@ -10,90 +10,92 @@ import {
 } from "lucide-react";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { DownloadButton } from "@/components/ui/DownloadButton";
-import { siteConfig } from "@/lib/site";
+import { getLatestRelease } from "@/lib/app-version";
+import { formatVersion } from "@/lib/utils";
 
 export const metadata = createMetadata({
-  title: "Platform Capabilities",
+  title: "Features",
   description:
-    "Complete breakdown of AMU BATCH X features including attendance tracking, weekly lecture schedules, department notice dispatch, and study archives.",
+    "What AMU BATCH X does: class timetable, attendance tracking against the 75% rule, department notices, notes and past papers.",
   path: "/features",
 });
 
 const featureCategories = [
   {
-    category: "Schedule & Routing",
-    title: "Timetable & Laboratory Venue Slotting",
+    category: "Timetable",
+    title: "Timetable",
     description:
-      "Engineered to reflect the actual weekly schedule of the Department of Computer Science, Aligarh Muslim University.",
+      "The weekly timetable of the Department of Computer Science, with rooms and labs.",
     icon: Calendar,
     points: [
-      "Explicit division between theory lectures and multi-hour practical laboratory sessions.",
-      "Mapped directly to department rooms: CS-01, CS-02, CS-03, CS-04, Unix Lab, and Systems Lab.",
-      "Day-by-day filterable view for quick checks between consecutive lectures.",
-      "Cached in local storage on Android so you can check class venues without network signal.",
+      "Lectures and lab sessions are shown separately.",
+      "Rooms CS-01 to CS-04, the Unix Lab and the Systems Lab.",
+      "Switch between days to check your next class.",
+      "Saved on your phone, so it works without signal.",
     ],
-    highlight: "Room & Lab Allocation",
+    highlight: "Rooms and labs",
   },
   {
-    category: "Academic Compliance",
-    title: "Attendance & 75% AMU Rule Tracker",
+    category: "Attendance",
+    title: "Attendance and the 75% rule",
     description:
-      "Prevents last-minute examination debarment by maintaining a continuous, verified record of classes attended.",
+      "Keep a running count of your attendance so you don't find out you're short when admit cards come out.",
     icon: ClipboardCheck,
     points: [
-      "Separate accounting for theory subjects and lab attendance registers.",
-      "Live margin calculation: shows how many classes you can miss while staying above 75 percent.",
-      "Early warning alerts when a subject slips into the danger threshold under 80 percent.",
-      "All attendance data remains strictly on your smartphone without third-party tracking.",
+      "Theory and lab attendance are counted separately.",
+      "Shows how many classes you can still miss and stay above 75%.",
+      "Warns you when a subject drops below 80%.",
+      "Attendance data stays on your phone.",
     ],
-    highlight: "Exam Hall Ticket Safety",
+    highlight: "Know where you stand",
   },
   {
-    category: "Official Communications",
-    title: "Department Notice Dispatch & Alerts",
+    category: "Notices",
+    title: "Department notices",
     description:
-      "A clean, noise-free announcement channel that separates critical university notices from casual group chats.",
+      "Department notices in one place, separate from group chats.",
     icon: Bell,
     points: [
-      "Categorized by Exam Circulars, Class Relocations, Deadlines, and University Holidays.",
-      "Urgent flags for same-day schedule shifts or instructor advisories.",
-      "Push notification support on Android to alert you before you commute to an empty room.",
-      "Searchable archive of all past department announcements throughout the semester.",
+      "Sorted into exams, room changes, deadlines and holidays.",
+      "Same-day changes are marked as urgent.",
+      "Push notifications, so you hear about a moved class before you walk there.",
+      "Search all notices from the semester.",
     ],
-    highlight: "Sub-5-Second Alerting",
+    highlight: "Push notifications",
   },
   {
-    category: "Learning Resources",
-    title: "Subject Notes, Lab Codes & PYQ Archive",
+    category: "Notes",
+    title: "Notes, lab programs and past papers",
     description:
-      "A structured repository of syllabus resources curated directly by MCA 2026 students.",
+      "Study material for each subject, collected by students of the MCA 2026 batch.",
     icon: BookOpen,
     points: [
-      "Organized strictly by department course codes (CSM-201, CSM-202, CSM-203L, CSM-204).",
-      "Unit-by-unit lecture notes collected from verified classroom presentations and textbooks.",
-      "Solved practical programs for C++, Java, Unix Shell, and SQL databases.",
-      "Past five years of solved examination papers with marking scheme insights.",
+      "Sorted by course code (CSM-201, CSM-202, CSM-203L, CSM-204).",
+      "Unit-wise notes from lectures and textbooks.",
+      "Solved lab programs in C++, Java, shell scripting and SQL.",
+      "Question papers from the last five years.",
     ],
-    highlight: "Offline PDF Library",
+    highlight: "Available offline",
   },
 ];
 
 const technicalSpecs = [
-  { label: "Target Operating System", value: "Android 8.0 (API Level 26) through Android 15" },
-  { label: "Storage Architecture", value: "Offline SQLite & Encrypted Key-Value Cache" },
-  { label: "Data Transmission", value: "TLS 1.3 encrypted API dispatch" },
-  { label: "Notice Delivery", value: "Priority Push Notification Service" },
-  { label: "User Tracking & Ads", value: "Zero trackers, zero advertising, student-first privacy" },
-  { label: "Primary Supported Batch", value: "MCA 2026 (Extensible to M.Sc., B.Sc., Ph.D.)" },
+  { label: "Android version", value: "Android 8.0 (API 26) or newer" },
+  { label: "Storage", value: "On the phone, works offline" },
+  { label: "Network", value: "HTTPS only" },
+  { label: "Notices", value: "Push notifications" },
+  { label: "Ads and tracking", value: "None" },
+  { label: "Supported programs", value: "MCA 2026, with more planned" },
 ];
 
-export default function FeaturesPage() {
+export default async function FeaturesPage() {
+  const release = await getLatestRelease();
   return (
     <>
       <PageHeader
-        label="Technical Capabilities"
-        title="Every feature built for a specific campus requirement."
-        description="AMU BATCH X was designed by analyzing where students lose time and information during the academic week."
+        label="Features"
+        title="What AMU BATCH X does"
+        description="Four things we needed every day as students: timetable, attendance, notices and notes."
       />
 
       {/* Main Features Deep-Dive */}
@@ -105,7 +107,7 @@ export default function FeaturesPage() {
               return (
                 <div
                   key={feat.category}
-                  className="ledger-card overflow-hidden border border-border bg-surface p-6 sm:p-10"
+                  data-reveal className="ledger-card overflow-hidden border border-border bg-surface p-6 sm:p-10"
                 >
                   <div className="grid gap-8 lg:grid-cols-12 lg:items-start">
                     <div className="lg:col-span-5">
@@ -138,7 +140,7 @@ export default function FeaturesPage() {
 
                     <div className="lg:col-span-7 rounded-xl border border-border bg-surface-muted p-5 sm:p-6">
                       <h4 className="font-mono-code text-xs font-bold uppercase tracking-wider text-foreground mb-4">
-                        Operational Details
+                        Details
                       </h4>
                       <ul className="space-y-3">
                         {feat.points.map((pt, pIdx) => (
@@ -161,10 +163,10 @@ export default function FeaturesPage() {
           <div className="mt-16 ledger-card border border-border bg-surface p-6 sm:p-8">
             <div className="border-b border-border pb-4 mb-6">
               <span className="font-mono-code text-xs font-bold uppercase tracking-wider text-primary">
-                System Engineering
+                Specs
               </span>
               <h3 className="font-display text-xl font-bold text-foreground mt-1">
-                Technical Specifications & Architecture
+                Requirements
               </h3>
             </div>
 
@@ -182,10 +184,10 @@ export default function FeaturesPage() {
           <div className="mt-12 rounded-2xl border border-border bg-surface p-6 sm:p-8 flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
             <div>
               <h3 className="font-display text-lg font-bold text-foreground">
-                Ready to organize your Computer Science semester?
+                Get the app
               </h3>
               <p className="mt-1 text-xs text-muted sm:text-sm">
-                Download the official v{siteConfig.appVersion} APK package for your Android device.
+                Download {formatVersion(release.version)} for Android.
               </p>
             </div>
             <div className="shrink-0">

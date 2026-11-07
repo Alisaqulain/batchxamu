@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { developers } from "@/data/developers";
 import { GithubIcon, LinkedinIcon } from "@/components/ui/SocialIcons";
-import { Globe, ArrowRight, Code2, Terminal } from "lucide-react";
+import { Globe, ArrowRight, Code2 } from "lucide-react";
 import Link from "next/link";
 
 export function TeamStudio() {
@@ -9,24 +9,23 @@ export function TeamStudio() {
     <section id="team" className="scroll-mt-20 border-b border-border bg-background py-16 sm:py-24">
       <div className="mx-auto max-w-[1536px] px-4 sm:px-8 lg:px-12 xl:px-16">
         {/* Section Header */}
-        <div className="border-b border-border pb-8">
+        <div data-reveal className="border-b border-border pb-8">
           <div className="max-w-2xl">
-            <div className="inline-flex items-center gap-2 rounded-md border border-primary/25 bg-primary-light px-2.5 py-1 font-mono-code text-xs font-semibold text-primary">
-              <Terminal className="h-3.5 w-3.5" />
-              <span>STUDENT ENGINEERING TEAM</span>
-            </div>
-            <h2 className="mt-4 font-display text-2xl font-semibold tracking-tight text-foreground sm:text-4xl">
-              Built by MCA students who face the problem daily.
+            <span className="font-mono-code text-xs font-semibold uppercase tracking-wider text-primary">
+              Team
+            </span>
+            <h2 className="mt-2 font-display text-2xl font-semibold tracking-tight text-foreground sm:text-4xl">
+              Built by MCA students at AMU
             </h2>
             <p className="mt-2 text-base text-muted">
-              We sit in the same lectures, code in the same Unix laboratories, and experience the same timetable uncertainties. AMU BATCH X is an engineering response to campus fragmentation.
+              We attend the same lectures and labs as everyone else, and we built the app we wanted to use.
             </p>
             <div className="mt-4">
               <Link
                 href="/developers"
                 className="inline-flex items-center gap-1.5 font-mono-code text-xs font-semibold text-primary hover:underline"
               >
-                <span>View full engineering details</span>
+                <span>More about the team</span>
                 <ArrowRight className="h-3.5 w-3.5" />
               </Link>
             </div>
@@ -34,11 +33,11 @@ export function TeamStudio() {
         </div>
 
         {/* Developers Cards Grid */}
-        <div className="mt-12 grid gap-6 md:grid-cols-3">
+        <div data-reveal-stagger className="mt-12 grid gap-6 md:grid-cols-2 max-w-4xl">
           {developers.map((dev) => (
             <div
               key={dev.name}
-              className="ledger-card flex flex-col justify-between border border-border bg-surface p-6"
+              data-tilt="6" className="ledger-card flex flex-col justify-between border border-border bg-surface p-6"
             >
               <div>
                 <div className="flex items-center gap-4">
@@ -121,20 +120,20 @@ export function TeamStudio() {
         </div>
 
         {/* Community Open Contribution Callout */}
-        <div className="mt-10 rounded-2xl border border-border bg-surface p-6 sm:p-8">
+        <div data-reveal className="mt-10 rounded-2xl border border-border bg-surface p-6 sm:p-8">
           <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
             <div className="max-w-2xl">
               <div className="flex items-center gap-2">
                 <Code2 className="h-4 w-4 text-primary" />
                 <span className="font-mono-code text-xs font-bold uppercase tracking-wider text-primary">
-                  Student Collaboration
+                  Contribute
                 </span>
               </div>
               <h3 className="mt-1 font-display text-lg font-semibold text-foreground">
-                Want to contribute notes, mock tests, or code?
+                Have notes, past papers or an idea?
               </h3>
               <p className="mt-1 text-xs leading-relaxed text-muted sm:text-sm">
-                The platform thrives on student contributions. Whether you have semester question papers, verified lab notes, or feature suggestions, reach out through the contact portal.
+                Send them our way. Most of what&apos;s in the app came from students asking for it.
               </p>
             </div>
 
@@ -143,7 +142,7 @@ export function TeamStudio() {
                 href="/contact"
                 className="inline-flex items-center gap-2 rounded-lg border border-border bg-surface-muted px-4 py-2 font-mono-code text-xs font-semibold text-foreground hover:border-primary/40 hover:bg-primary-light/40 transition-colors"
               >
-                <span>Get in touch with the team</span>
+                <span>Contact us</span>
                 <ArrowRight className="h-3.5 w-3.5" />
               </Link>
             </div>

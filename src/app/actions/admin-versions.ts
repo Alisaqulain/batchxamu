@@ -5,6 +5,14 @@ import { getSupabaseServerClient, STORAGE_BUCKET_APK } from "@/lib/supabase";
 import { verifyAdminSession } from "./admin-auth";
 import { formatBytes } from "@/lib/app-version";
 
+/**
+ * The version is rendered in the root layout (navbar, footer, JSON-LD, modal),
+ * so a release change must purge every cached page, not just "/" and "/download".
+ */
+function revalidateReleasePages() {
+  revalidatePath("/", "layout");
+}
+
 export interface VersionActionResult {
   success: boolean;
   error?: string;
@@ -96,11 +104,7 @@ export async function registerUploadedApkAction(
       details: `Released v${version.trim()} (Code ${versionCode}) - ${apkFileSize}`,
     });
 
-    revalidatePath("/");
-    revalidatePath("/download");
-    revalidatePath("/admin");
-    revalidatePath("/admin/apks");
-    revalidatePath("/admin/versions");
+    revalidateReleasePages();
 
     return {
       success: true,
@@ -144,11 +148,7 @@ export async function registerReplacedApkAction(params: {
     details: `Updated package file for release ID ${params.id} (${params.apkFileSize})`,
   });
 
-  revalidatePath("/");
-  revalidatePath("/download");
-  revalidatePath("/admin");
-  revalidatePath("/admin/apks");
-  revalidatePath("/admin/versions");
+  revalidateReleasePages();
 
   return { success: true };
 }
@@ -275,11 +275,7 @@ export async function uploadApkAction(
       details: `Released v${version} (Code ${versionCode}) - ${formattedSize}`,
     });
 
-    revalidatePath("/");
-    revalidatePath("/download");
-    revalidatePath("/admin");
-    revalidatePath("/admin/apks");
-    revalidatePath("/admin/versions");
+    revalidateReleasePages();
 
     return {
       success: true,
@@ -329,11 +325,7 @@ export async function updateVersionAction(
     details: `Updated metadata for release ID ${id}`,
   });
 
-  revalidatePath("/");
-  revalidatePath("/download");
-  revalidatePath("/admin");
-  revalidatePath("/admin/apks");
-  revalidatePath("/admin/versions");
+  revalidateReleasePages();
 
   return { success: true };
 }
@@ -413,11 +405,7 @@ export async function replaceApkAction(
       details: `Replaced binary for v${versionRecord.latest_version} with ${apkFile.name} (${formattedSize})`,
     });
 
-    revalidatePath("/");
-    revalidatePath("/download");
-    revalidatePath("/admin");
-    revalidatePath("/admin/apks");
-    revalidatePath("/admin/versions");
+    revalidateReleasePages();
 
     return { success: true };
   } catch (err: any) {
@@ -486,11 +474,7 @@ export async function deleteVersionAction(id: string): Promise<VersionActionResu
     details: `Deleted release v${record.latest_version} (Code ${record.version_code})`,
   });
 
-  revalidatePath("/");
-  revalidatePath("/download");
-  revalidatePath("/admin");
-  revalidatePath("/admin/apks");
-  revalidatePath("/admin/versions");
+  revalidateReleasePages();
 
   return { success: true };
 }

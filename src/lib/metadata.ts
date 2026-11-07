@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { siteConfig } from "./site";
+import { developers } from "@/data/developers";
 
 const ogImage = `${siteConfig.url}/og-image.png`;
 
@@ -25,7 +26,7 @@ export function createMetadata({
   const url = path === "" || path === "/" ? `${siteConfig.url}/` : `${siteConfig.url}${path}`;
   const fullTitle =
     path === "" || path === "/"
-      ? "AMU BATCH X | Department of Computer Science Student Platform"
+      ? siteConfig.fullName
       : `${title} | ${siteConfig.name}`;
 
   return {
@@ -33,13 +34,13 @@ export function createMetadata({
     description,
     applicationName: siteConfig.name,
     keywords: [...siteConfig.keywords, ...keywords],
-    authors: [{ name: `${siteConfig.name} Team`, url: siteConfig.url }],
+    authors: developers.map((dev) => ({ name: dev.name, url: dev.github || dev.portfolio })),
     creator: siteConfig.name,
     publisher: siteConfig.name,
     metadataBase: new URL(siteConfig.url),
     alternates: { canonical: url },
     category: "education",
-    manifest: "/site.webmanifest",
+    manifest: "/manifest.webmanifest",
     icons: {
       icon: [
         { url: "/favicon.ico" },
@@ -69,7 +70,7 @@ export function createMetadata({
           url: ogImage,
           width: 1200,
           height: 630,
-          alt: `${siteConfig.name}: Department of Computer Science App Platform`,
+          alt: `${siteConfig.name}: student app for AMU Computer Science`,
         },
       ],
       ...(publishedTime && { publishedTime }),

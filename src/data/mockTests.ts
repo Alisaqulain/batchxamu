@@ -45,19 +45,17 @@ export const mockTestCards: MockTestItem[] = [
 ];
 
 export const mockTestFreeFeatures = [
-  "Subject Tests",
+  "Subject tests",
   "MCQs",
-  "Practice Questions",
-  "Previous Year Questions",
-  "Basic Performance",
+  "Practice questions",
+  "Previous year questions",
+  "Your score per test",
 ];
 
 export const mockTestPremiumFeatures = [
-  "Full Mock Tests",
-  "Advanced Analytics",
-  "Detailed Solutions",
-  "Rankings",
-  "Performance Comparison",
-  "Personalized Recommendations",
-  "Premium Question Bank",
+  "Full-length timed tests",
+  "Detailed solutions",
+  "Topic-wise breakdown of your score",
+  "Comparison with your batch",
+  "Larger question bank",
 ];

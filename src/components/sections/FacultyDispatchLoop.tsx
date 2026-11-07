@@ -3,8 +3,6 @@ import {
   BellRing,
   Smartphone,
   ArrowRight,
-  Layers,
-  CheckCircle2,
   Server,
 } from "lucide-react";
 import { StatusBadge } from "@/components/ui/StatusBadge";
@@ -13,43 +11,39 @@ import Link from "next/link";
 const pipelineStages = [
   {
     stage: "01",
-    actor: "Faculty Instructor",
-    title: "Class Reschedule or Notice",
+    actor: "Teacher",
+    title: "Moves a class or posts a notice",
     description:
-      "A professor logs into the portal to reschedule an afternoon lecture or notify the batch about an alternate lab hall.",
+      "A teacher reschedules a lecture or tells the batch the lab has moved, from a simple web page.",
     icon: Users,
-    channel: "Web Dispatch Interface",
-    statusBadge: "Instructor Entry",
+    channel: "Web dashboard",
   },
   {
     stage: "02",
-    actor: "API Gateway",
-    title: "Central Verification & Sync",
+    actor: "Server",
+    title: "Timetable is updated",
     description:
-      "The change is verified with reason and timestamp, updating the department centralized timetable database.",
+      "The change is saved with a reason and time, and the shared timetable is updated.",
     icon: Server,
-    channel: "Central Cloud Service",
-    statusBadge: "Automated Ledger",
+    channel: "Backend",
   },
   {
     stage: "03",
-    actor: "Push Alert Broadcast",
-    title: "Sub-5s Priority Notification",
+    actor: "Notification",
+    title: "Students are notified",
     description:
-      "A priority notification is dispatched to enrolled student phones, preventing wasted commutes across campus.",
+      "Students in that class get a push notification, so nobody walks to an empty room.",
     icon: BellRing,
-    channel: "Push Alert Engine",
-    statusBadge: "Instant Alert",
+    channel: "Push notification",
   },
   {
     stage: "04",
-    actor: "Student Application",
-    title: "Timetable Dynamic Adjustment",
+    actor: "App",
+    title: "Timetable shows the change",
     description:
-      "The student mobile app dynamically adjusts the day schedule and marks the lecture as rescheduled with room details.",
+      "The day's timetable in the app shows the class as moved, with the new time and room.",
     icon: Smartphone,
-    channel: "Local SQLite Cache",
-    statusBadge: "Offline Updated",
+    channel: "Android app",
   },
 ];
 
@@ -59,17 +53,16 @@ export function FacultyDispatchLoop() {
       <div className="mx-auto max-w-[1536px] px-4 sm:px-8 lg:px-12 xl:px-16">
         
         {/* Section Masthead */}
-        <div className="flex flex-col justify-between gap-4 border-b border-border pb-8 sm:flex-row sm:items-end">
+        <div data-reveal className="flex flex-col justify-between gap-4 border-b border-border pb-8 sm:flex-row sm:items-end">
           <div className="max-w-2xl">
-            <div className="inline-flex items-center gap-2 rounded-md border border-accent-terracotta/30 bg-accent-red-light px-2.5 py-1 font-mono-code text-xs font-semibold text-accent-terracotta">
-              <Layers className="h-3.5 w-3.5" />
-              <span>FACULTY & CLASSROOM DISPATCH PIPELINE</span>
-            </div>
-            <h2 className="mt-4 font-display text-2xl font-semibold tracking-tight text-foreground sm:text-4xl">
-              Closing the loop between faculty and students.
+            <span className="font-mono-code text-xs font-semibold uppercase tracking-wider text-primary">
+              For teachers (planned)
+            </span>
+            <h2 className="mt-2 font-display text-2xl font-semibold tracking-tight text-foreground sm:text-4xl">
+              Class changes that reach every student
             </h2>
             <p className="mt-2 text-base text-muted">
-              Planned faculty dispatch workflow designed to eliminate empty classroom visits and informal WhatsApp forwards.
+              We&apos;re working on tools for teachers so class changes go straight to students instead of through forwarded messages.
             </p>
           </div>
 
@@ -79,7 +72,7 @@ export function FacultyDispatchLoop() {
               href="/teachers"
               className="font-mono-code text-xs font-semibold text-primary hover:underline inline-flex items-center gap-1"
             >
-              <span>Faculty specifications</span>
+              <span>Teacher tools</span>
               <ArrowRight className="h-3 w-3" />
             </Link>
           </div>
@@ -87,13 +80,13 @@ export function FacultyDispatchLoop() {
 
         {/* Connected Architectural Pipeline Diagram */}
         <div className="mt-12">
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 relative">
+          <div data-reveal-stagger className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 relative">
             {pipelineStages.map((stage, idx) => {
               const Icon = stage.icon;
               return (
                 <div
                   key={stage.stage}
-                  className="relative flex flex-col justify-between rounded-2xl border border-border bg-surface p-6 shadow-2xs hover:border-primary/40 transition-colors"
+                  data-tilt="7" className="relative flex flex-col justify-between rounded-2xl border border-border bg-surface p-6 shadow-2xs hover:border-primary/40"
                 >
                   {/* Top Step Meta */}
                   <div>
@@ -106,9 +99,6 @@ export function FacultyDispatchLoop() {
                           {stage.actor}
                         </span>
                       </div>
-                      <span className="rounded bg-surface-muted px-2 py-0.5 font-mono-code text-[11px] text-muted border border-border">
-                        {stage.statusBadge}
-                      </span>
                     </div>
 
                     <div className="mt-4 flex items-center gap-3">
@@ -138,29 +128,10 @@ export function FacultyDispatchLoop() {
                       </div>
                     </div>
                   )}
-
-                  {/* Bottom Connection Status */}
-                  <div className="mt-6 flex items-center justify-between border-t border-border/70 pt-3 font-mono-code text-[11px] text-muted">
-                    <span className="flex items-center gap-1">
-                      <CheckCircle2 className="h-3 w-3 text-primary" />
-                      <span>Stage Verified</span>
-                    </span>
-                    <span>Sub-10s Loop</span>
-                  </div>
                 </div>
               );
             })}
           </div>
-        </div>
-
-        {/* Technical Pipeline Note */}
-        <div className="mt-8 rounded-xl border border-primary/20 bg-primary-light/40 p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs font-mono-code text-primary-deep">
-          <span>
-            System Phase 2: Currently in active staging with department faculty coordinators.
-          </span>
-          <span className="font-bold text-primary">
-            Direct API integration with Aligarh Muslim University timetable servers.
-          </span>
         </div>
 
       </div>

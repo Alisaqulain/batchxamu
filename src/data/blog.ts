@@ -1,174 +1,98 @@
 import type { BlogPost } from "@/types";
 
+const author = "AMU BATCH X Team";
+
 export const blogPosts: BlogPost[] = [
   {
-    slug: "building-better-student-experience",
-    title: "Building a Better Student Experience",
-    excerpt:
-      "University life involves juggling classes, assignments, notices, and career planning. A well-designed digital platform reduces friction and helps students stay focused on learning.",
-    date: "2026-01-15",
-    readTime: "5 min read",
-    author: "MCA 26 Team",
-    tags: ["Student Life", "Digital Platform", "Academics"],
-    content: `
-University students today navigate a complex academic environment. Between attending lectures, completing assignments, tracking attendance, and preparing for exams, information often arrives through multiple disconnected channels: WhatsApp groups, notice boards, word of mouth, and scattered PDF files.
-
-A centralized digital platform addresses this fragmentation directly. When students can open one application and see their timetable, latest notices, attendance status, and study materials, they spend less time searching and more time learning.
-
-**Reducing information overload**
-
-Instead of scrolling through dozens of chat messages to find an important announcement, students receive structured notices with clear categories. Academic updates, exam schedules, and holiday notifications are organized and searchable.
-
-**Building consistent habits**
-
-When attendance tracking, assignment deadlines, and class schedules live in one place, students develop reliable routines. They check one source of truth each morning rather than piecing together information from several groups.
-
-**Supporting offline access**
-
-Connectivity is not always guaranteed on campus. Platforms that cache essential information (timetables, downloaded notes, and recent notices) ensure students are not left without critical data when networks are slow or unavailable.
-
-**Looking ahead**
-
-The goal is not to replace human connection but to handle the administrative overhead that currently consumes student attention. With that foundation in place, platforms can extend into mentorship, career guidance, and collaborative learning: areas where MCA 26 is actively being developed.
-    `.trim(),
-  },
-  {
     slug: "why-students-need-centralized-academic-platform",
-    title: "Why Students Need a Centralized Academic Platform",
+    title: "Why We Put Timetables, Notices and Attendance in One App",
     excerpt:
-      "Scattered academic information creates stress and missed deadlines. Here is why departments benefit from bringing resources, communication, and tracking into one system.",
+      "Class updates in one WhatsApp group, notices in another, attendance in your head. Here is what that costs students and what we did about it.",
     date: "2026-01-28",
-    readTime: "6 min read",
-    author: "MCA 26 Team",
-    tags: ["Academics", "Platform Design", "Department"],
+    readTime: "4 min read",
+    author,
+    tags: ["Academics", "Student Life", "AMU BATCH X"],
     content: `
-Every semester, students face the same recurring challenges: a timetable change announced in one group, an assignment deadline shared in another, and attendance concerns discussed informally after class. This decentralization is not a failure of any individual; it is a structural problem that digital tools can solve.
+Most semesters go the same way. A room change is posted in one group, an assignment deadline in another, and attendance is something you only think about when it's already a problem.
 
-**The cost of fragmentation**
+**What goes wrong**
 
-When academic information lives in multiple places, some students inevitably miss updates. Those who catch everything often do so through constant vigilance by checking multiple apps, asking classmates, and following up with representatives. This creates unequal access to information.
+Nobody is doing anything wrong here. The information just lives in too many places. Students who keep up do it by checking several chats, asking friends and following up with class representatives. Students who don't, miss things.
 
-**What centralization provides**
+**What we wanted instead**
 
-A centralized platform offers a single entry point for:
+One place to check in the morning:
 
-- Class schedules and room changes
-- Official notices from the department
-- Attendance records students can verify
-- Notes and study materials organized by subject
-- Exam dates and assignment tracking
+- Today's classes and rooms
+- Notices from the department
+- Your attendance, and how many classes you can still miss
+- Notes and past papers, sorted by subject
+- Exam dates and assignment deadlines
 
-**Benefits for the department**
+**What AMU BATCH X does today**
 
-Departments gain visibility into what information reaches students and can ensure consistency. Rather than relying on a chain of forwards, announcements go directly to enrolled students through the platform.
-
-**MCA 26's approach**
-
-MCA 26 was built starting from the student experience in the MCA program, with the architecture designed to expand across the Department of Computer Science. The current app focuses on core academic features; future modules will add teacher tools and multi-program support.
+The Android app covers all of the above, and keeps your timetable, attendance and saved notes on the phone so they work without internet. Teacher tools and support for more programs are planned, and we label them as planned until they ship.
     `.trim(),
   },
   {
     slug: "department-wide-digital-platform",
-    title: "From One Program to a Department Platform",
+    title: "From One Batch to the Whole Department",
     excerpt:
-      "MCA 26 started with MCA students, but the architecture is designed to serve the entire Department of Computer Science across undergraduate, postgraduate and doctoral programs.",
+      "AMU BATCH X started with one MCA batch. Here is how we are making it work for other programs in the Department of Computer Science.",
     date: "2026-02-10",
-    readTime: "5 min read",
-    author: "MCA 26 Team",
-    tags: ["Department", "Platform", "Programs"],
+    readTime: "4 min read",
+    author,
+    tags: ["Department", "Programs", "Roadmap"],
     content: `
-Department-level platforms need to work for more than one program. A timetable system that only serves one batch leaves other students behind. A notice system that only reaches one course creates information gaps across the department.
+An app that only works for one batch doesn't help much in a department where everyone shares the same faculty, labs and notice board.
 
-**Why department-wide architecture matters**
+**Different programs, shared basics**
 
-The Department of Computer Science runs multiple programs, from B.Sc. (Hons.) Computer Science and Applications through MCA and M.Sc. Computer Science to Ph.D. Computer Science. Students across these programs share faculty, facilities, and department announcements, but their daily academic needs differ.
+The Department of Computer Science at AMU runs B.Sc. (Hons.), MCA, M.Sc. and Ph.D. programs. Notices and the faculty directory are the same for everyone. Timetables, subjects and exams are not.
 
-**Building for expansion**
+**How we are approaching it**
 
-MCA 26 currently focuses on features MCA students use every day. The platform architecture, however, is designed to onboard additional programs without rebuilding from scratch. Shared infrastructure handles department notices and faculty directories; program-specific modules handle curriculum differences.
+Shared things like notices are built once. Program-specific things like the timetable and subject list are set up per program, so adding a new program doesn't mean rebuilding the app.
 
-**Honest positioning**
+**A note on what this is**
 
-MCA 26 is designed for the Department of Computer Science community. It is a student-developed project and should not be presented as an official university-operated platform unless formally authorized.
-
-**What comes next**
-
-Teacher interfaces, mock tests, and broader program support are on the roadmap, each clearly labeled so users know what is live today and what is coming.
-    `.trim(),
-  },
-  {
-    slug: "future-of-digital-university-platforms",
-    title: "The Future of Digital University Platforms",
-    excerpt:
-      "University platforms are evolving from simple notice boards to integrated ecosystems. What comes next for department-level academic technology?",
-    date: "2026-02-22",
-    readTime: "7 min read",
-    author: "MCA 26 Team",
-    tags: ["Future", "University Tech", "Platform"],
-    content: `
-Digital tools in higher education have moved through distinct phases. Early systems focused on administrative records. Later, learning management systems brought course content online. The next phase integrates daily student life (attendance, communication, resources, and career development) into cohesive platforms.
-
-**From apps to ecosystems**
-
-Single-purpose apps solve one problem well but create silos. The direction is toward platforms that serve multiple stakeholders: students access resources, teachers manage classes, and departments maintain a unified digital presence.
-
-**Multi-program scalability**
-
-Departments often run several programs such as MCA, M.Sc., B.Sc., and Ph.D. A scalable platform architecture allows shared infrastructure (faculty directories and department notices) while supporting program-specific modules (curriculum, assessments, and communities).
-
-**Assessment and preparation**
-
-Mock tests and practice platforms represent another growth area. Free practice resources combined with premium analytics can help students prepare systematically without relying solely on external coaching.
-
-**Public web presence**
-
-The website itself becomes part of the platform strategy by handling app distribution, SEO, blog content, and project visibility. This public layer supports discovery while the mobile app handles daily academic workflows.
-
-**Building thoughtfully**
-
-MCA 26 is being developed with this long-term vision while maintaining honesty about what is live today versus what is planned. Sustainable platform growth depends on solving real student problems first, then expanding based on demonstrated need.
+AMU BATCH X is a student project. It is not an official Aligarh Muslim University app, and the department's own notices are always the final word.
     `.trim(),
   },
   {
     slug: "mca-student-app-to-department-ecosystem",
-    title: "From MCA Student App to Department Digital Ecosystem",
+    title: "How AMU BATCH X Started",
     excerpt:
-      "MCA 26 started as a student-focused academic app for the MCA program. Here is how the project is evolving toward a full department platform.",
+      "The app began as a side project for our own MCA batch. A short history, and what we are working on next.",
     date: "2026-03-05",
-    readTime: "6 min read",
-    author: "MCA 26 Team",
-    tags: ["MCA 26", "Development", "Roadmap"],
+    readTime: "4 min read",
+    author,
+    tags: ["AMU BATCH X", "Development", "Roadmap"],
     content: `
-MCA 26 began with a practical observation: MCA students needed a better way to access academic information. Notices were easy to miss, attendance was hard to track, and study materials were scattered across chat groups and drives.
+AMU BATCH X started as a small app for our own MCA batch, originally under the name MCA 26. Notices were easy to miss, attendance was hard to keep track of, and notes were spread across chats and drives.
 
-**Starting with the student experience**
+**The first version**
 
-The first version focused on features students use daily:
+We started with what we used every day:
 
-- Timetable and class schedules
-- Attendance tracking including lab sessions
-- Department notices and announcements
-- Notes, assignments, and exam information
+- Timetable and rooms
+- Attendance, including labs
+- Department notices
+- Notes, assignments and exam dates
 - Faculty directory and holiday calendar
-- Offline access for essential data
+- Offline access for all of the above
 
-These features form the foundation; they must work reliably before the platform expands.
+**Who builds it**
 
-**The development team**
+Ali Saqulain works on the web platform and backend. Sameer Ahmad works on the Android app.
 
-MCA 26 is built by students who understand these challenges firsthand. Ali Saqulain leads full-stack development of the academic portal, Sameer Ahmad focuses on app development and student experience, and Okasha Ansari contributes to platform development.
+**What's next**
 
-**What comes next**
+Teacher tools for attendance and class updates, mock tests, and support for more programs. Each one is marked as planned on the site until it is actually available.
 
-The roadmap includes teacher dashboards for class and attendance management, mock test modules, multi-program support, and a referral program. Each feature is being designed with clear status labels so users know what is available now and what is coming.
+**Feedback**
 
-**This website**
-
-You are reading part of the platform strategy. This public website handles marketing, SEO, app downloads, blog content, and project information, extending MCA 26's reach beyond the mobile app.
-
-**Get involved**
-
-Students can download the app, explore features, and share feedback through the contact page. The platform grows best when built in conversation with the community it serves.
+If something is wrong or missing, tell us through the contact page. Most of the features in the app came from students asking for them.
     `.trim(),
   },
 ];

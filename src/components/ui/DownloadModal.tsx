@@ -11,10 +11,11 @@ import React, {
 } from "react";
 import { X, ArrowRight, ShieldCheck, Download } from "lucide-react";
 import { AndroidIcon, AppleIcon } from "@/components/ui/SocialIcons";
-import { siteConfig } from "@/lib/site";
-import { cn } from "@/lib/utils";
+import type { ResolvedDownload } from "@/lib/app-version";
+import { cn, formatVersion } from "@/lib/utils";
 
 interface DownloadModalContextType {
+  release: ResolvedDownload;
   isOpen: boolean;
   openDownloadModal: (triggerEl?: HTMLElement | null) => void;
   closeDownloadModal: () => void;
@@ -34,7 +35,19 @@ export function useDownloadModal() {
   return context;
 }
 
-export function DownloadModalProvider({ children }: { children: ReactNode }) {
+/** Latest released app version, shared by every client component. */
+export function useLatestRelease(): ResolvedDownload {
+  return useDownloadModal().release;
+}
+
+export function DownloadModalProvider({
+  children,
+  initialRelease,
+}: {
+  children: ReactNode;
+  /** Resolved on the server from `getLatestAppVersion()` in the root layout. */
+  initialRelease: ResolvedDownload;
+}) {
   const [isOpen, setIsOpen] = useState(false);
   const triggerRef = useRef<HTMLElement | null>(null);
   const modalRef = useRef<HTMLDivElement>(null);
@@ -107,39 +120,28 @@ export function DownloadModalProvider({ children }: { children: ReactNode }) {
     };
   }, [isOpen, closeDownloadModal]);
 
-  const [releaseInfo, setReleaseInfo] = useState<{
-    version: string;
-    downloadUrl: string;
-    sourceType: "github" | "supabase" | "direct";
-    sourceLabel: string;
-    fileSize: string;
-    fileName: string;
-  }>({
-    version: siteConfig.appVersion || "1.0.8",
-    downloadUrl:
-      siteConfig.androidDownloadUrl ||
-      "https://github.com/sameerahmad005/Batch-26/releases/download/v1.0.8/v1.0.8.apk",
-    sourceType: "github",
-    sourceLabel: "GitHub Release",
-    fileSize: "24.2 MB",
-    fileName: "batch-x.apk",
-  });
+  const [releaseInfo, setReleaseInfo] = useState<ResolvedDownload>(initialRelease);
 
+  // A cached page can be up to a minute old; confirm against the live API.
   useEffect(() => {
     let isMounted = true;
-    fetch("/api/version")
+    fetch("/api/version", { cache: "no-store" })
       .then((res) => res.json())
       .then((data) => {
-        if (isMounted && data?.success && data.downloadUrl) {
-          setReleaseInfo({
-            version: data.version || siteConfig.appVersion || "1.0.8",
-            downloadUrl: data.downloadUrl,
-            sourceType: data.sourceType || "direct",
-            sourceLabel: data.sourceLabel || "Official Release",
-            fileSize: data.fileSize || "24.2 MB",
-            fileName: data.fileName || "batch-x.apk",
-          });
-        }
+        if (!isMounted || !data?.success || !data.downloadUrl) return;
+        setReleaseInfo((prev) =>
+          prev.version === data.version && prev.downloadUrl === data.downloadUrl
+            ? prev
+            : {
+                version: data.version || prev.version,
+                versionCode: data.versionCode ?? prev.versionCode,
+                downloadUrl: data.downloadUrl,
+                sourceType: data.sourceType || "direct",
+                sourceLabel: data.sourceLabel || prev.sourceLabel,
+                fileSize: data.fileSize || "",
+                fileName: data.fileName || prev.fileName,
+              }
+        );
       })
       .catch((err) => {
         console.warn("Could not fetch latest release info:", err);
@@ -155,7 +157,7 @@ export function DownloadModalProvider({ children }: { children: ReactNode }) {
 
   return (
     <DownloadModalContext.Provider
-      value={{ isOpen, openDownloadModal, closeDownloadModal }}
+      value={{ release: releaseInfo, isOpen, openDownloadModal, closeDownloadModal }}
     >
       {children}
 
@@ -188,10 +190,6 @@ export function DownloadModalProvider({ children }: { children: ReactNode }) {
             {/* Header: Title & Close Action */}
             <div className="flex items-start justify-between gap-4 border-b border-border pb-4">
               <div>
-                <div className="inline-flex items-center gap-1.5 rounded-md border border-primary/25 bg-primary-light px-2 py-0.5 font-mono-code text-[11px] font-bold text-primary mb-1.5">
-                  <Download className="h-3 w-3" />
-                  <span>INSTALLATION HUB</span>
-                </div>
                 <h2
                   id="platform-modal-title"
                   className="font-display text-xl sm:text-2xl font-bold tracking-tight text-foreground"
@@ -210,7 +208,7 @@ export function DownloadModalProvider({ children }: { children: ReactNode }) {
                 ref={closeButtonRef}
                 type="button"
                 onClick={closeDownloadModal}
-                aria-label="Close platform selection modal"
+                aria-label="Close"
                 className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-border bg-surface-muted text-muted hover:text-foreground hover:bg-surface transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
               >
                 <X className="h-4 w-4" />
@@ -229,7 +227,7 @@ export function DownloadModalProvider({ children }: { children: ReactNode }) {
                   setTimeout(closeDownloadModal, 300);
                 }}
                 className={cn(
-                  "group block rounded-xl border-2 border-primary/40 bg-gradient-to-br from-primary-light/40 via-surface to-surface p-4 sm:p-4.5",
+                  "group block rounded-xl border-2 border-primary/40 bg-primary-light/30 p-4 sm:p-4.5",
                   "shadow-xs transition-all duration-200",
                   "hover:border-primary hover:bg-primary-light/70 hover:shadow-md",
                   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2",
@@ -247,14 +245,11 @@ export function DownloadModalProvider({ children }: { children: ReactNode }) {
                           Android
                         </span>
                         <span className="rounded-full bg-primary-light px-2 py-0.5 font-mono-code text-[10px] font-bold text-primary border border-primary/30">
-                          v{releaseInfo.version}
-                        </span>
-                        <span className="rounded-full bg-surface-muted px-2 py-0.5 font-mono-code text-[10px] text-muted border border-border">
-                          {releaseInfo.sourceLabel}
+                          {formatVersion(releaseInfo.version)}
                         </span>
                       </div>
                       <p className="font-mono-code text-xs text-muted mt-0.5">
-                        Direct APK package · Android 8.0+
+                        APK file · Android 8.0 or newer
                       </p>
                     </div>
                   </div>
@@ -266,7 +261,7 @@ export function DownloadModalProvider({ children }: { children: ReactNode }) {
 
                 <div className="mt-3 flex items-center justify-between border-t border-primary/20 pt-2.5 font-mono-code text-[11px]">
                   <span className="text-muted truncate max-w-[200px]" title={releaseInfo.fileName}>
-                    {releaseInfo.fileSize} · {releaseInfo.sourceLabel}
+                    {[releaseInfo.fileSize, releaseInfo.sourceLabel].filter(Boolean).join(" · ")}
                   </span>
                   <span className="font-bold text-primary flex items-center gap-1">
                     <span>Download APK</span>
@@ -296,24 +291,17 @@ export function DownloadModalProvider({ children }: { children: ReactNode }) {
                           iOS
                         </span>
                         <span className="rounded-full bg-surface px-2 py-0.5 font-mono-code text-[10px] font-bold text-muted border border-border">
-                          Not Active Yet
+                          Coming later
                         </span>
                       </div>
                       <p className="font-mono-code text-xs text-muted mt-0.5">
-                        iPhone & iPad · In Active Development
+                        iPhone and iPad version is in development
                       </p>
                     </div>
                   </div>
 
-                  <div className="rounded bg-surface px-2 py-1 font-mono-code text-[10px] font-semibold text-muted border border-border">
-                    In Dev
-                  </div>
                 </div>
 
-                <div className="mt-3 flex items-center justify-between border-t border-border/70 pt-2.5 font-mono-code text-[11px] text-muted">
-                  <span>Apple App Store Channel</span>
-                  <span className="italic">Not Active Yet</span>
-                </div>
               </div>
             </div>
 
@@ -321,7 +309,7 @@ export function DownloadModalProvider({ children }: { children: ReactNode }) {
             <div className="mt-5 rounded-xl border border-border bg-surface-muted p-3 flex items-center gap-2 text-xs text-muted">
               <ShieldCheck className="h-4 w-4 text-primary shrink-0" />
               <span>
-                Verified student build for Department of Computer Science.
+                Built and maintained by students of the Department of Computer Science, AMU.
               </span>
             </div>
           </div>

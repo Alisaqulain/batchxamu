@@ -1,44 +1,54 @@
 import { siteConfig } from "./site";
+import type { ResolvedDownload } from "./app-version";
+import { developers } from "@/data/developers";
+
+const siteUrl = `${siteConfig.url}/`;
+const logo = `${siteConfig.url}/logo.png`;
+
+const publisher = {
+  "@type": "Organization",
+  name: siteConfig.name,
+  url: siteUrl,
+  logo,
+};
 
 export function getWebsiteJsonLd() {
   return {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    name: "AMU BATCH X",
-    alternateName: "AMU Batch X Platform",
-    description:
-      "A student-focused academic platform for the Department of Computer Science community in Aligarh.",
-    url: "https://www.amubatchx.app/",
+    name: siteConfig.name,
+    alternateName: "Batch X",
+    description: siteConfig.description,
+    url: siteUrl,
     inLanguage: "en-IN",
-    publisher: {
-      "@type": "Organization",
-      name: "AMU BATCH X",
-      url: "https://www.amubatchx.app/",
-      logo: `${siteConfig.url}/logo.png`,
-    },
+    publisher,
   };
 }
 
-export function getMobileAppJsonLd() {
+export function getMobileAppJsonLd(release?: ResolvedDownload) {
   return {
     "@context": "https://schema.org",
-    "@type": "WebApplication",
-    name: "AMU BATCH X",
-    applicationCategory: "Education",
-    operatingSystem: "Android, iOS, Web",
-    description:
-      "A student-focused academic platform for the Department of Computer Science community in Aligarh.",
-    url: "https://www.amubatchx.app/",
-    image: `${siteConfig.url}/logo.png`,
+    "@type": "MobileApplication",
+    name: siteConfig.name,
+    applicationCategory: "EducationalApplication",
+    operatingSystem: "Android 8.0+",
+    description: siteConfig.description,
+    url: `${siteConfig.url}/download`,
+    image: logo,
+    ...(release?.version && { softwareVersion: release.version }),
+    ...(release?.downloadUrl && { downloadUrl: release.downloadUrl }),
+    ...(release?.fileSize && { fileSize: release.fileSize }),
     offers: {
       "@type": "Offer",
       price: "0",
       priceCurrency: "INR",
     },
-    author: {
-      "@type": "Organization",
-      name: "AMU BATCH X Student Development Team",
-    },
+    author: developers.map((dev) => ({
+      "@type": "Person",
+      name: dev.name,
+      ...(dev.github && { url: dev.github }),
+    })),
+    publisher,
   };
 }
 
@@ -46,16 +56,16 @@ export function getOrganizationJsonLd() {
   return {
     "@context": "https://schema.org",
     "@type": "Organization",
-    name: "AMU BATCH X",
-    url: "https://www.amubatchx.app/",
-    logo: `${siteConfig.url}/logo.png`,
+    name: siteConfig.name,
+    alternateName: "Batch X",
+    url: siteUrl,
+    logo,
     sameAs: [siteConfig.githubOrg, siteConfig.linkedinOrg],
-    description:
-      "A student-focused academic platform for the Department of Computer Science community in Aligarh.",
+    description: siteConfig.description,
     contactPoint: {
       "@type": "ContactPoint",
-      email: "contact@amubatchx.app",
-      contactType: "student support",
+      email: siteConfig.supportEmail,
+      contactType: "customer support",
     },
   };
 }

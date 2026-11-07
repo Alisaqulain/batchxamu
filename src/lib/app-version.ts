@@ -1,21 +1,29 @@
+import { cache } from "react";
 import { getSupabaseServerClient, AppVersion } from "@/lib/supabase";
 import { siteConfig } from "@/lib/site";
 
-export async function getLatestAppVersion(): Promise<AppVersion> {
+/**
+ * Single source of truth for the released app version.
+ * Reads the newest row of `app_versions`. Every page, component, API route
+ * and SEO file must go through this function (or `getLatestRelease`).
+ * Wrapped in React `cache()` so one request only queries the database once.
+ */
+export const getLatestAppVersion = cache(async (): Promise<AppVersion> => {
+  const now = new Date().toISOString();
   const fallback: AppVersion = {
-    id: "fallback-v1",
-    latest_version: siteConfig.appVersion || "1.0.8",
-    minimum_supported_version: "1.0.8",
+    id: "fallback",
+    latest_version: siteConfig.fallbackAppVersion,
+    minimum_supported_version: siteConfig.fallbackAppVersion,
     force_update: false,
-    update_title: "AMU BATCH X Android Application",
-    update_description: "The official computer science student app for Aligarh Muslim University.",
-    download_url: siteConfig.androidDownloadUrl || null,
-    version_code: 11,
-    latest_version_code: 11,
-    apk_file_name: "batch-x.apk",
-    apk_file_size: "24.2 MB",
-    created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString(),
+    update_title: null,
+    update_description: null,
+    download_url: siteConfig.androidDownloadUrl,
+    version_code: null,
+    latest_version_code: null,
+    apk_file_name: null,
+    apk_file_size: null,
+    created_at: now,
+    updated_at: now,
   };
 
   try {
@@ -28,6 +36,7 @@ export async function getLatestAppVersion(): Promise<AppVersion> {
       .limit(1);
 
     if (error || !data || data.length === 0) {
+      if (error) console.error("Error fetching latest app version:", error.message);
       return fallback;
     }
 
@@ -36,6 +45,11 @@ export async function getLatestAppVersion(): Promise<AppVersion> {
     console.error("Error fetching latest app version from Supabase:", err);
     return fallback;
   }
+});
+
+/** Latest version record resolved into display/download info. */
+export async function getLatestRelease(): Promise<ResolvedDownload> {
+  return resolveDownloadSource(await getLatestAppVersion());
 }
 
 export async function getAllAppVersions(): Promise<AppVersion[]> {
@@ -99,25 +113,21 @@ export interface ResolvedDownload {
 }
 
 export function resolveDownloadSource(versionRecord?: AppVersion | null): ResolvedDownload {
-  const defaultUrl =
-    siteConfig.androidDownloadUrl ||
-    "https://github.com/sameerahmad005/Batch-26/releases/download/v1.0.8/v1.0.8.apk";
-
-  const rawUrl = versionRecord?.download_url || defaultUrl;
-  const ver = versionRecord?.latest_version || siteConfig.appVersion || "1.0.8";
-  const code = versionRecord?.version_code || 11;
-  const fileName = versionRecord?.apk_file_name || `batch-x-v${ver}.apk`;
-  const fileSize = versionRecord?.apk_file_size || "24.2 MB";
+  const rawUrl = versionRecord?.download_url || siteConfig.androidDownloadUrl;
+  const ver = versionRecord?.latest_version || siteConfig.fallbackAppVersion;
+  const code = versionRecord?.version_code ?? 0;
+  const fileName = versionRecord?.apk_file_name || `batch-x${ver ? `-v${ver}` : ""}.apk`;
+  const fileSize = versionRecord?.apk_file_size || "";
 
   let sourceType: DownloadSourceType = "direct";
-  let sourceLabel = "Official Channel";
+  let sourceLabel = "Direct download";
 
   if (rawUrl.includes("github.com")) {
     sourceType = "github";
     sourceLabel = "GitHub Release";
   } else if (rawUrl.includes("supabase.co") || rawUrl.includes("/storage/v1/object/")) {
     sourceType = "supabase";
-    sourceLabel = "Supabase Cloud CDN";
+    sourceLabel = "Official server";
   }
 
   return {

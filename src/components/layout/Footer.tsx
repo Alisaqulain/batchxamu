@@ -10,10 +10,13 @@ import {
   footerPlatformLinks,
 } from "@/data/navigation";
 import { siteConfig } from "@/lib/site";
+import { useLatestRelease } from "@/components/ui/DownloadModal";
+import { formatVersion } from "@/lib/utils";
 import { ArrowUpRight } from "lucide-react";
 
 export function Footer() {
   const pathname = usePathname();
+  const release = useLatestRelease();
 
   // Do not render public footer on admin console routes
   if (pathname?.startsWith("/admin")) {
@@ -24,19 +27,19 @@ export function Footer() {
     <footer className="mt-auto border-t border-border bg-surface">
 
       <div className="mx-auto max-w-[1536px] px-4 pt-12 pb-[calc(6rem+env(safe-area-inset-bottom,0px))] sm:px-8 sm:pt-16 sm:pb-[calc(6rem+env(safe-area-inset-bottom,0px))] lg:px-12 xl:px-16 lg:py-16">
-        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-5">
+        <div data-reveal-stagger className="grid gap-10 md:grid-cols-2 lg:grid-cols-5">
           {/* Main Brand Column (2 cols) */}
           <div className="lg:col-span-2">
             <Logo size="footer" />
             <p className="mt-4 max-w-sm text-xs leading-relaxed text-muted sm:text-sm">
-              An academic operating platform engineered by Computer Science students at Aligarh Muslim University to centralize attendance, lecture schedules, department circulars, and study archives into one reliable mobile application.
+              An app made by Computer Science students at Aligarh Muslim University for timetables, attendance, department notices and study material.
             </p>
 
             <div className="mt-5 flex items-center gap-3 font-mono-code text-xs text-muted">
               <span className="rounded bg-primary-light px-2 py-0.5 font-bold text-primary border border-primary/20">
-                v{siteConfig.appVersion} Stable
+                {formatVersion(release.version)}
               </span>
-              <span>Android (Live) · iOS (In Dev)</span>
+              <span>Android · iOS coming later</span>
             </div>
 
             <div className="mt-6 flex flex-wrap items-center gap-2">
@@ -45,7 +48,7 @@ export function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 rounded-lg border border-border bg-surface-muted px-2.5 py-1.5 text-xs text-muted transition-colors hover:border-primary/40 hover:bg-primary-light hover:text-primary font-mono-code"
-                aria-label="Batch-X Project GitHub"
+                aria-label="AMU BATCH X on GitHub"
               >
                 <GithubIcon className="h-4 w-4" />
                 <span>GitHub</span>
@@ -70,23 +73,13 @@ export function Footer() {
                 <LinkedinIcon className="h-4 w-4" />
                 <span>Sameer Ahmad</span>
               </a>
-              <a
-                href="https://www.linkedin.com/in/okasha-ansari-90199136b/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 rounded-lg border border-border bg-surface-muted px-2.5 py-1.5 text-xs text-muted transition-colors hover:border-primary/40 hover:bg-primary-light hover:text-primary font-mono-code"
-                aria-label="Okasha Ansari on LinkedIn"
-              >
-                <LinkedinIcon className="h-4 w-4" />
-                <span>Okasha Ansari</span>
-              </a>
             </div>
           </div>
 
           {/* Column 2: Platform Modules */}
           <div>
             <h3 className="font-mono-code text-xs font-bold uppercase tracking-wider text-foreground">
-              Platform Modules
+              App
             </h3>
             <ul className="mt-4 space-y-2">
               {footerPlatformLinks.map((link) => (
@@ -105,7 +98,7 @@ export function Footer() {
           {/* Column 3: Community & Team */}
           <div>
             <h3 className="font-mono-code text-xs font-bold uppercase tracking-wider text-foreground">
-              Community & Team
+              Community
             </h3>
             <ul className="mt-4 space-y-2">
               {footerCommunityLinks.map((link) => (
@@ -124,7 +117,7 @@ export function Footer() {
           {/* Column 4: Department & Legal */}
           <div>
             <h3 className="font-mono-code text-xs font-bold uppercase tracking-wider text-foreground">
-              Institutional
+              Legal
             </h3>
             <ul className="mt-4 space-y-2">
               {footerLegalLinks.map((link) => (
@@ -144,7 +137,7 @@ export function Footer() {
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-1 text-xs text-muted transition-colors hover:text-primary"
                 >
-                  <span>AMU Official Portal</span>
+                  <span>AMU website</span>
                   <ArrowUpRight className="h-3 w-3" />
                 </a>
               </li>

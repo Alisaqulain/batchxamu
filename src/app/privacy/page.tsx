@@ -4,54 +4,54 @@ import { ShieldCheck, Database, Lock, Bell, Cookie, FileCheck } from "lucide-rea
 import { siteConfig } from "@/lib/site";
 
 export const metadata = createMetadata({
-  title: "Privacy Policy & Student Data Sovereignty",
+  title: "Privacy Policy",
   description:
-    "AMU BATCH X is built with complete student privacy: zero third-party tracking cookies, zero ad SDKs, and 100% on-device SQLite storage.",
+    "How AMU BATCH X handles your data: no ads, no third-party trackers, and academic data stored on your phone.",
   path: "/privacy",
 });
 
 const privacyPrinciples = [
   {
     icon: Database,
-    title: "1. On-Device Local SQLite Storage",
-    subtitle: "Your Academic Data Never Leaves Your Smartphone",
+    title: "1. Your data stays on your phone",
+    subtitle: "Attendance, subjects and timetable",
     content:
-      "Unlike traditional cloud portals that log student movements, all attendance registers, safe bunk margin tallies, course selections, and lecture schedules in AMU BATCH X are stored strictly inside your phone's encrypted SQLite database. If you clear app storage or uninstall the application, your attendance history is deleted entirely.",
+      "Your attendance records, selected subjects and timetable are stored on your phone, not on our servers. If you clear the app's storage or uninstall it, that data is deleted.",
   },
   {
     icon: ShieldCheck,
-    title: "2. Zero Commercial Trackers & Zero Advertising SDKs",
-    subtitle: "Student Privacy by Principle",
+    title: "2. No ads or trackers",
+    subtitle: "Nothing is sold or shared",
     content:
-      "AMU BATCH X is an academic operating platform created by students for students. It contains zero third-party telemetry, zero user behavior trackers, and zero commercial advertising networks. We do not profile student habits, sell telemetry data, or monetize academic interactions in any form.",
+      "The app has no advertising and no third-party analytics or tracking. We don't build profiles of students and we don't sell any data.",
   },
   {
     icon: Bell,
-    title: "3. Verified Notice Delivery & Push Tokens",
-    subtitle: "Minimal Functional Communication",
+    title: "3. Push notifications",
+    subtitle: "Only used to send notices",
     content:
-      "To receive instant push notifications regarding exam schedule revisions, hall shifts (CS-01 to Unix Labs), and official circulars, the app securely registers a push device token with standard notification dispatch servers. This token is used exclusively for department broadcast dispatches and is never tied to your personal identity.",
+      "To send you notices, the app registers a push notification token for your device. It is only used to deliver department notices and is not linked to your name or other personal details.",
   },
   {
     icon: Cookie,
-    title: "4. Zero Cookie Tracking on Web",
-    subtitle: "Cookie-Free Architecture",
+    title: "4. Cookies on this website",
+    subtitle: "No tracking cookies",
     content:
-      "This official website (www.amubatchx.app) does not set advertising, cross-site tracking, or profiling cookies. The only client-side storage utilized is browser localStorage for functional interface preferences (such as remembering that you acknowledged the student privacy banner).",
+      "This website (www.amubatchx.app) does not use advertising or tracking cookies. It only uses your browser's local storage to remember that you dismissed the privacy banner.",
   },
   {
     icon: Lock,
-    title: "5. Transport Layer Security (TLS 1.3)",
-    subtitle: "Encrypted Network Communications",
+    title: "5. Encrypted connections",
+    subtitle: "HTTPS only",
     content:
-      "All syllabus downloads, solved laboratory programs, previous year question papers, and official department circulars fetched from the student server pipeline are transmitted over modern TLS 1.3 encrypted connections with strict certificate validation.",
+      "Notes, past papers and notices are downloaded over encrypted HTTPS connections.",
   },
   {
     icon: FileCheck,
-    title: "6. Departmental Scope & Inquiries",
-    subtitle: "Governance & Academic Context",
+    title: "6. Who runs this and how to reach us",
+    subtitle: "Contact",
     content:
-      "AMU BATCH X is developed and maintained by student software engineers within the Department of Computer Science, Faculty of Science, Aligarh Muslim University. For questions or privacy inquiries, contact the engineering team via our contact portal or directly at contact@amubatchx.app.",
+      "AMU BATCH X is built and maintained by students of the Department of Computer Science, Aligarh Muslim University. It is not an official university service. For privacy questions, use the contact page or email contact@amubatchx.app.",
   },
 ];
 
@@ -59,9 +59,9 @@ export default function PrivacyPage() {
   return (
     <>
       <PageHeader
-        label="Data Protection & Privacy"
-        title="Student Privacy & Data Sovereignty"
-        description="Last updated: March 2026. How AMU BATCH X protects student autonomy through local storage, zero trackers, and complete transparency."
+        label="Privacy"
+        title="Privacy Policy"
+        description="Last updated: March 2026. What data AMU BATCH X stores and why."
       />
 
       <section className="py-14 sm:py-20 border-b border-border bg-background">
@@ -74,10 +74,10 @@ export default function PrivacyPage() {
               </div>
               <div>
                 <h2 className="font-display text-lg sm:text-xl font-bold text-foreground">
-                  Our Core Privacy Guarantee to AMU Students
+                  The short version
                 </h2>
                 <p className="mt-1.5 text-xs sm:text-sm leading-relaxed text-muted font-sans">
-                  We believe educational tools should never exploit student attention or harvest academic data. AMU BATCH X does not require account sign-ups to view timetables or calculate attendance margins, and your daily attendance data is kept 100% on your Android device.
+                  You don&apos;t need an account to see your timetable or track attendance, your attendance stays on your phone, and there are no ads or trackers.
                 </p>
               </div>
             </div>
@@ -90,7 +90,7 @@ export default function PrivacyPage() {
               return (
                 <article
                   key={item.title}
-                  className="ledger-card border border-border bg-surface p-6 sm:p-8 transition-all hover:border-border-light"
+                  data-reveal className="ledger-card border border-border bg-surface p-6 sm:p-8 transition-all hover:border-border-light"
                 >
                   <div className="flex items-start gap-4">
                     <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-primary/25 bg-primary-light text-primary mt-1">

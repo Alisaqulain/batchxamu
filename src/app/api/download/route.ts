@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getLatestAppVersion, resolveDownloadSource } from "@/lib/app-version";
+import { siteConfig } from "@/lib/site";
 
 export const dynamic = "force-dynamic";
 
@@ -19,15 +20,9 @@ export async function GET() {
       });
     }
 
-    return NextResponse.redirect(
-      "https://github.com/sameerahmad005/Batch-26/releases/download/v1.0.8/v1.0.8.apk",
-      307
-    );
+    return NextResponse.redirect(siteConfig.releasesUrl, 307);
   } catch (error) {
     console.error("Error in /api/download redirect route:", error);
-    return NextResponse.redirect(
-      "https://github.com/sameerahmad005/Batch-26/releases/download/v1.0.8/v1.0.8.apk",
-      307
-    );
+    return NextResponse.redirect(siteConfig.releasesUrl, 307);
   }
 }

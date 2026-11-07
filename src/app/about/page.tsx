@@ -3,41 +3,44 @@ import { PageHeader } from "@/components/ui/PageHeader";
 import { DownloadButton } from "@/components/ui/DownloadButton";
 import { ShieldAlert, ArrowRight } from "lucide-react";
 import Link from "next/link";
-import { siteConfig } from "@/lib/site";
+import { getLatestRelease } from "@/lib/app-version";
+import { formatVersion } from "@/lib/utils";
 
 export const metadata = createMetadata({
   title: "About AMU BATCH X",
   description:
-    "Learn about the origins, student engineering philosophy, and department expansion roadmap of AMU BATCH X at Aligarh Muslim University.",
+    "Why AMU BATCH X exists, who builds it, and how it helps Computer Science students at Aligarh Muslim University keep track of classes, attendance and notices.",
   path: "/about",
 });
 
 const principles = [
   {
-    title: "Grounded in Daily Campus Reality",
-    desc: "Every feature solves a genuine administrative or academic friction point experienced by Computer Science students at AMU: attendance margin calculation, lab room slotting, or urgent class relocations.",
+    title: "Built around real problems",
+    desc: "Each feature started as something we kept asking each other: how many classes can I miss, which lab is it today, did that lecture move?",
   },
   {
-    title: "Offline-First Reliability",
-    desc: "We prioritize local caching. Lecture halls and laboratory basements should never prevent you from checking your daily schedule or accessing your saved study notes.",
+    title: "Works offline",
+    desc: "Your timetable, attendance and saved notes are stored on the phone, so weak signal in a lab doesn't stop you from checking them.",
   },
   {
-    title: "Student Privacy & Respect",
-    desc: "The platform contains zero advertisements, zero third-party data tracking, and no monetization barriers on foundational syllabus notes and question papers.",
+    title: "No ads, no tracking",
+    desc: "There are no ads or third-party trackers, and notes and question papers are free.",
   },
   {
-    title: "Transparent Department Positioning",
-    desc: "We are honest about our identity: an organic student engineering project designed for our department community, maintaining clear labels on what is live today versus what is on the roadmap.",
+    title: "Clear about what's live",
+    desc: "This is a student project. We label what works today and what is still planned.",
   },
 ];
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const release = await getLatestRelease();
+
   return (
     <>
       <PageHeader
         label="About the Project"
-        title="Software built to elevate student life in Computer Science."
-        description="The story, philosophy, and future roadmap of AMU BATCH X at the Department of Computer Science, Aligarh Muslim University."
+        title="A student-built app for the Department of Computer Science"
+        description="Why we built AMU BATCH X, what it does, and who works on it."
       />
 
       <section className="py-14 sm:py-20 border-b border-border bg-background">
@@ -45,32 +48,29 @@ export default function AboutPage() {
           <div className="grid gap-12 lg:grid-cols-12">
             {/* Left Narrative Column */}
             <div className="lg:col-span-8 space-y-10">
-              <div className="ledger-card border border-border bg-surface p-6 sm:p-10">
+              <div data-reveal className="ledger-card border border-border bg-surface p-6 sm:p-10">
                 <span className="font-mono-code text-xs font-bold uppercase tracking-wider text-primary">
-                  The Origin
+                  Background
                 </span>
                 <h2 className="font-display text-2xl font-bold text-foreground mt-2 sm:text-3xl">
                   Why MCA 2026 students built AMU BATCH X
                 </h2>
                 <div className="mt-4 space-y-4 text-sm leading-relaxed text-muted sm:text-base">
                   <p className="font-semibold text-foreground text-sm sm:text-base">
-                    AMU BATCH X is a student-focused digital academic platform built to simplify academic coordination and access to essential resources for the Department of Computer Science community in Aligarh.
+                    AMU BATCH X is an app for students of the Department of Computer Science at Aligarh Muslim University.
                   </p>
                   <p>
-                    University education at the Department of Computer Science, Aligarh Muslim University, is intellectually demanding. Students juggle theoretical algorithms, intense database query tuning, multi-hour Unix operating system laboratories, and continuous internal evaluations.
+                    Timetables, notices and notes were spread across WhatsApp groups, PDFs and printouts. We kept asking the same questions: which room is the OS lab in today, has the 2 PM lecture moved, am I still above 75% attendance?
                   </p>
                   <p>
-                    Yet for years, the logistics of student life remained fragmented across informal WhatsApp groups, lost PDF circulars, and crumpled paper schedules. Students were forced to constantly ask: &quot;Which room is the OS lab in today?&quot;, &quot;Has the 2 PM lecture been rescheduled?&quot;, or &quot;Am I safely above the 75 percent attendance threshold before mid-sems?&quot;
-                  </p>
-                  <p>
-                    AMU BATCH X was built by students Ali Saqulain, Sameer Ahmad, and Okasha Ansari to solve this fragmentation directly. The platform provides:
+                    Ali Saqulain and Sameer Ahmad built AMU BATCH X to put all of that in one place. It includes:
                   </p>
                   <ul className="list-disc pl-5 space-y-1.5 font-mono-code text-xs text-foreground/90">
-                    <li>Daily lecture timetable mapped to department halls CS-01 through CS-04 and Unix Labs</li>
-                    <li>75% attendance margin calculation with safe bunk allowance tallies</li>
-                    <li>Verified department notice dispatch feed with push alerting</li>
-                    <li>Academic vault with course syllabus notes, verified lab implementations, and exam PYQs</li>
-                    <li>Direct offline mobile application access with zero tracking or ads</li>
+                    <li>Daily timetable with rooms and labs</li>
+                    <li>Attendance tracking against the 75% requirement, including how many classes you can still miss</li>
+                    <li>Department notices with push notifications</li>
+                    <li>Notes, lab programs and previous year question papers</li>
+                    <li>Offline access, with no ads or tracking</li>
                   </ul>
                 </div>
               </div>
@@ -79,10 +79,10 @@ export default function AboutPage() {
               <div className="space-y-4">
                 <div className="border-b border-border pb-3">
                   <span className="font-mono-code text-xs font-bold uppercase tracking-wider text-primary">
-                    Core Principles
+                    Principles
                   </span>
                   <h3 className="font-display text-xl font-bold text-foreground mt-1">
-                    How We Make Engineering Decisions
+                    What guides the app
                   </h3>
                 </div>
 
@@ -90,7 +90,7 @@ export default function AboutPage() {
                   {principles.map((p, idx) => (
                     <div
                       key={idx}
-                      className="ledger-card border border-border bg-surface p-6 flex flex-col justify-between"
+                      data-reveal className="ledger-card border border-border bg-surface p-6 flex flex-col justify-between"
                     >
                       <div>
                         <h4 className="font-display text-base font-bold text-foreground">
@@ -110,11 +110,11 @@ export default function AboutPage() {
                 <div className="flex items-center gap-2 mb-2 text-accent-terracotta">
                   <ShieldAlert className="h-5 w-5 shrink-0" />
                   <h4 className="font-mono-code text-xs font-bold uppercase tracking-wider">
-                    Institutional Relationship & Transparency
+                    Not an official university app
                   </h4>
                 </div>
                 <p className="text-xs sm:text-sm leading-relaxed text-muted">
-                  AMU BATCH X is an independent digital academic platform built by the student development team for the Department of Computer Science community. It is not an official university-operated administrative body unless formally authorized. We prioritize accuracy, verify our data against departmental circulars, and maintain strict student privacy standards.
+                  AMU BATCH X is an independent student project. It is not run by Aligarh Muslim University. We check information against department circulars, but the official notice is always final.
                 </p>
               </div>
             </div>
@@ -122,9 +122,9 @@ export default function AboutPage() {
             {/* Right Information Column */}
             <div className="lg:col-span-4 space-y-6">
               {/* Snapshot Card */}
-              <div className="ledger-card border border-border bg-surface p-6">
+              <div data-reveal className="ledger-card border border-border bg-surface p-6">
                 <span className="font-mono-code text-xs font-bold uppercase tracking-wider text-primary">
-                  Project Snapshot
+                  At a glance
                 </span>
 
                 <div className="mt-4 space-y-3 font-mono-code text-xs">
@@ -142,11 +142,11 @@ export default function AboutPage() {
                   </div>
                   <div className="flex justify-between border-b border-border/60 pb-2">
                     <span className="text-muted">Current Version</span>
-                    <span className="text-primary font-bold">v{siteConfig.appVersion} Stable</span>
+                    <span className="text-primary font-bold">{formatVersion(release.version)}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-muted">Release Channel</span>
-                    <span className="text-foreground">Direct Android APK</span>
+                    <span className="text-foreground">Android APK</span>
                   </div>
                 </div>
 
@@ -156,15 +156,15 @@ export default function AboutPage() {
               </div>
 
               {/* Developer Team Link Card */}
-              <div className="ledger-card border border-border bg-surface p-6">
+              <div data-reveal className="ledger-card border border-border bg-surface p-6">
                 <span className="font-mono-code text-xs font-bold uppercase tracking-wider text-muted">
-                  The Student Team
+                  Team
                 </span>
                 <h4 className="font-display text-base font-bold text-foreground mt-2">
-                  Meet the Architects
+                  Meet the developers
                 </h4>
                 <p className="mt-1 text-xs text-muted leading-relaxed">
-                  Discover the developer backgrounds of Ali Saqulain, Sameer Ahmad, and Okasha Ansari.
+                  Ali Saqulain and Sameer Ahmad build and maintain AMU BATCH X.
                 </p>
 
                 <div className="mt-4">

@@ -5,12 +5,11 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Download } from "lucide-react";
 import { useDownloadModal } from "@/components/ui/DownloadModal";
-import { siteConfig } from "@/lib/site";
-import { cn } from "@/lib/utils";
+import { cn, formatVersion } from "@/lib/utils";
 
 export function StickyMobileCTA() {
   const [visible, setVisible] = useState(false);
-  const { openDownloadModal } = useDownloadModal();
+  const { openDownloadModal, release } = useDownloadModal();
   const pathname = usePathname();
 
   useEffect(() => {
@@ -56,7 +55,7 @@ export function StickyMobileCTA() {
                 AMU BATCH X
               </span>
               <span className="rounded bg-primary-light px-1.5 py-0.2 font-mono-code text-[10px] font-bold text-primary border border-primary/20">
-                v{siteConfig.appVersion}
+                {formatVersion(release.version)}
               </span>
             </div>
             <p className="font-mono-code text-[10px] text-muted truncate">

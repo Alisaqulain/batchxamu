@@ -36,12 +36,14 @@ export function AdminApkUploadForm({ latestVersion }: Props) {
   const [uploadStage, setUploadStage] = useState<string>("");
 
   // Suggested values based on latest release
-  const nextVersionCode = (latestVersion.version_code || 11) + 1;
-  const currentVer = latestVersion.latest_version || "1.0.8";
+  const nextVersionCode = (latestVersion.version_code || 0) + 1;
+  const currentVer = latestVersion.latest_version || "";
   const verParts = currentVer.split(".").map((p) => parseInt(p, 10));
-  const nextVer = !isNaN(verParts[2])
-    ? `${verParts[0]}.${verParts[1]}.${verParts[2] + 1}`
-    : `${currentVer}.1`;
+  const nextVer = !currentVer
+    ? ""
+    : !isNaN(verParts[2])
+      ? `${verParts[0]}.${verParts[1]}.${verParts[2] + 1}`
+      : `${currentVer}.1`;
 
   const [version, setVersion] = useState(nextVer);
   const [versionCode, setVersionCode] = useState(nextVersionCode.toString());
@@ -363,7 +365,7 @@ export function AdminApkUploadForm({ latestVersion }: Props) {
               required
               value={minVersion}
               onChange={(e) => setMinVersion(e.target.value)}
-              placeholder="e.g. 1.0.8"
+              placeholder={currentVer ? `e.g. ${currentVer}` : "e.g. 1.0.0"}
               className="mt-1.5 w-full rounded-xl border border-border bg-surface-muted px-3.5 py-2 text-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
             />
           </div>

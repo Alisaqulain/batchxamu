@@ -5,6 +5,8 @@ export interface NavDropdownItem {
   href: string;
   description: string;
   badge?: string;
+  /** Show the latest app version (from the database) as the badge. */
+  versionBadge?: boolean;
   iconName: string;
 }
 
@@ -19,38 +21,37 @@ export const navDropdownCategories: NavDropdownCategory[] = [
   {
     id: "platform",
     label: "Platform",
-    description: "Mobile application systems, technical architecture, and distribution",
+    description: "The app and how to get it",
     items: [
       {
-        title: "Technical Capabilities",
+        title: "Features",
         href: "/features",
-        description: "Deep dive into attendance engine, timetables, and offline SQLite cache",
-        badge: "Specs",
+        description: "Attendance, timetable, notices and notes",
         iconName: "Layers",
       },
       {
-        title: "App Screen Showcase",
+        title: "Screenshots",
         href: "/#screenshots",
-        description: "Interactive 3D view of authentic Android screenshots",
+        description: "Screens from the Android app",
         iconName: "Smartphone",
       },
       {
-        title: "Capabilities Atlas",
+        title: "App preview",
         href: "/#capabilities",
-        description: "The four pillars solving daily academic friction in Computer Science",
+        description: "Try each feature on the phone preview",
         iconName: "Sparkles",
       },
       {
-        title: "Download App Hub",
+        title: "Download",
         href: "/download",
-        description: "Official Android APK package and iOS development status",
-        badge: "v1.0.8",
+        description: "Get the Android APK",
+        versionBadge: true,
         iconName: "Download",
       },
       {
-        title: "Release Changelog",
+        title: "Release notes",
         href: "/download#changelog",
-        description: "Release history, security patches, and version updates",
+        description: "What changed in the latest version",
         iconName: "History",
       },
     ],
@@ -58,37 +59,36 @@ export const navDropdownCategories: NavDropdownCategory[] = [
   {
     id: "academics",
     label: "Academics",
-    description: "Curriculum structures, student guides, and exam archives",
+    description: "Programs, guides and practice",
     items: [
       {
-        title: "Academic Programs",
+        title: "Programs",
         href: "/programs",
-        description: "MCA, M.Sc. CS, B.Sc. Hons, and research doctoral coursework",
+        description: "MCA, M.Sc., B.Sc. (Hons.) and Ph.D.",
         iconName: "GraduationCap",
       },
       {
-        title: "Student Academic Guide",
+        title: "For students",
         href: "/students",
-        description: "Surviving the 75% attendance rule, lab protocols, and exam hall tickets",
+        description: "Attendance rules, labs and exams",
         iconName: "BookOpen",
       },
       {
-        title: "Faculty & Instructors",
+        title: "For teachers",
         href: "/teachers",
-        description: "Department coordinators, lab supervisors, and office hours",
+        description: "Planned tools for class changes and attendance",
         iconName: "Users",
       },
       {
-        title: "Mock Tests & PYQs",
+        title: "Mock tests",
         href: "/mock-tests",
-        description: "Previous semester examination papers and timed practice tests",
-        badge: "Practice",
+        description: "Past papers and practice tests (planned)",
         iconName: "CheckSquare",
       },
       {
-        title: "Department Architecture",
+        title: "Roadmap",
         href: "/#department",
-        description: "Classrooms CS-01 to CS-04, Unix Lab 2, and systems infra",
+        description: "Which programs are supported and what's next",
         iconName: "Building2",
       },
     ],
@@ -96,49 +96,49 @@ export const navDropdownCategories: NavDropdownCategory[] = [
   {
     id: "community",
     label: "Community",
-    description: "Student development team, documentation, and communication channels",
+    description: "The team behind the app",
     items: [
       {
-        title: "About AMU BATCH X",
+        title: "About",
         href: "/about",
-        description: "Why we built this platform for the Department of Computer Science",
+        description: "Why we built AMU BATCH X",
         iconName: "Info",
       },
       {
-        title: "Engineering Team",
+        title: "Developers",
         href: "/developers",
-        description: "Student developers, contributors, and open-source GitHub repo",
+        description: "Who builds the app",
         iconName: "Code2",
       },
       {
-        title: "Academic Blog",
+        title: "Blog",
         href: "/blog",
-        description: "Student articles, study guides, and campus computing updates",
+        description: "Notes from the team",
         iconName: "Newspaper",
       },
       {
-        title: "Contact & Feedback",
+        title: "Contact",
         href: "/contact",
-        description: "Direct feedback channel to the student development team",
+        description: "Questions, bugs and feedback",
         iconName: "Mail",
       },
     ],
   },
   {
     id: "more",
-    label: "Legal & Policies",
-    description: "Privacy policies, operational rules, and student conduct",
+    label: "Legal",
+    description: "Privacy and terms",
     items: [
       {
         title: "Privacy Policy",
         href: "/privacy",
-        description: "Local device storage, zero trackers, and complete student privacy",
+        description: "What data the app stores",
         iconName: "ShieldCheck",
       },
       {
-        title: "Terms & Conditions",
+        title: "Terms",
         href: "/terms",
-        description: "Platform usage rules and student code of conduct",
+        description: "Rules for using the app and website",
         iconName: "FileText",
       },
     ],
@@ -164,19 +164,19 @@ export const mainNavLinks: NavLink[] = [
 ];
 
 export const footerPlatformLinks: NavLink[] = [
-  { label: "Core Features", href: "/features" },
-  { label: "Academic Programs", href: "/programs" },
-  { label: "Student Survival Guide", href: "/students" },
-  { label: "Teacher Dispatch Platform", href: "/teachers" },
-  { label: "CS Mock Tests", href: "/mock-tests" },
-  { label: "Download App (Android & iOS)", href: "/download" },
+  { label: "Features", href: "/features" },
+  { label: "Programs", href: "/programs" },
+  { label: "For students", href: "/students" },
+  { label: "For teachers", href: "/teachers" },
+  { label: "Mock tests", href: "/mock-tests" },
+  { label: "Download", href: "/download" },
 ];
 
 export const footerCommunityLinks: NavLink[] = [
-  { label: "About AMU BATCH X", href: "/about" },
-  { label: "Engineering Team", href: "/developers" },
-  { label: "Technical Blog", href: "/blog" },
-  { label: "Contact & Feedback", href: "/contact" },
+  { label: "About", href: "/about" },
+  { label: "Developers", href: "/developers" },
+  { label: "Blog", href: "/blog" },
+  { label: "Contact", href: "/contact" },
 ];
 
 export const footerLegalLinks: NavLink[] = [

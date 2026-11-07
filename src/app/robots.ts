@@ -5,8 +5,9 @@ export default function robots(): MetadataRoute.Robots {
   return {
     rules: {
       userAgent: "*",
-      allow: "/",
-      disallow: ["/admin/", "/admin", "/api/", "/api"],
+      // /api/download and /api/version stay crawlable: llms.txt links to them.
+      allow: ["/", "/api/download", "/api/version"],
+      disallow: ["/admin", "/api/"],
     },
     sitemap: `${siteConfig.url}/sitemap.xml`,
   };

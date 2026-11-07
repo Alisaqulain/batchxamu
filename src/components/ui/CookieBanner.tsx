@@ -40,7 +40,7 @@ export function CookieBanner() {
 
   return (
     <aside
-      aria-label="Student Privacy Notice"
+      aria-label="Privacy notice"
       className={cn(
         "fixed bottom-20 lg:bottom-6 left-4 right-4 sm:left-6 sm:right-auto z-50",
         "max-w-md rounded-2xl border border-primary/30 bg-surface/98 p-4 shadow-2xl backdrop-blur-xl",
@@ -55,7 +55,7 @@ export function CookieBanner() {
         <div className="flex-1 min-w-0">
           <div className="flex items-center justify-between gap-2">
             <h4 className="font-display text-xs font-bold text-foreground">
-              Zero Tracking Cookies · Student Privacy
+              No tracking cookies
             </h4>
             <button
               type="button"
@@ -68,7 +68,7 @@ export function CookieBanner() {
           </div>
 
           <p className="mt-1 text-[11px] leading-relaxed text-muted font-sans">
-            AMU BATCH X operates without third-party advertising SDKs or tracking cookies. All academic rosters, attendance margins, and notes remain strictly encrypted in local on-device SQLite storage.
+            This site doesn&apos;t use ads or tracking cookies. In the app, your attendance and notes are stored on your phone.
           </p>
 
           <div className="mt-3 flex items-center justify-between gap-3">
@@ -76,7 +76,7 @@ export function CookieBanner() {
               href="/privacy"
               className="font-mono-code text-[11px] font-semibold text-primary hover:underline"
             >
-              Read Privacy Policy →
+              Privacy policy
             </Link>
 
             <button
@@ -84,7 +84,7 @@ export function CookieBanner() {
               onClick={handleAcknowledge}
               className="rounded-lg bg-primary px-3 py-1 font-mono-code text-[11px] font-bold text-white shadow-xs hover:bg-primary-hover active:scale-96 transition-all cursor-pointer"
             >
-              Acknowledge
+              OK
             </button>
           </div>
         </div>

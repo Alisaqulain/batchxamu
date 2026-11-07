@@ -5,32 +5,32 @@ import { CheckCircle2, MapPin, ArrowRight } from "lucide-react";
 import Link from "next/link";
 
 export const metadata = createMetadata({
-  title: "Student Academic Guide",
+  title: "For Students",
   description:
-    "Essential guide for Computer Science students at AMU: navigating the 75% attendance rule, daily lab schedules, lecture rooms, and examination preparation.",
+    "A practical guide for Computer Science students at AMU: the 75% attendance rule, lab schedules, lecture rooms and exam preparation.",
   path: "/students",
 });
 
 const survivalChecklist = [
   {
-    title: "1. The 75% Attendance Safe-Margin Habit",
-    desc: "At Aligarh Muslim University, failing to meet the 75 percent threshold in theory or practical labs leads to detention from semester examinations. Check your BATCH X attendance margin every Friday afternoon.",
-    tip: "Always maintain a buffer of at least 3 to 4 classes in each subject before scheduling travel or personal leave.",
+    title: "1. Check your attendance every week",
+    desc: "At AMU, falling below 75% in a theory or lab subject can stop you from sitting the semester exam. A quick weekly look in the app is enough.",
+    tip: "Keep 3 or 4 classes spare in each subject before planning travel or leave.",
   },
   {
-    title: "2. Verify Laboratory Allocations Daily",
-    desc: "Laboratory sessions (like Operating Systems or Database Management) run for 2 consecutive hours. While lectures take place in CS-01 through CS-04, labs require assembling in either the Unix Lab or Systems Lab.",
-    tip: "Check the app notifications at 08:30 AM for any morning room relocations posted by instructors.",
+    title: "2. Check where your lab is",
+    desc: "Labs like Operating Systems or DBMS run for two hours. Lectures are in CS-01 to CS-04, but labs are in the Unix Lab or the Systems Lab.",
+    tip: "Look at your notifications in the morning in case a room has changed.",
   },
   {
-    title: "3. Keep Study Notes Saved Offline",
-    desc: "Mobile network connectivity inside certain campus seminar halls and departmental basements can be intermittent. Download core syllabus units and lab manuals to offline storage.",
-    tip: "BATCH X automatically caches your timetable and favorited PDF units locally on your Android device.",
+    title: "3. Save notes for offline use",
+    desc: "Signal is weak in some halls and labs. Download the units and lab manuals you need ahead of time.",
+    tip: "The app keeps your timetable and saved notes on the phone automatically.",
   },
   {
-    title: "4. Systematic PYQ Practice",
-    desc: "Aligarh Muslim University semester examinations emphasize thorough conceptual understanding, algorithmic proofs, and syntax rigor. Practice with previous year question papers available in the app repository.",
-    tip: "Focus on 5-year solved papers for Data Structures, Database Systems, and Computer Networks.",
+    title: "4. Practise with past papers",
+    desc: "Semester exams test concepts, proofs and exact syntax. Previous year papers are the best way to see what gets asked.",
+    tip: "Start with the last five years of Data Structures, DBMS and Computer Networks papers.",
   },
 ];
 
@@ -38,9 +38,9 @@ export default function StudentsPage() {
   return (
     <>
       <PageHeader
-        label="Student Guide"
-        title="Everything you need to navigate your semester."
-        description="A practical guide for Department of Computer Science students at AMU: attendance compliance, timetable routines, and exam preparation."
+        label="For students"
+        title="A few things that make the semester easier"
+        description="Practical tips for Computer Science students at AMU on attendance, labs and exams."
       />
 
       <section className="py-14 sm:py-20 border-b border-border bg-background">
@@ -50,17 +50,17 @@ export default function StudentsPage() {
             <div className="lg:col-span-8 space-y-6">
               <div className="border-b border-border pb-4">
                 <span className="font-mono-code text-xs font-bold uppercase tracking-wider text-primary">
-                  Department Best Practices
+                  Tips
                 </span>
                 <h2 className="font-display text-2xl font-bold text-foreground mt-1">
-                  The Four Pillars of Academic Peace of Mind
+                  Four habits worth having
                 </h2>
               </div>
 
               {survivalChecklist.map((item, idx) => (
                 <div
                   key={idx}
-                  className="ledger-card border border-border bg-surface p-6 sm:p-7"
+                  data-reveal className="ledger-card border border-border bg-surface p-6 sm:p-7"
                 >
                   <h3 className="font-display text-lg font-bold text-foreground">
                     {item.title}
@@ -72,7 +72,7 @@ export default function StudentsPage() {
                   <div className="mt-4 rounded-lg border border-primary/20 bg-primary-light/50 p-3 flex items-start gap-2.5">
                     <CheckCircle2 className="h-4 w-4 text-primary shrink-0 mt-0.5" />
                     <p className="text-xs text-primary-deep font-medium leading-relaxed">
-                      <span className="font-bold">Student Tip:</span> {item.tip}
+                      <span className="font-bold">Tip:</span> {item.tip}
                     </p>
                   </div>
                 </div>
@@ -82,11 +82,11 @@ export default function StudentsPage() {
             {/* Right Column: Quick Reference & Download Card */}
             <div className="lg:col-span-4 space-y-6">
               {/* Department Lecture Room Quick Key */}
-              <div className="ledger-card border border-border bg-surface p-6">
+              <div data-reveal className="ledger-card border border-border bg-surface p-6">
                 <div className="flex items-center gap-2 border-b border-border pb-3 mb-4">
                   <MapPin className="h-4 w-4 text-accent-terracotta" />
                   <h3 className="font-mono-code text-xs font-bold uppercase tracking-wider text-foreground">
-                    Department Room Key
+                    Rooms
                   </h3>
                 </div>
 
@@ -111,21 +111,21 @@ export default function StudentsPage() {
               </div>
 
               {/* Install Terminal Card */}
-              <div className="ledger-card border border-primary/30 bg-primary-light/40 p-6">
+              <div data-reveal className="ledger-card border border-primary/30 bg-primary-light/40 p-6">
                 <div className="flex items-center justify-between">
                   <span className="font-mono-code text-[11px] font-bold uppercase tracking-wider text-primary">
-                    Official Mobile App
+                    The app
                   </span>
                   <div className="flex items-center gap-1.5 font-mono-code text-[10px]">
-                    <span className="rounded bg-primary text-white px-1.5 py-0.5 font-bold">Android Live</span>
-                    <span className="rounded bg-surface text-muted border border-border px-1.5 py-0.5 font-medium">iOS In Dev</span>
+                    <span className="rounded bg-primary text-white px-1.5 py-0.5 font-bold">Android</span>
+                    <span className="rounded bg-surface text-muted border border-border px-1.5 py-0.5 font-medium">iOS coming later</span>
                   </div>
                 </div>
                 <h3 className="font-display text-lg font-bold text-foreground mt-2">
                   Get AMU BATCH X
                 </h3>
                 <p className="mt-2 text-xs leading-relaxed text-muted">
-                  Keep your daily schedule, 75 percent attendance record, and verified department notices on your phone. Direct APK is available for Android; iOS edition is currently in active development.
+                  Your timetable, attendance and department notices on your phone. Available for Android now; iOS is in development.
                 </p>
 
                 <div className="mt-5">
@@ -137,7 +137,7 @@ export default function StudentsPage() {
                     href="/features"
                     className="font-mono-code text-xs text-primary font-semibold hover:underline inline-flex items-center gap-1"
                   >
-                    <span>View all app capabilities</span>
+                    <span>See all features</span>
                     <ArrowRight className="h-3 w-3" />
                   </Link>
                 </div>

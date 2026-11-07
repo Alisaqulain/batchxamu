@@ -3,7 +3,7 @@ import { PageHeader } from "@/components/ui/PageHeader";
 import { FileText, CheckCircle2, AlertTriangle, BookOpen, Shield, Code2 } from "lucide-react";
 
 export const metadata = createMetadata({
-  title: "Terms & Conditions · AMU BATCH X",
+  title: "Terms and Conditions",
   description:
     "Terms and conditions for using the AMU BATCH X mobile application and web platform for Department of Computer Science students.",
   path: "/terms",
@@ -12,45 +12,45 @@ export const metadata = createMetadata({
 const termsSections = [
   {
     icon: CheckCircle2,
-    title: "1. Acceptance of Platform Terms",
-    subtitle: "Mutual Agreement for Academic Utilities",
+    title: "1. Accepting these terms",
+    subtitle: "Applies to the app and this website",
     content:
-      "By downloading, installing, or browsing the AMU BATCH X mobile application or official website (www.amubatchx.app), you agree to be bound by these terms. If you disagree with any portion of these provisions, you should refrain from using the application and platform.",
+      "By downloading or using the AMU BATCH X app or this website (www.amubatchx.app), you agree to these terms. If you don't agree, please don't use the app or website.",
   },
   {
     icon: BookOpen,
-    title: "2. Purpose & Student Developer Scope",
-    subtitle: "Department of Computer Science Academic Initiative",
+    title: "2. What AMU BATCH X is",
+    subtitle: "A student project",
     content:
-      "AMU BATCH X is an independent academic companion engineered by postgraduate computer science students at Aligarh Muslim University (AMU). While designed specifically to address daily scheduling and attendance tracking friction within the Department of Computer Science, it is a student-led engineering initiative and does not supplant formal university notifications unless explicitly stated by faculty administration.",
+      "AMU BATCH X is an independent app made by postgraduate Computer Science students at Aligarh Muslim University (AMU). It is not an official university service and does not replace official university notices.",
   },
   {
     icon: AlertTriangle,
-    title: "3. Verification of Critical University Circulars",
-    subtitle: "Advisory on Examination & Admit Card Guidelines",
+    title: "3. Check important notices with the university",
+    subtitle: "Exams, fees and admit cards",
     content:
-      "While BATCH X employs automated feeds and student coordinators to reflect class room shifts (CS-01 to CS-04, Unix Labs) and official deadlines with high reliability, students must cross-verify critical university examination schedules, fee deadlines, and formal admit card rules against official university circulars posted on department notice boards and amu.ac.in.",
+      "We try to keep room changes and deadlines accurate, but always confirm exam schedules, fee deadlines and admit card rules against the official notices on the department notice board and amu.ac.in.",
   },
   {
     icon: Shield,
-    title: "4. Attendance Calculator Functionality",
-    subtitle: "75% Rule Compliance as an Informational Tool",
+    title: "4. The attendance tracker is a guide",
+    subtitle: "Not an official record",
     content:
-      "The 75% attendance engine operates on local mathematical tallying based on the user's manual inputs. It is an organizational aid designed to warn students before entering debarment thresholds. Official exam eligibility remains determined solely by the faculty registers maintained by course instructors.",
+      "The attendance tracker counts the classes you enter yourself. It helps you keep an eye on the 75% rule, but your exam eligibility is decided only by the official attendance registers kept by your teachers.",
   },
   {
     icon: Code2,
-    title: "5. Intellectual Property & Open Collaboration",
-    subtitle: "Student Engineering Ownership & Study Vault Notes",
+    title: "5. Ownership",
+    subtitle: "Code, design and study material",
     content:
-      "The AMU BATCH X software source code, interface designs, 3D brand assets, and mobile APK builds are authored by the student development team. Solved lab programs, syllabus guides, and previous year examination papers belong to their respective student and faculty authors and are shared for educational and non-commercial research purposes.",
+      "The AMU BATCH X code, design and app builds are made by the AMU BATCH X team. Lab programs, notes and past papers belong to their original student and faculty authors and are shared for non-commercial study use.",
   },
   {
     icon: FileText,
-    title: "6. Modifications to Terms",
-    subtitle: "Platform Evolution & Semester Updates",
+    title: "6. Changes to these terms",
+    subtitle: "Updates",
     content:
-      "These terms may be updated from time to time to accommodate new features, Android platform policy revisions, or academic calendar adjustments. Continued use of AMU BATCH X constitutes acceptance of revised terms.",
+      "We may update these terms when the app changes. If you keep using AMU BATCH X after an update, you accept the new terms.",
   },
 ];
 
@@ -58,9 +58,9 @@ export default function TermsPage() {
   return (
     <>
       <PageHeader
-        label="Operational Guidelines"
-        title="Terms & Conditions"
-        description="Last updated: March 2026. Clear, transparent guidelines governing the use of the AMU BATCH X platform and student utilities."
+        label="Terms"
+        title="Terms and Conditions"
+        description="Last updated: March 2026. The rules for using the AMU BATCH X app and website."
       />
 
       <section className="py-14 sm:py-20 border-b border-border bg-background">
@@ -73,10 +73,10 @@ export default function TermsPage() {
               </div>
               <div>
                 <h2 className="font-display text-lg sm:text-xl font-bold text-foreground">
-                  Academic Platform Agreement
+                  In short
                 </h2>
                 <p className="mt-1.5 text-xs sm:text-sm leading-relaxed text-muted font-sans">
-                  AMU BATCH X was created to support Computer Science students with accurate daily timetables, instant room alerts, and attendance math. By using this service, you acknowledge that all utilities are provided as-is to foster academic collaboration and semester organization.
+                  AMU BATCH X is a free student project, provided as-is. Use it to stay organized, but treat official university notices as final.
                 </p>
               </div>
             </div>
@@ -89,7 +89,7 @@ export default function TermsPage() {
               return (
                 <article
                   key={item.title}
-                  className="ledger-card border border-border bg-surface p-6 sm:p-8 transition-all hover:border-border-light"
+                  data-reveal className="ledger-card border border-border bg-surface p-6 sm:p-8 transition-all hover:border-border-light"
                 >
                   <div className="flex items-start gap-4">
                     <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-primary/25 bg-primary-light text-primary mt-1">
